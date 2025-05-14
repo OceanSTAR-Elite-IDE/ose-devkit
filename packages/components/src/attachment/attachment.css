@@ -1,0 +1,87 @@
+:root {
+  --nc-attachment-item-margin: theme('spacing.4');
+  --nc-attachment-task-color: theme('colors.gray.700');
+  --nc-attachment-task-color-error: theme('colors.red.600');
+  --nc-attachment-task-padding: theme('spacing.2');
+  --nc-attachment-task-background: color-mix(in srgb, theme('colors.blue.500') 10%, transparent);
+  --nc-attachment-task-background-success: color-mix(in srgb, theme('colors.green.500') 10%, transparent);
+  --nc-attachment-task-background-error: color-mix(in srgb, theme('colors.red.500') 10%, transparent);
+  --nc-attachment-font-size: theme('fontSize.xs');
+}
+
+.nc-attachment {
+  display: block;
+  margin: 0 0 var(--nc-attachment-item-margin);
+}
+
+.nc-attachment.disabled .nc-attachment-trigger {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nc-attachment.readonly .nc-attachment-trigger {
+  display: none;
+}
+
+.nc-attachment-item {
+  position: relative;
+  margin-top: calc(var(--nc-attachment-item-margin) * 0.5);
+}
+
+.nc-attachment-item:last-child {
+  margin-bottom: var(--nc-attachment-item-margin);
+}
+
+.nc-attachment-progress {
+  margin-bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.nc-attachment-task {
+  font-size: var(--nc-attachment-font-size);
+  transition: background 0.5s;
+  display: flex;
+  color: var(--nc-attachment-task-color);
+  background-color: var(--nc-attachment-task-background);
+}
+
+.nc-attachment-task > .cell {
+  padding: var(--nc-attachment-task-padding);
+}
+
+.nc-attachment-task .task-info {
+  padding-left: 0;
+  padding-right: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nc-attachment-task .task-name {
+  margin-right: 0.5em;
+}
+
+.nc-attachment-task .task-name:not([href]) {
+  cursor: auto;
+  color: theme('colors.gray.700');
+}
+
+.nc-attachment-task .task-error {
+  color: var(--nc-attachment-task-color-error);
+  margin-left: 0.5em;
+}
+
+.nc-attachment-task .task-action {
+  cursor: pointer;
+}
+
+.nc-attachment-task.success {
+  background-color: var(--nc-attachment-task-background-success);
+}
+
+.nc-attachment-task.error {
+  background-color: var(--nc-attachment-task-background-error);
+}

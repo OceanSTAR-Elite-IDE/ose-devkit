@@ -1,0 +1,89 @@
+:root {
+  --nc-form-label-width: 120px;
+}
+
+.nc-form-field {
+  display: block;
+}
+
+.nc-form-label {
+  display: block;
+  font-weight: 500;
+}
+
+.nc-form-label.required {
+  position: relative;
+}
+
+.nc-form-label.required::after {
+  content: '*';
+  color: var(--nc-form-color-invalid);
+}
+
+.nc-form-sublabel {
+  margin-left: 2px;
+}
+
+.nc-form-group {
+  margin-top: var(--nc-form-spacing);
+}
+
+.nc-form-field.nc-form-horizontal {
+  display: flex;
+}
+
+.nc-form-field.nc-form-horizontal .nc-form-label {
+  flex: 0 0 auto;
+  padding-top: var(--nc-form-padding-y);
+  padding-bottom: var(--nc-form-padding-y);
+}
+
+.nc-form-field.nc-form-horizontal .nc-form-group {
+  margin-top: 0;
+  flex: 1 1 0;
+}
+
+.nc-form-message {
+  color: var(--nc-form-color-invalid);
+  margin-top: var(--nc-form-spacing);
+}
+
+.nc-form-error {
+  /* input variables */
+  --nc-input-box-shadow-color: var(--nc-form-color-invalid);
+  --nc-input-box-shadow-color-focus: var(--nc-form-color-invalid);
+  --nc-input-border-color: var(--nc-form-color-invalid);
+  --nc-input-color-placeholder: var(--nc-form-color-invalid);
+
+  /* checkbox variables */
+
+  /* radio variables */
+}
+
+.nc-form-success {
+  /* input variables */
+  --nc-input-box-shadow-color: var(--nc-form-color-valid);
+  --nc-input-box-shadow-color-focus: var(--nc-form-color-valid);
+  --nc-input-border-color: var(--nc-form-color-valid);
+  --nc-input-color-placeholder: var(--nc-form-color-valid);
+
+  /* checkbox variables */
+  --nc-checkbox-current-color: var(--nc-form-color-valid);
+
+  /* radio variables */
+  --nc-radio-current-color: var(--nc-form-color-valid);
+}
+
+.nc-form-warning {
+  /* input variables */
+  --nc-input-box-shadow-color: var(--nc-form-color-warning);
+  --nc-input-box-shadow-color-focus: var(--nc-form-color-warning);
+  --nc-input-border-color: var(--nc-form-color-warning);
+  --nc-input-color-placeholder: var(--nc-form-color-warning);
+
+  /* checkbox variables */
+  --nc-checkbox-current-color: var(--nc-form-color-warning);
+
+  /* radio variables */
+  --nc-radio-current-color: var(--nc-form-color-warning);
+}

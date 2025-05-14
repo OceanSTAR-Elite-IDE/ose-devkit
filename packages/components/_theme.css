@@ -1,0 +1,47 @@
+/* @layer base { */
+:root {
+  --nc-primary-color: theme('colors.blue.600');
+  --nc-primary-color-rgb: 37 99 235;
+  --nc-primary-color-light: theme('colors.blue.400');
+  --nc-primary-color-lightest: theme('colors.blue.100');
+  --nc-primary-color-dark: theme('colors.blue.800');
+  --nc-primary-color-darkness: theme('colors.blue.900');
+
+  --nc-secondary-color: theme('colors.slate.600');
+  --nc-secondary-color-rgb: 71 85 105;
+  --nc-secondary-color-light: theme('colors.slate.400');
+  --nc-secondary-color-lightest: theme('colors.slate.100');
+  --nc-secondary-color-dark: theme('colors.slate.800');
+  --nc-secondary-color-darkness: theme('colors.slate.900');
+
+  --nc-success-color: theme('colors.teal.600');
+  --nc-success-color-rgb: 22 163 74;
+  --nc-success-color-light: theme('colors.teal.400');
+  --nc-success-color-lightest: theme('colors.teal.100');
+  --nc-success-color-dark: theme('colors.teal.800');
+  --nc-success-color-darkness: theme('colors.teal.900');
+
+  --nc-danger-color: theme('colors.rose.600');
+  --nc-danger-color-rgb: 225 29 72;
+  --nc-danger-color-light: theme('colors.rose.400');
+  --nc-danger-color-lightest: theme('colors.rose.100');
+  --nc-danger-color-dark: theme('colors.rose.800');
+  --nc-danger-color-darkness: theme('colors.rose.900');
+
+  --nc-warning-color: theme('colors.orange.600');
+  --nc-warning-color-rgb: 234 88 12;
+  --nc-warning-color-light: theme('colors.orange.400');
+  --nc-warning-color-lightest: theme('colors.orange.100');
+  --nc-warning-color-dark: theme('colors.orange.800');
+  --nc-warning-color-darkness: theme('colors.orange.900');
+
+  --nc-global-border-radius: theme('borderRadius.DEFAULT');
+
+  --nc-form-padding-x: theme('padding.3');
+  --nc-form-padding-y: theme('padding[1.5]');
+  --nc-form-spacing: theme('margin[1.5]');
+
+  --nc-form-color-invalid: var(--nc-danger-color);
+  --nc-form-color-valid: var(--nc-success-color);
+  --nc-form-color-warning: var(--nc-warning-color);
+}

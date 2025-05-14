@@ -1,0 +1,40 @@
+:root {
+  --nc-skeleton-color: theme('colors.gray.100');
+  --nc-skeleton-color-blink: theme('colors.gray.300');
+  --nc-skeleton-radius: var(--nc-global-border-radius);
+  --nc-skeleton-default-size: 1.5rem;
+  --nc-skeleton-spacing: 0.5rem;
+}
+
+@keyframes nc-skeleton-blinking {
+  0%,
+  100% {
+    background: var(--nc-skeleton-current-color);
+  }
+  50% {
+    background: var(--nc-skeleton-current-color-blink);
+  }
+}
+
+.nc-skeleton {
+  --nc-skeleton-current-color: var(--nc-skeleton-color);
+  --nc-skeleton-current-color-blink: var(--nc-skeleton-color-blink);
+  --nc-skeleton-current-size: var(--nc-skeleton-default-size);
+
+  animation: nc-skeleton-blinking 1s infinite ease-in-out both;
+  border-radius: var(--nc-skeleton-radius);
+
+  display: block;
+  height: var(--nc-skeleton-current-size);
+  max-width: 100%;
+}
+
+.nc-skeleton.nc-skeleton-inline {
+  min-width: var(--nc-skeleton-current-size);
+  display: inline-block;
+}
+
+.nc-skeleton.nc-skeleton-circle {
+  width: var(--nc-skeleton-current-size);
+  border-radius: 50%;
+}

@@ -1,0 +1,88 @@
+:root {
+  --nc-button-color-default: var(--nc-primary-color);
+  --nc-button-text-color: theme('textColor.white');
+  --nc-button-padding: var(--nc-form-padding-y) var(--nc-form-padding-x);
+  --nc-button-border-width: 0;
+  --nc-button-border-radius: var(--nc-global-border-radius);
+  --nc-button-border: var(--nc-button-border-width) solid var(--nc-button-border-color);
+  --nc-button-box-shadow-offset-width: 1px;
+}
+
+.nc-button {
+  --nc-button-current-color: var(--nc-button-color-default);
+  --nc-button-box-shadow:
+    inset 0 0 0 0px var(--nc-button-current-color),
+    inset 0 0 0 var(--nc-input-box-shadow-offset-width) var(--nc-button-current-color);
+}
+
+.nc-button,
+.nc-button[type='submit'],
+.nc-button[type='button'],
+.nc-button[type='reset'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nc-button-padding);
+  border: var(--nc-button-border);
+  border-radius: var(--nc-button-border-radius);
+  background-color: var(--nc-button-current-color);
+  color: var(--nc-button-text-color);
+  box-shadow: var(--nc-button-box-shadow);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.nc-button:disabled,
+.nc-button[type='submit']:disabled,
+.nc-button[type='button']:disabled,
+.nc-button[type='reset']:disabled {
+  cursor: no-drop;
+  background-color: theme('colors.gray.100') !important;
+  /* border-color: ; */
+  --nc-button-box-shadow:
+    inset 0 0 0 0px theme('colors.gray.200'),
+    inset 0 0 0 var(--nc-input-box-shadow-offset-width) theme('colors.gray.200');
+  color: theme('colors.gray.500');
+  /* box-shadow: unset; */
+}
+
+.nc-button:not(:disabled):hover {
+  color: var(--nc-button-text-color);
+}
+
+.nc-button.nc-button-reverse {
+  background-color: transparent;
+  color: var(--nc-button-current-color);
+}
+
+.nc-button.nc-button-reverse:not(:disabled):hover {
+  color: var(--nc-button-text-color);
+  box-shadow: var(--nc-button-box-shadow);
+  background-color: var(--nc-button-current-color);
+}
+
+.nc-button.nc-button-expanded {
+  display: flex;
+  width: 100%;
+}
+
+.nc-button.nc-button-danger {
+  --nc-button-current-color: var(--nc-danger-color);
+}
+
+.nc-button.nc-button-success {
+  --nc-button-current-color: var(--nc-success-color);
+}
+
+.nc-button.nc-button-warning {
+  --nc-button-current-color: var(--nc-warning-color);
+}
+
+.nc-button.nc-button-primary {
+  --nc-button-current-color: var(--nc-primary-color);
+}
+
+.nc-button.nc-button-secondary {
+  --nc-button-current-color: var(--nc-secondary-color);
+}

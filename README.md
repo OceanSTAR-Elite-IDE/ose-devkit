@@ -1,59 +1,42 @@
-# AngularLatest
+# GitLab to GitHub Issue Migration Tool
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+这个工具可以帮助你将 GitLab 项目中的 issues 迁移到 GitHub 仓库。
 
-## Development server
+## 前提条件
 
-To start a local development server, run:
+1. Node.js 环境
+2. GitLab 个人访问令牌 (Personal Access Token)
+3. GitHub 个人访问令牌 (Personal Access Token)
 
+## 安装
+
+1. 克隆此仓库
+2. 安装依赖：
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 配置
 
-## Code scaffolding
+1. 复制 `.env.example` 文件为 `.env`
+2. 在 `.env` 文件中填入以下信息：
+   - GitLab 个人访问令牌
+   - GitLab 项目 ID
+   - GitHub 个人访问令牌
+   - GitHub 用户名
+   - GitHub 仓库名
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 使用方法
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+运行以下命令开始迁移：
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 注意事项
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- 确保你有足够的权限访问源 GitLab 项目和目标 GitHub 仓库
+- 迁移过程中会保留 issue 的标题、描述和标签
+- 为了避免 API 限制，每个 issue 创建之间会有 1 秒的延迟
+- 建议在迁移前备份重要数据

@@ -1,0 +1,29 @@
+
+<nc-pseudo-input
+  [style.margin.px]="0"
+  [attr.tabindex]="tabIndex"
+  [value]="_displayValue"
+  [placeholder]="placeholder"
+  [disabled]="disabled">
+  <nc-pseudo-caret *ngIf="!_displayValue || disabled">
+    <span [class]="icons.caret"></span>
+  </nc-pseudo-caret>
+  <nc-pseudo-caret class="nc-datepicker-clear" (click)="_onClear($event)" *ngIf="_displayValue && !disabled">
+    <span [class]="icons.clear"></span>
+  </nc-pseudo-caret>
+</nc-pseudo-input>
+
+<nc-overlay
+  overlayClass="nc-datepicker-overlay"
+  [origin]="origin"
+  [positionPairs]="_positionPairs"
+  arrow
+  (afterOpen)="_onAfterOpen($event)"
+  (afterClosed)="_onAfterClosed($event)"
+  (beforeOpen)="_onBeforeOpen($event)"
+  (beforeClosed)="_onBeforeClosed($event)"
+  (positionChange)="_onPositionChange($event)">
+  <div class="nc-datepicker-pane">
+    <ng-template [cdkPortalOutlet]="_portal"></ng-template>
+  </div>
+</nc-overlay>

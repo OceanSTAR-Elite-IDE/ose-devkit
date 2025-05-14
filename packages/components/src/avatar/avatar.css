@@ -1,0 +1,63 @@
+:root {
+  --nc-avatar-small: theme('spacing.8'); /* 32px */
+  --nc-avatar-medium: theme('spacing.16'); /* 64px */
+  --nc-avatar-large: theme('spacing.32'); /* 128px */
+  --nc-avatar-radius: theme('borderRadius.md');
+  --nc-avatar-border: 1px solid theme('colors.gray.300');
+  --nc-avatar-border-focus: 1px solid theme('colors.blue.500');
+  --nc-avatar-shadow: theme('boxShadow.sm');
+  --nc-avatar-shadow-focus: theme('boxShadow.md');
+  --nc-avatar-transition-duration: 0.25s;
+}
+
+.nc-avatar {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--nc-avatar-radius);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  border: var(--nc-avatar-border);
+  box-shadow: var(--nc-avatar-shadow);
+  transition:
+    border var(--nc-avatar-transition-duration),
+    box-shadow var(--nc-avatar-transition-duration);
+  cursor: pointer;
+  height: var(--nc-avatar-medium);
+  width: var(--nc-avatar-medium);
+}
+
+.nc-avatar:hover {
+  border: var(--nc-avatar-border-focus);
+  box-shadow: var(--nc-avatar-shadow-focus);
+}
+
+.nc-avatar img {
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nc-avatar.small {
+  height: var(--nc-avatar-small);
+  width: var(--nc-avatar-small);
+}
+
+.nc-avatar.medium {
+  height: var(--nc-avatar-medium);
+  width: var(--nc-avatar-medium);
+}
+
+.nc-avatar.large {
+  height: var(--nc-avatar-large);
+  width: var(--nc-avatar-large);
+}
+
+.nc-avatar.circle {
+  border-radius: 50%;
+}

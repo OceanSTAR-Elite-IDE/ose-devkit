@@ -1,0 +1,16 @@
+<div class="nc-checkbox-input-container">
+  <input [id]="id"
+    class="nc-checkbox-input"
+    [class.indeterminated]="indeterminated"
+    type="checkbox"
+    [tabIndex]="tabIndex"
+    [checked]="checked"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    (change)="_onInteractionEvent($event)"
+    (click)="_onInputClick($event)">
+</div>
+<label class="nc-checkbox-label" [for]="id">
+  <ng-content></ng-content>
+</label>
+

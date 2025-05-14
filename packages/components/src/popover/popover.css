@@ -1,0 +1,22 @@
+:root {
+  --nc-popover-padding: theme('padding.2');
+  --nc-popover-background: theme('colors.white');
+  --nc-popover-arrow-gap: theme('padding.2');
+}
+
+.nc-popover {
+
+}
+
+.nc-popover .nc-popover-title {
+  padding: var(--nc-popover-padding);
+  border-bottom: var(--nc-overlay-border);
+}
+.nc-popover .nc-popover-pane {
+  padding: var(--nc-popover-padding);
+}
+
+.nc-overlay-container.nc-popover-overlay {
+  --nc-overlay-current-background: var(--nc-popover-background);
+  --nc-overlay-current-arrow-gap: var(--nc-popover-arrow-gap);
+}

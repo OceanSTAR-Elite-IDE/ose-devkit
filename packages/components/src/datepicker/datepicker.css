@@ -1,0 +1,210 @@
+:root {
+  --nc-datepicker-default-color: var(--nc-primary-color-rgb);
+  --nc-datepicker-background-alpha: 0.1;
+  --nc-datepicker-background-selected: rgb(var(--nc-datepicker-default-color));
+  --nc-datepicker-background-range: rgb(var(--nc-datepicker-default-color) / var(--nc-datepicker-background-alpha));
+  --nc-datepicker-background-preview: rgb(var(--nc-datepicker-default-color) / var(--nc-datepicker-background-alpha));
+  --nc-datepicker-background-active: rgb(var(--nc-datepicker-default-color) / var(--nc-datepicker-background-alpha));
+
+  --nc-datepicker-block-width: 2.5em;
+  --nc-datepicker-block-padding: theme('padding.1') theme('padding[1.5]');
+
+  --nc-datepicker-text-color: theme('colors.black');
+  --nc-datepicker-text-color-selected: theme('colors.white');
+  --nc-datepicker-text-color-hover: rgb(var(--nc-datepicker-default-color));
+  --nc-datepicker-text-color-disabled: theme('colors.gray.300');
+  --nc-datepicker-text-color-active: rgb(var(--nc-datepicker-default-color));
+
+  --nc-datepicker-font-size: theme('fontSize.xs');
+
+  --nc-datepicker-pane-radius: var(--nc-global-border-radius);
+  --nc-datepicker-pane-padding: theme('padding[1.5]');
+  --nc-datepicker-pane-background: theme('colors.white');
+
+  --nc-datepicker-calendar-padding: theme('padding[1.5]');
+}
+
+.nc-datepicker {
+  position: relative;
+  display: block;
+}
+
+.nc-datepicker-calendar {
+  display: inline-block;
+  padding: var(--nc-datepicker-calendar-padding);
+}
+
+.nc-datepicker-calendar .nc-calendar-month td,
+.nc-datepicker-calendar .nc-calendar-month th {
+  width: 14.28571428%;
+}
+
+.nc-datepicker-calendar .nc-calendar-year td,
+.nc-datepicker-calendar .nc-calendar-year th {
+  width: 33.333333333%;
+  height: 3.7em;
+}
+
+.nc-datepicker-calendar .nc-calendar-year .nc-calendar-cell-content {
+  left: 10% !important;
+  top: 10% !important;
+  width: 80% !important;
+  height: 80% !important;
+}
+
+.nc-datepicker-calendar .nc-calendar-multi-year td,
+.nc-datepicker-calendar .nc-calendar-multi-year th {
+  width: 25%;
+  height: 3.7em;
+}
+
+.nc-datepicker-calendar .nc-calendar-multi-year .nc-calendar-cell-content {
+  left: 10% !important;
+  top: 15% !important;
+  width: 80% !important;
+  height: 70% !important;
+}
+
+.nc-datepicker-calendar table {
+  width: 100%;
+  font-size: var(--nc-datepicker-font-size);
+  margin: 0;
+  user-select: none;
+  border-collapse: separate;
+}
+.nc-datepicker-calendar table > tbody,
+.nc-datepicker-calendar table > tfoot,
+.nc-datepicker-calendar table > thead {
+  border: 0px;
+  background: transparent !important;
+}
+.nc-datepicker-calendar table > tfoot button {
+  margin-bottom: 0px;
+}
+
+tr:nth-child(even),
+tr:nth-child(odd) {
+  background: transparent !important;
+}
+
+.nc-datepicker-calendar table td,
+.nc-datepicker-calendar table th {
+  text-align: center;
+  width: var(--nc-datepicker-block-width);
+  height: 2em;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition:
+    color 0.3s,
+    background 0.15s;
+  padding: rem-calc(4 0);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.nc-datepicker-calendar table td.nc-calendar-cell-disabled span,
+.nc-datepicker-calendar table th.nc-calendar-cell-disabled span {
+  color: var(--nc-datepicker-text-color-disabled);
+  cursor: not-allowed;
+}
+
+.nc-datepicker-calendar table td:hover,
+.nc-datepicker-calendar table th:hover {
+  outline: none;
+}
+
+.nc-datepicker-calendar table td[colspan='3'],
+.nc-datepicker-calendar table th[colspan='3'] {
+  width: calc(var(--nc-datepicker-block-width) * 3);
+}
+
+.nc-datepicker-calendar table td[colspan='3'] span,
+.nc-datepicker-calendar table th[colspan='3'] span {
+  padding: 0 2px;
+}
+
+/* .nc-datepicker-calendar .nc-calendar-header {
+} */
+
+/* .nc-datepicker-calendar .nc-calendar-body {
+
+} */
+
+.nc-calendar-cell {
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: var(--nc-datepicker-block-padding);
+}
+
+.nc-calendar-cell:hover {
+  color: var(--nc-datepicker-text-color-hover);
+}
+
+.nc-calendar-cell-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border-radius: var(--nc-datepicker-pane-radius);
+}
+
+.nc-calendar-body-cell-preview {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  transition: background-color 0.15s;
+  border-radius: var(--nc-datepicker-pane-radius);
+}
+
+.nc-calendar-cell-today {
+  color: var(--nc-datepicker-text-color-active);
+  background-color: var(--nc-datepicker-background-active);
+}
+
+.nc-calendar-cell-selected {
+  color: var(--nc-datepicker-text-color-selected) !important;
+  background-color: var(--nc-datepicker-background-selected) !important;
+}
+
+.nc-calendar-cell-selected:hover {
+  /*  */
+  background-color: var(--nc-datepicker-background-selected, 5%);
+}
+
+.nc-calendar-cell.nc-calendar-cell-preview-start .nc-calendar-body-cell-preview,
+.nc-calendar-cell.nc-calendar-cell-preview-end .nc-calendar-body-cell-preview,
+.nc-calendar-cell.nc-calendar-cell-in-preview .nc-calendar-body-cell-preview {
+  background-color: var(--nc-datepicker-background-preview);
+}
+
+.nc-calendar-cell.nc-calendar-cell-range-start .nc-calendar-body-cell-preview,
+.nc-calendar-cell.nc-calendar-cell-range-end .nc-calendar-body-cell-preview,
+.nc-calendar-cell.nc-calendar-cell-in-range .nc-calendar-body-cell-preview {
+  background-color: var(--nc-datepicker-background-range);
+}
+
+.nc-datepicker-pane {
+  position: relative;
+  border-radius: var(--nc-datepicker-pane-radius);
+  padding: var(--nc-datepicker-pane-padding);
+  line-height: 1.5;
+}
+
+.nc-overlay-container.nc-datepicker-overlay {
+  --nt-overlay-container-background: var(--nc-datepicker-pane-background);
+}
+
+.nc-datepicker-clear {
+  pointer-events: auto !important;
+  cursor: pointer;
+}

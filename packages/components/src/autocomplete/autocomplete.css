@@ -1,0 +1,45 @@
+:root {
+  /* --nt-autocomplete-pane-min-width: 100px; */
+  --nt-autocomplete-pane-min-width: 256px;
+  --nt-autocomplete-pane-background: theme('colors.white');
+  --nt-autocomplete-pane-radius: var(--nc-global-border-radius);
+  --nt-autocomplete-pane-padding: theme('padding.2');
+
+  --nt-autocomplete-color-empty: theme('colors.gray.500');
+  --nc-autocomplete-pane-arrow-gap: theme('padding.2');
+}
+
+
+.nc-autocomplete {
+  position: relative;
+  display: block;
+  margin: 0 0 var(--nc-form-spacing);
+}
+
+.nc-autocomplete-pane {
+  min-width: var(--nc-autocomplete-pane-min-width);
+  border-radius: var(--nt-autocomplete-pane-radius);
+  overflow-y: scroll;
+  width: 100%;
+  background-color: var(--nt-autocomplete-pane-background);
+  box-shadow: var(--nc-overlay-current-box-shadow);
+  border: var(--nc-overlay-border);
+  transition: ease-in-out max-height .3s, ease-in-out margin .3s;
+}
+
+.nc-autocomplete-pane .filter-empty {
+  padding: var(--nc-option-padding);
+  color: var(--nt-autocomplete-color-empty);
+  cursor: no-drop;
+}
+
+.nc-autocomplete-pane.nc-autocomplete-visible {
+  max-height: 1000px !important;
+  margin: 2px 0 !important;
+}
+
+.nc-autocomplete-pane.nc-autocomplete-hidden {
+  max-height: 0px !important;
+  visibility: hidden !important;
+  margin: 0px !important;
+}

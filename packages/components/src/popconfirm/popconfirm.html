@@ -1,0 +1,20 @@
+<ng-content></ng-content>
+<nc-overlay
+  [origin]="origin"
+  [position]="position"
+  (afterClosed)="_afterClosed($event)"
+  (afterOpen)="_afterOpen($event)"
+  (beforeClosed)="_beforeClosed($event)"
+  (beforeOpen)="_beforeOpen($event)"
+  (positionChange)="_positionChange($event)"
+  arrow
+  overlayClass="nc-popconfirm-overlay">
+  <div class="nc-popconfirm">
+    <div *ngIf="template" class="nc-popconfirm-title"><ng-container *ngTemplateOutlet="template"></ng-container></div>
+    <div *ngIf="!template" class="nc-popconfirm-title" [innerHtml]="title"></div>
+    <div class="nc-popconfirm-action">
+      <button (click)="_closeOverlay($event, false)" color="secondary" nt-button size="tiny">{{cancelText}}</button>
+      <button (click)="_closeOverlay($event, true)" nt-button size="tiny">{{confirmText}}</button>
+    </div>
+  </div>
+</nc-overlay>

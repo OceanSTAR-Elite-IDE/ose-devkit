@@ -1,0 +1,42 @@
+:root {
+  --nc-select-pane-min-width:       100px;
+  --nc-select-pane-max-height:      256px;
+  --nc-select-radius:               var(--nc-global-border-radius);
+  --nc-select-pane-background:      theme('colors.white');
+  --nc-select-pane-color-empty:     theme('colors.gray.500');
+}
+
+.nc-select {
+  position: relative;
+  display: block;
+}
+
+.nc-select-pane {
+  min-width: var(--nc-select-pane-max-width);
+  max-height: var(--nc-select-pane-max-height);
+  border-radius: var(--nc-select-radius);
+  overflow-y: auto;
+
+  /* 目前存在 max-height 的初始值为0时 OverlayPosition 判断过早导致窗口边界超出浏览器的现象，在解决这个问题之前暂时注释此代码 */
+
+  /* max-height: 0px; */
+  /* transition: max-height .3s; */
+  /* &.folded { */
+}
+
+.nc-select-pane .filter-empty {
+  padding: var(--nc-option-padding);
+  color: var(--nc-select-pane-color-empty);
+  cursor: no-drop;
+  /* text-align: center; */
+}
+
+.nc-overlay-container.nc-select-overlay {
+  --nc-overlay-container-background: var(--nc-select-pane-background);
+  --nc-overlay-current-arrow-gap: theme('padding.1');
+}
+
+.nc-select-clear {
+  pointer-events: auto !important;
+  cursor: pointer;
+}

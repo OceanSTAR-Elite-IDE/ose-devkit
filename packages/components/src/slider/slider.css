@@ -1,0 +1,171 @@
+:root {
+  --nc-slider-width-vertical: 3px;
+  --nc-slider-transition: all 0.2s ease-in-out;
+  --nc-slider-height: 3px;
+  --nc-slider-background: theme('colors.gray.300');
+  --nc-slider-fill-background: theme('colors.blue.500');
+  --nc-slider-handle-height: theme('spacing.4');
+  --nc-slider-handle-width: theme('spacing.4');
+  --nc-slider-handle-background: theme('colors.blue.500');
+  --nc-slider-handle-radius: 50%;
+  --nc-slider-stepmark-height: theme('spacing.3');
+  --nc-slider-stepmark-width: theme('spacing.3');
+  --nc-slider-opacity-disabled: 0.25;
+  --nc-slider-radius: theme('borderRadius.md');
+  --nc-slider-tooltip-background: theme('colors.black');
+  --nc-slider-tooltip-padding: theme('spacing.1') theme('spacing.2');
+  --nc-slider-tooltip-color: theme('colors.white');
+  --nc-slider-tooltip-font-size: theme('fontSize.xs');
+  --nc-slider-tooltip-arrow-gap: theme('spacing.3');
+}
+
+.nc-slider {
+  position: relative;
+  height: var(--nc-slider-height);
+  margin-top: theme('spacing.5');
+  margin-bottom: theme('spacing.9');
+  display: block;
+  border-radius: var(--nc-slider-radius);
+  background-color: var(--nc-slider-background);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.nc-slider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  max-width: 100%;
+  height: var(--nc-slider-height);
+  border-radius: var(--nc-slider-radius);
+  background-color: var(--nc-slider-fill-background);
+  transition: var(--nc-slider-transition);
+}
+
+.nc-slider-handle {
+  left: 0;
+  z-index: 1;
+  position: absolute;
+  display: inline-block;
+  width: var(--nc-slider-handle-width);
+  height: var(--nc-slider-handle-height);
+  cursor: grabbing;
+  border-radius: var(--nc-slider-handle-radius);
+  background-color: var(--nc-slider-handle-background);
+  transition: var(--nc-slider-transition);
+  touch-action: manipulation;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+
+.nc-slider-handle:hover {
+  background-color: color-mix(in srgb, var(--nc-slider-handle-background) 85%, black);
+  box-shadow: theme('boxShadow.md');
+}
+
+.nc-slider-stepmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.nc-slider-stepmark span {
+  position: absolute;
+  display: inline-block;
+  font-size: var(--nc-slider-tooltip-font-size);
+  width: var(--nc-slider-height);
+  height: var(--nc-slider-height);
+  transform: translate(-50%, 0%);
+  background-color: theme('colors.white');
+  border-radius: 50%;
+  white-space: nowrap;
+  box-shadow: 0px 0px 0px 2px var(--nc-slider-fill-background);
+  transition: background-color 0.2s linear;
+}
+
+.nc-slider-stepmark span.is-passed,
+.nc-slider-stepmark span:hover {
+  background-color: var(--nc-slider-fill-background);
+}
+
+.nc-slider.disabled {
+  opacity: var(--nc-slider-opacity-disabled);
+  cursor: not-allowed;
+}
+
+.nc-slider.vertical {
+  display: inline-block;
+  width: var(--nc-slider-width-vertical);
+  height: theme('spacing.32');
+  margin: 0 theme('spacing.5');
+  transform: scale(1, -1);
+}
+
+.nc-slider.vertical .nc-slider-fill {
+  top: 0;
+  width: var(--nc-slider-width-vertical);
+  max-height: 100%;
+}
+
+.nc-slider.vertical .nc-slider-handle {
+  transform: translate(-50%, -50%);
+}
+
+.nc-slider.vertical .nc-slider-stepmark {
+  height: 100%;
+}
+
+.nc-slider.vertical .nc-slider-stepmark span {
+  transform: translate(0%, -50%) !important;
+}
+
+.nc-slider.invert .nc-slider-fill {
+  left: unset;
+  right: 0;
+}
+
+.nc-slider.invert .nc-slider-handle {
+  left: unset;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.nc-slider.invert .nc-slider-stepmark {
+  left: unset;
+  right: 0;
+}
+
+.nc-slider.invert .nc-slider-stepmark span {
+  transform: translate(50%, 0%);
+}
+
+.nc-slider.invert.vertical {
+  transform: scale(1, 1);
+}
+
+.nc-slider.invert.vertical .nc-slider-handle {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.nc-slider.is-sliding .nc-slider-handle,
+.nc-slider.is-sliding .nc-slider-fill {
+  transition-duration: 0s;
+}
+
+.nc-overlay-container.nc-slider-tooltip-overlay {
+  --nc-overlay-current-background: var(--nc-slider-tooltip-background);
+  --nc-overlay-current-arrow-gap: var(--nc-slider-tooltip-arrow-gap);
+}
+
+.nc-slider-tooltip {
+  color: var(--nc-slider-tooltip-color);
+  padding: var(--nc-slider-tooltip-padding);
+  font-size: var(--nc-slider-tooltip-font-size);
+}

@@ -1,0 +1,40 @@
+:root {
+  --nc-popconfirm-width: 180px;
+  --nc-popconfirm-padding: theme('padding.2');
+  --nc-popconfirm-radius: var(--nc-global-radius);
+  --nc-popconfirm-background: theme('colors.white');
+
+  /* --nc-popconfirm-button-margin: 0 0 0 .4em; */
+  --nc-popconfirm-margin: theme('padding.1');
+  --nc-popconfirm-arrow-gap: theme('padding.2');
+}
+
+.nc-popconfirm-pane {
+  width: var(--nc-popconfirm-width);
+  padding: var(--nc-popconfirm-padding);
+  border-radius: var(--nc-popconfirm-radius);
+  display: block;
+}
+
+
+.nc-popconfirm {
+
+}
+
+.nc-popconfirm .nc-popconfirm-title {
+  margin-bottom: --nc-popconfirm-margin;
+}
+
+.nc-popconfirm  .nc-popconfirm-action {
+  text-align: right;
+}
+
+.nc-popconfirm  .nc-popconfirm-action .button {
+  /* margin: var(--nc-popconfirm-button-margin); */
+}
+
+.nc-overlay-container.nc-popconfirm-overlay {
+  --nc-overlay-current-background: var(--nc-popconfirm-background);
+  --nc-overlay-current-arrow-gap: var(--nc-popconfirm-arrow-gap);
+}
+

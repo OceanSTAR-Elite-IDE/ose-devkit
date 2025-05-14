@@ -1,0 +1,56 @@
+:root {
+  --nc-option-padding: theme('padding[0.5]') theme('padding.1');
+  --nc-option-font-size: theme('fontSize.base');
+
+  --nc-option-color: theme('colors.black');
+  --nc-option-color-hover: theme('colors.black');
+  --nc-option-color-selected: theme('colors.white');
+  --nc-option-color-disabled: theme('colors.gray.500');
+
+  --nc-option-background-default: theme('colors.white');
+  --nc-option-background-disabled-default: $white;
+  --nc-option-background-hovered-default: rgba(var(--nc-primary-color-rgb)  / .1);
+  --nc-option-background-selected-default: var(--nc-primary-color);
+}
+
+.nc-option {
+  --nc-option-current-color: var(--nc-option-color);
+  --nc-option-current-color-hover: var(--nc-option-color-hover);
+  --nc-option-current-color-selected: var(--nc-option-color-selected);
+  --nc-option-current-color-disabled: var(--nc-option-color-disabled);
+
+  --nc-option-current-background: var(--nc-option-background-default);
+  --nc-option-current-background-hovered: var(--nc-option-background-hovered-default);
+  --nc-option-current-background-selected: var(--nc-option-background-selected-default);
+  --nc-option-current-background-disabled: var(--nc-option-background-disabled-default);
+
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--nc-option-font-size);
+  padding: var(--nc-option-padding);
+  color: var(--nc-option-current-color);
+  background: var(--nc-option-current-background);
+}
+.nc-option:hover,
+.nc-option.nc-option-active {
+  color: var(--nc-option-current-color-hover);
+  background-color: var(--nc-option-current-background-hovered);
+}
+
+.nc-option.nc-option-selected {
+  color: var(--nc-option-current-color-selected);
+  background-color: var(--nc-option-current-background-selected);
+}
+
+.nc-option.nc-option-disabled {
+  color: var(--nc-option-current-color-disabled);
+  background-color: var(--nc-option-current-background-disabled);
+  cursor: no-drop;
+}
+
+.nc-option.nc-option-hidden {
+  display: none;
+}
+

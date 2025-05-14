@@ -1,0 +1,24 @@
+<span
+  class="nt-slider-handle"
+  [ngStyle]="_trackHandleStyles"
+  (mouseenter)="_overlay.markOpen()"
+  (mouseleave)="_overlay.markClose()"
+  #sliderHandle>
+</span>
+<span class="nt-slider-fill" [ngStyle]="_trackFillStyles"></span>
+<div *ngIf="stepmark" class="nt-slider-stepmark">
+  <span
+    *ngFor="let mark of _stepmarkValues"
+    [class.is-passed]="!!value && value >= mark.value"
+    [ngStyle]="_trackStepmarkStyles(mark)">
+  </span>
+</div>
+<nc-overlay
+  [origin]="_origin"
+  [positionPairs]="_trackTootipPosition"
+  (overlayEnter)="_overlay.markOpen()"
+  (overlayLeave)="_overlay.markClose()"
+  arrow
+  overlayClass="nt-slider-tooltip-overlay">
+  <div class="nt-slider-tooltip">{{ displayValue }}</div>
+</nc-overlay>

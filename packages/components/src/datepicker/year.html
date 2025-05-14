@@ -1,0 +1,13 @@
+<table class="nc-calendar-table">
+  <tbody
+    [activeCell]="_dateAdapter.getMonth(activeDate)"
+    [cellAspectRatio]="3 / 7"
+    [endValue]="_selectedMonth!"
+    [label]="_yearLabel"
+    [numCols]="3"
+    [rows]="_months"
+    [startValue]="_selectedMonth!"
+    [todayValue]="_todayMonth!"
+    (selectedValueChange)="_monthSelected($event)"
+    nc-calendar-body></tbody>
+</table>

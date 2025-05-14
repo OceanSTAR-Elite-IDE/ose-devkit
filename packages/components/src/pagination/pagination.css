@@ -1,0 +1,60 @@
+:root {
+
+  --nc-pagination-color-item: theme('colors.gray.900');
+  --nc-pagination-color-ellipsis: theme('colors.gray.700');
+  --nc-pagination-color-direction: theme('colors.gray.400');
+  --nc-pagination-color-current: theme('colors.white');
+
+  --nc-pagination-font-size: theme('fontSize.xs');
+
+  --nc-pagination-item-padding: theme('padding[1.5]') theme('padding.3');
+  --nc-pagination-item-bg-color-hover: theme('colors.gray.50');
+  --nc-pagination-item-bg-color-current: var(--nc-primary-color);
+}
+
+.nc-pagination {
+  display: inline-flex;
+  isolation: isolate;
+  font-size: var(--nc-pagination-font-size);
+}
+
+.nc-pagination-previous,
+.nc-pagination-next,
+.nc-pagination-item,
+.nc-pagination-ellipsis {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--nc-pagination-item-padding);
+}
+
+.nc-pagination-item {
+  color: var(--nc-pagination-color-item);
+}
+
+.nc-pagination-item.nc-pagination-current {
+  color: var(--nc-pagination-color-current) !important;
+  background-color: var(--nc-pagination-item-bg-color-current) !important;
+  z-index: 10;
+}
+
+.nc-pagination-previous,
+.nc-pagination-next {
+  color: var(--nc-pagination-color-direction);
+}
+
+.nc-pagination-ellipsis {
+  color: var(--nc-pagination-color-ellipsis);
+}
+
+.nc-pagination-previous:focus,
+.nc-pagination-next:focus,
+.nc-pagination-item:focus {
+  z-index: 20;
+}
+
+.nc-pagination-previous:hover,
+.nc-pagination-next:hover,
+.nc-pagination-item:hover {
+  background-color: var(--nc-pagination-item-bg-color-hover);
+}

@@ -1,0 +1,83 @@
+:root {
+  --nc-switch-height: theme('spacing.6');
+  --nc-switch-width: calc(var(--nc-switch-height) * 1.8);
+  --nc-switch-handle-size: calc(var(--nc-switch-height) - theme('spacing.1'));
+  --nc-switch-handle-offset: calc((var(--nc-switch-height) - var(--nc-switch-handle-size)) / 2);
+  --nc-switch-padding: theme('spacing.1');
+  --nc-switch-border-radius: calc(var(--nc-switch-height) / 2);
+  --nc-switch-background: theme('colors.gray.300');
+  --nc-switch-background-checked: theme('colors.blue.500');
+  --nc-switch-handle-background: theme('colors.white');
+  --nc-switch-transition-duration: 0.2s;
+  --nc-switch-transition-function: ease-in-out;
+  --nc-switch-disabled-opacity: 0.5;
+}
+
+.nc-switch {
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+
+.nc-switch-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.nc-switch-slider {
+  position: relative;
+  display: block;
+  width: var(--nc-switch-width);
+  height: var(--nc-switch-height);
+  background-color: var(--nc-switch-background);
+  border-radius: var(--nc-switch-border-radius);
+  transition: background-color var(--nc-switch-transition-duration) var(--nc-switch-transition-function);
+}
+
+.nc-switch-slider:before {
+  position: absolute;
+  content: '';
+  height: var(--nc-switch-handle-size);
+  width: var(--nc-switch-handle-size);
+  left: var(--nc-switch-handle-offset);
+  top: var(--nc-switch-handle-offset);
+  background-color: var(--nc-switch-handle-background);
+  border-radius: 50%;
+  transition: transform var(--nc-switch-transition-duration) var(--nc-switch-transition-function);
+}
+
+.nc-switch-input:checked + .nc-switch-slider {
+  background-color: var(--nc-switch-background-checked);
+}
+
+.nc-switch-input:checked + .nc-switch-slider:before {
+  transform: translateX(calc(var(--nc-switch-width) - var(--nc-switch-height)));
+}
+
+.nc-switch-input:focus + .nc-switch-slider {
+  box-shadow: 0 0 1px var(--nc-switch-background-checked);
+}
+
+.nc-switch-input:disabled + .nc-switch-slider,
+.nc-switch.disabled .nc-switch-slider {
+  opacity: var(--nc-switch-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.nc-switch-label {
+  display: inline-block;
+  margin-left: theme('spacing.2');
+  vertical-align: middle;
+}
+
+.nc-switch.small {
+  --nc-switch-height: theme('spacing.4');
+}
+
+.nc-switch.large {
+  --nc-switch-height: theme('spacing.8');
+}

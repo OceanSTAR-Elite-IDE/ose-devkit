@@ -1,0 +1,28 @@
+:root {
+  --nc-tooltip-background-color: theme('colors.slate.800');
+  --nc-tooltip-color: theme('colors.white');
+  --nc-tooltip-padding: theme('padding.2');
+  --nc-tooltip-max-width: 12rem;
+  --nc-tooltip-font-size: theme('fontSize.xs');
+  --nc-tooltip-radius: var(--nc-global-radius);
+  --nc-tooltip-arrow-gap: theme('padding.2');
+}
+
+.nc-tooltip-content {
+  max-width: var(--nc-tooltip-max-width);
+  padding: var(--nc-tooltip-padding);
+  border-radius: inherit;
+  background-color: var(--nc-tooltip-background-color);
+  font-size: var(--nc-tooltip-font-size);
+  color: var(--nc-tooltip-color);
+}
+
+.nc-tooltip-trigger {
+  display: inline-block;
+}
+
+.nc-overlay-container.nc-tootip-overlay  {
+  --nc-overlay-border: none;
+  --nc-overlay-current-background: var(--nc-tooltip-background-color);
+  --nc-overlay-current-arrow-gap: var(--nc-tooltip-arrow-gap);
+}

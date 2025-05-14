@@ -1,0 +1,26 @@
+<div class="nc-notifer-content">
+  <ng-container
+    *ngIf="notification.template; else predefinedNotification"
+    [ngTemplateOutlet]="notification.template"
+    [ngTemplateOutletContext]="{ notification: notification }">
+  </ng-container>
+
+  <ng-template #predefinedNotification>
+    <div *ngIf="_hasIcon" class="nc-notifier-icon">
+      <span [class]="icons[notification.type]"></span>
+    </div>
+    <div class="nc-notifier-message">{{ notification.message }}</div>
+    <button
+      *ngIf="config.behaviour.showDismissButton"
+      class="nc-notifier-button"
+      (click)="onClickDismiss()"
+      type="button">
+      <svg viewBox="0 0 14 14">
+        <path d="M4 4l6 6m0-6l-6 6" />
+      </svg>
+    </button>
+    <!-- <button class="nc-notifier-button" type="button" title="dismiss" *ngIf="config.behaviour.showDismissButton" (click)="onClickDismiss()">
+      <span [class]="icons.close"></span>
+    </button> -->
+  </ng-template>
+</div>

@@ -1,0 +1,16 @@
+<div class="nc-radio-input-container">
+  <input
+    class="nc-radio-input"
+    [checked]="checked"
+    [disabled]="disabled"
+    [id]="id"
+    [name]="name"
+    [tabIndex]="tabIndex"
+    (change)="_onInputChange($event)"
+    (click)="_onInputClick($event)"
+    type="radio" />
+  <div class="nc-radio-input"></div>
+</div>
+<label class="nc-radio-label" [for]="id">
+  <ng-content></ng-content>
+</label>

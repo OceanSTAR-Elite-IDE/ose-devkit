@@ -1,0 +1,32 @@
+<a
+  class="nc-pagination-previous rounded-l-md ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+  [class.disabled]="pageIndex === 1"
+  (click)="_previousPage()">
+  {{ previousLabel }}
+</a>
+
+<ng-container *ngFor="let item of pageItems">
+  <a
+    *ngIf="item === pageIndex"
+    class="nc-pagination-item ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+    [class.!ring-0]="item === pageIndex"
+    [class.nc-pagination-current]="item === pageIndex">
+    {{ item }}
+  </a>
+  <a
+    *ngIf="item !== pageIndex && item !== '...'"
+    class="nc-pagination-item ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+    (click)="_pageChange(item)">
+    {{ item }}
+  </a>
+  <span *ngIf="item === '...'" class="nc-pagination-ellipsis ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
+    {{ item }}
+  </span>
+</ng-container>
+
+<a
+  class="nc-pagination-next rounded-r-md ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+  [class.disabled]="pageIndex === totalPage"
+  (click)="_nextPage()">
+  {{ nextLabel }}
+</a>

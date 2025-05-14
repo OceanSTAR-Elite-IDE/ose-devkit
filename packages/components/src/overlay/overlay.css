@@ -1,0 +1,184 @@
+:root {
+  --nc-overlay-container-arrow: 8px;
+  --nc-overlay-container-arrow-offset: theme('padding[2.5]');
+  --nc-overlay-container-arrow-gap: theme('padding.2');
+  --nc-overlay-container-background: theme('colors.white');
+  --nc-overlay-radius: var(--nc-global-border-radius);
+  --nc-overlay-border-color: theme('colors.gray.200');
+  --nc-overlay-border-width: 1px;
+  --nc-overlay-border: var(--nc-overlay-border-width) solid var(--nc-overlay-border-color);
+  --nc-overlay-box-shadow: theme('boxShadow.md');
+}
+
+
+.nc-overlay-container > .nc-overlay-arrow {
+  z-index: -1;
+  position: absolute;
+  width: var(--nc-overlay-container-arrow);
+  height: var(--nc-overlay-container-arrow);
+  background-color: var(--nc-overlay-current-background);
+  box-shadow: var(--nc-overlay-current-box-shadow);
+  transform: rotate(-135deg);
+  outline: var(--nc-overlay-border);
+}
+
+.nc-overlay-container.start-bottom-start-top > .nc-overlay-arrow {
+  top: var(--nc-overlay-current-arrow-gap);
+  margin-top: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  left: var(--nc-overlay-container-arrow-offset);
+}
+.nc-overlay-container.center-bottom-center-top > .nc-overlay-arrow {
+  top: var(--nc-overlay-current-arrow-gap);
+  margin-top: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  left: 50%;
+  margin-left: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+}
+.nc-overlay-container.end-bottom-end-top > .nc-overlay-arrow {
+  top: var(--nc-overlay-current-arrow-gap);
+  margin-top: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  right: var(--nc-overlay-container-arrow-offset);
+}
+
+.nc-overlay-container.start-top-start-bottom > .nc-overlay-arrow {
+  bottom: var(--nc-overlay-current-arrow-gap);
+  margin-bottom: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  left: var(--nc-overlay-container-arrow-offset);
+}
+.nc-overlay-container.center-top-center-bottom > .nc-overlay-arrow {
+  bottom: var(--nc-overlay-current-arrow-gap);
+  margin-bottom: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  left: 50%;
+  margin-left: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+}
+.nc-overlay-container.end-top-end-bottom > .nc-overlay-arrow {
+  bottom: var(--nc-overlay-current-arrow-gap);
+  margin-bottom: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  right: var(--nc-overlay-container-arrow-offset);
+}
+
+.nc-overlay-container.end-top-start-top > .nc-overlay-arrow {
+  left: var(--nc-overlay-current-arrow-gap);
+  margin-left: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  top: var(--nc-overlay-container-arrow-offset);
+}
+.nc-overlay-container.end-center-start-center > .nc-overlay-arrow {
+  top: 50%;
+  left: var(--nc-overlay-current-arrow-gap);
+  margin-top: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  margin-left: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+}
+.nc-overlay-container.end-bottom-start-bottom > .nc-overlay-arrow {
+  left: var(--nc-overlay-current-arrow-gap);
+  margin-left: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  bottom: var(--nc-overlay-container-arrow-offset);
+}
+
+.nc-overlay-container.start-top-end-top > .nc-overlay-arrow {
+  right: var(--nc-overlay-current-arrow-gap);
+  margin-right: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  top: var(--nc-overlay-container-arrow-offset);
+}
+.nc-overlay-container.start-center-end-center > .nc-overlay-arrow {
+  top: 50%;
+  right: var(--nc-overlay-current-arrow-gap);
+  margin-top: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+  margin-right: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+
+}
+.nc-overlay-container.start-bottom-end-bottom > .nc-overlay-arrow {
+  right: var(--nc-overlay-current-arrow-gap);
+  bottom: var(--nc-overlay-container-arrow-offset);
+  margin-right: calc(-1 * var(--nc-overlay-container-arrow) / 2);
+}
+
+.nc-overlay-container {
+
+  display: block;
+  border-radius: var(--nc-overlay-radius);
+
+  --nc-overlay-current-background: var(--nc-overlay-container-background);
+  --nc-overlay-current-arrow-gap: var(--nc-overlay-container-arrow-gap);
+  --nc-overlay-current-box-shadow: var(--nc-overlay-box-shadow);
+}
+
+.nc-overlay-container.start-bottom-start-top,
+.nc-overlay-container.center-bottom-center-top,
+.nc-overlay-container.end-bottom-end-top {
+  padding-top: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.start-bottom-start-top .nc-overlay-shadow,
+.nc-overlay-container.center-bottom-center-top .nc-overlay-shadow,
+.nc-overlay-container.end-bottom-end-top .nc-overlay-shadow {
+  top: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.start-top-start-bottom,
+.nc-overlay-container.center-top-center-bottom,
+.nc-overlay-container.end-top-end-bottom {
+  padding-bottom: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.start-top-start-bottom .nc-overlay-shadow,
+.nc-overlay-container.center-top-center-bottom .nc-overlay-shadow,
+.nc-overlay-container.end-top-end-bottom .nc-overlay-shadow {
+  bottom: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.end-top-start-top,
+.nc-overlay-container.end-center-start-center,
+.nc-overlay-container.end-bottom-start-bottom {
+  padding-left: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.end-top-start-top .nc-overlay-shadow,
+.nc-overlay-container.end-center-start-center .nc-overlay-shadow,
+.nc-overlay-container.end-bottom-start-bottom .nc-overlay-shadow {
+  left: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.start-top-end-top,
+.nc-overlay-container.start-center-end-center,
+.nc-overlay-container.start-bottom-end-bottom {
+  padding-right: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container.start-top-end-top .nc-overlay-shadow,
+.nc-overlay-container.start-center-end-center .nc-overlay-shadow,
+.nc-overlay-container.start-bottom-end-bottom .nc-overlay-shadow {
+  right: var(--nc-overlay-current-arrow-gap);
+}
+
+.nc-overlay-container-nospacing.nospacing {
+  padding: 0 !important;
+}
+
+.nc-overlay-container-nospacing.nospacing .nc-overlay-shadow {
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+.nc-overlay-pane {
+  border-radius: inherit;
+  position: relative;
+  background-color: var(--nc-overlay-container-background);
+}
+
+.nc-overlay-shadow {
+  z-index: -2;
+  box-shadow: var(--nc-overlay-current-box-shadow);
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  position: absolute;
+  border-radius: inherit;
+  outline: var(--nc-overlay-border);
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.nc-overlay-backdrop {
+  background: transparent;
+  opacity: 0;
+}

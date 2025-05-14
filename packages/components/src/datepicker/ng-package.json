@@ -1,0 +1,12 @@
+{
+  "lib": {
+    "entryFile": "index.ts",
+    "flatModuleFile": "datepicker",
+    "umdModuleIds": {
+      "@oceanstar/components/core": "nc.components.core",
+      "@oceanstar/components/overlay": "nc.components.overlay",
+      "@oceanstar/components/forms": "nc.components.forms"
+    },
+    "umdId": "nc.components.datepicker"
+  }
+}

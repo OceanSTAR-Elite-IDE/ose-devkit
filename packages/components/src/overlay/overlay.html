@@ -1,0 +1,25 @@
+<ng-template
+  [cdkConnectedOverlayHasBackdrop]="backdrop"
+  [cdkConnectedOverlayOpen]="opened"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayPositions]="positionPairs"
+  (backdropClick)="close()"
+  (positionChange)="onOverlayPositionChange($event)"
+  cdk-connected-overlay
+  cdkConnectedOverlayBackdropClass="nc-overlay-backdrop">
+  <div
+    class="nc-overlay-container {{paddingClass}} {{overlayClass}}"
+    [class.nospacing]="nospacing"
+    (@fade.done)="onAnimationDone($event)"
+    (@fade.start)="onAnimationStart($event)"
+    (click)="$event.stopPropagation()"
+    (mouseenter)="overlayEnter.emit($event)"
+    (mouseleave)="overlayLeave.emit($event)"
+    [@fade]>
+    <div class="nc-overlay-shadow"></div>
+    <div *ngIf="arrow" class="nc-overlay-arrow"></div>
+    <div class="nc-overlay-pane">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let week of _weekdays;" scope="col">
+        {{week.narrow}}
+      </th>
+    </tr>
+  </thead>
+  <tbody nc-calendar-body
+    [label]="_monthLabel"
+    [rows]="_weeks"
+    [todayValue]="_todayDate!"
+    [startValue]="_rangeStart!"
+    [endValue]="_rangeEnd!"
+    [comparisonStart]="_comparisonRangeStart"
+    [comparisonEnd]="_comparisonRangeEnd"
+    [previewStart]="_previewStart"
+    [previewEnd]="_previewEnd"
+    [isRange]="_isRange"
+    [activeCell]="_dateAdapter.getDate(activeDate) - 1"
+    (selectedValueChange)="_dateSelected($event)"
+    (previewChange)="_previewChanged($event)">
+  </tbody>
+</table>

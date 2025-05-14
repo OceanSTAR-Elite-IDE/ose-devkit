@@ -1,0 +1,75 @@
+:root {
+  --nc-radio-size: 1rem;
+  --nc-radio-container-size: 1.5rem;
+  --nc-radio-background: theme('colors.white');
+  --nc-radio-background-disabled: theme('colors.gray.200');
+
+  --nc-radio-default-color: var(--nc-primary-color);
+
+  --nc-radio-outline-width: 2px;
+  --nc-radio-outline-offset: 2px;
+
+  --nc-radio-border-color: theme('colors.gray.300');
+  --nc-radio-border-width: 1px;
+  --nc-radio-border: var(--nc-radio-border-width) solid var(--nc-radio-border-color);
+}
+
+.nc-radio {
+  --nc-radio-current-color: var(--nc-radio-default-color);
+  --nc-radio-current-size: var(--nc-radio-size);
+  display: flex;
+}
+
+.nc-radio .nc-radio-input-container {
+  flex-shrink: 0;
+  display: flex;
+  height: var(--nc-radio-container-size);
+  align-items: center;
+}
+
+.nc-radio input[type='radio'].nc-radio-input {
+  width: var(--nc-radio-current-size);
+  height: var(--nc-radio-current-size);
+  background-color: var(--nc-radio-background);
+  border: var(--nc-radio-border);
+  border-radius: 50%;
+}
+
+.nc-radio input[type='radio'].nc-radio-input:focus {
+  outline: var(--nc-radio-outline-width) solid var(--nc-radio-current-color);
+  outline-offset: var(--nc-radio-outline-offset);
+}
+
+.nc-radio input[type='radio'].nc-radio-input:hover {
+  border-color: var(--nc-radio-current-color);
+}
+
+.nc-radio input[type='radio'].nc-radio-input:checked {
+  background-color: var(--nc-radio-current-color);
+  border-color: var(--nc-radio-current-color);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.nc-radio input[type='radio'].nc-radio-input:checked:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+.nc-radio input[type='radio'].nc-radio-input:disabled,
+.nc-radio input[type='radio'].nc-radio-input:checked:disabled {
+  background-color: var(--nc-radio-background-disabled) !important;
+}
+
+.nc-radio .nc-radio-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.nc-radio .nc-radio-label:not(:empty) {
+  margin-left: theme('margin.2');
+}
+
+.nc-radio-group {
+  display: block;
+}

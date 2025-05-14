@@ -1,0 +1,15 @@
+<ng-content></ng-content>
+<nc-overlay
+  overlayClass="nc-dropdown-overlay"
+  [origin]="origin"
+  [position]="position"
+  [arrow]="pane.arrow"
+  (afterOpen)="_afterOpen($event)"
+  (afterClosed)="_afterClosed($event)"
+  (beforeOpen)="_beforeOpen($event)"
+  (beforeClosed)="_beforeClosed($event)"
+  (overlayEnter)="_onMouseEnter($event)"
+  (overlayLeave)="_onMouseLeave($event)"
+  (positionChange)="_positionChange($event)">
+  <ng-content select="nc-dropdown-pane"></ng-content>
+</nc-overlay>

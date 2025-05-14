@@ -1,0 +1,93 @@
+:root {
+  --nc-checkbox-size: 1rem;
+  --nc-checkbox-container-size: 1.5rem;
+  --nc-checkbox-background: theme('colors.white');
+  --nc-checkbox-background-disabled: theme('colors.gray.200');
+
+  --nc-checkbox-default-color: var(--nc-primary-color);
+  --nc-checkbox-default-color-rgb: var(--nc-primary-color-rgb);
+
+  --nc-checkbox-outline-width: 2px;
+  --nc-checkbox-outline-offset: 2px;
+
+  --nc-checkbox-border-radius: var(--nc-global-border-radius);
+  --nc-checkbox-border-color: theme('colors.gray.300');
+  --nc-checkbox-border-width: 1px;
+  --nc-checkbox-border: var(--nc-checkbox-border-width) solid var(--nc-checkbox-border-color);
+}
+
+.nc-checkbox {
+  --nc-checkbox-current-color: var(--nc-checkbox-default-color);
+  --nc-checkbox-current-color-rgb: var(--nc-checkbox-default-color-rgb);
+  --nc-checkbox-current-size: var(--nc-checkbox-size);
+  display: flex;
+}
+
+.nc-checkbox .nc-checkbox-input-container {
+  flex-shrink: 0;
+  display: flex;
+  height: var(--nc-checkbox-container-size);
+  align-items: center;
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input {
+  width: var(--nc-checkbox-current-size);
+  height: var(--nc-checkbox-current-size);
+  background-color: var(--nc-checkbox-background);
+  border: var(--nc-checkbox-border);
+  border-radius: var(--nc-checkbox-border-radius);
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:focus {
+  outline: var(--nc-checkbox-outline-width) solid var(--nc-checkbox-current-color);
+  outline-offset: var(--nc-checkbox-outline-offset);
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:hover {
+  border-color: var(--nc-checkbox-current-color);
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:checked,
+.nc-checkbox input[type='checkbox'].nc-checkbox-input.indeterminated:checked {
+  background-color: var(--nc-checkbox-current-color);
+  border-color: var(--nc-checkbox-current-color);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input.indeterminated {
+  background-color: rgb(var(--nc-checkbox-current-color-rgb) / 0.55);
+  border-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input.indeterminated {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMWVtIiB3aWR0aD0iMWVtIiBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+PHBhdGggZD0iTTQzMiAyNTZjMCAxNy43LTE0LjMgMzItMzIgMzJMNDggMjg4Yy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMybDM1MiAwYzE3LjcgMCAzMiAxNC4zIDMyIDMyeiIvPjwvc3ZnPg==');
+  background-size: 80%;
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:checked,
+.nc-checkbox input[type='checkbox'].nc-checkbox-input.indeterminated:checked {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMWVtIiB3aWR0aD0iMWVtIiBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+PHBhdGggZD0iTTQzOC42IDEwNS40YzEyLjUgMTIuNSAxMi41IDMyLjggMCA0NS4zbC0yNTYgMjU2Yy0xMi41IDEyLjUtMzIuOCAxMi41LTQ1LjMgMGwtMTI4LTEyOGMtMTIuNS0xMi41LTEyLjUtMzIuOCAwLTQ1LjNzMzIuOC0xMi41IDQ1LjMgMEwxNjAgMzM4LjcgMzkzLjQgMTA1LjRjMTIuNS0xMi41IDMyLjgtMTIuNSA0NS4zIDB6Ii8+PC9zdmc+');
+  background-size: 73%;
+}
+
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:disabled,
+.nc-checkbox input[type='checkbox'].nc-checkbox-input:checked:disabled {
+  border: var(--nc-checkbox-border) !important;
+  cursor: no-drop;
+  background-color: var(--nc-checkbox-background-disabled) !important;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMWVtIiB3aWR0aD0iMWVtIiBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+PHBhdGggZD0iTTQzMiAyNTZjMCAxNy43LTE0LjMgMzItMzIgMzJMNDggMjg4Yy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMybDM1MiAwYzE3LjcgMCAzMiAxNC4zIDMyIDMyeiIvPjwvc3ZnPg==');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.nc-checkbox .nc-checkbox-label {
+  flex: 1;
+}
+
+.nc-checkbox .nc-checkbox-label:not(:empty) {
+  margin-left: theme('margin.2');
+}

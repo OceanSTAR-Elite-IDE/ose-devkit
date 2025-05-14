@@ -1,0 +1,87 @@
+:root {
+  --nc-badge-color-default: var(--nc-primary-color-rgb);
+  --nc-badge-background-alpha: 0.1;
+  --nc-badge-border-width: 0px;
+  --nc-badge-border-radius: var(--nc-global-border-radius);
+  --nc-badge-outline-width: 1px;
+  --nc-badge-outline-style: solid;
+  --nc-badge-outline-alpha: 0.2;
+  --nc-badge-dot-size: 6px;
+  --nc-badge-font-size: theme('fontSize.xs');
+  --nc-badge-line-height: theme('lineHeight.4');
+  --nc-badge-padding: theme('padding.[0.5]') theme('padding.1');
+  --nc-badge-close-size: theme('fontSize.sm');
+  --nc-badge-close-radius: 2px;
+}
+
+.nc-badge {
+  --nc-badge-current-color: var(--nc-badge-color-default);
+
+  display: inline-flex;
+  padding: var(--nc-badge-padding);
+  border-color: rgb(var(--nc-badge-current-color));
+  border-width: var(--nc-badge-border-width);
+  border-style: solid;
+  border-radius: var(--nc-badge-border-radius);
+  outline-width: var(--nc-badge-outline-width);
+  outline-style: var(--nc-badge-outline-style);
+  outline-color: rgb(var(--nc-badge-current-color) / var(--nc-badge-outline-alpha));
+  color: rgb(var(--nc-badge-current-color));
+  font-size: var(--nc-badge-font-size);
+  line-height: var(--nc-badge-line-height);
+  background-color: rgb(var(--nc-badge-current-color) / var(--nc-badge-background-alpha));
+  column-gap: 4px;
+  align-items: center;
+}
+
+.nc-badge svg.nc-badge-dot {
+  width: var(--nc-badge-dot-size);
+  height: var(--nc-badge-dot-size);
+  fill: rgb(var(--nc-badge-current-color));
+  border-radius: 50%;
+  display: none;
+}
+
+.nc-badge.nc-badge-dotted .nc-badge-dot {
+  display: inline-block;
+}
+
+.nc-badge .nc-badge-close {
+  display: none;
+  position: relative;
+  width: var(--nc-badge-close-size);
+  height: var(--nc-badge-close-size);
+  stroke: rgb(var(--nc-badge-current-color) / 0.5);
+  border-radius: var(--nc-badge-close-radius);
+  margin-right: -0.25em;
+}
+
+.nc-badge .nc-badge-close:hover {
+  stroke: rgb(var(--nc-badge-current-color));
+  background-color: rgb(var(--nc-badge-current-color) / 0.2);
+}
+
+.nc-badge.nc-badge-observed .nc-badge-close {
+  display: inline-block;
+}
+
+.nc-badge.nc-badge-reverse {
+  outline-color: var(--nc-badge-current-color);
+  background-color: unset;
+}
+
+.nc-badge.nc-badge-secondary {
+  --nc-badge-current-color: var(--nc-secondary-color-rgb);
+}
+
+.nc-badge.nc-badge-success {
+  --nc-badge-current-color: var(--nc-success-color-rgb);
+}
+
+.nc-badge.nc-badge-danger {
+  --nc-badge-current-color: var(--nc-danger-color-rgb);
+}
+
+.nc-badge.nc-badge-warning {
+  --nc-badge-current-color: var(--nc-warning-color-rgb);
+}

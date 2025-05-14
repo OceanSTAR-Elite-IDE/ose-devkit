@@ -1,0 +1,12 @@
+<table class="nc-calendar-table">
+  <tbody
+    [activeCell]="_getActiveCell()"
+    [cellAspectRatio]="3 / 7"
+    [endValue]="_selectedYear!"
+    [numCols]="3"
+    [rows]="_years"
+    [startValue]="_selectedYear!"
+    [todayValue]="_todayYear"
+    (selectedValueChange)="_yearSelected($event)"
+    nc-calendar-body></tbody>
+</table>

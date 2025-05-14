@@ -1,0 +1,133 @@
+:root {
+  --nc-progress-default-background-color: theme('colors.gray.200');
+  --nc-progress-background-alpha: 0.2;
+  --nc-progress-radius: var(--nc-global-border-radius);
+  --nc-progress-meter-transition: width 0.5s cubic-bezier(0.8, 0.2, 0.2, 0.8);
+  --nc-progress-font-size: theme('fontSize.sm');
+  --nc-progress-font-color: white;
+  --nc-progress-default-size: 1rem;
+  --nc-progress-default-color: var(--nc-primary-color-rgb);
+
+  --nc-progress-circle-default-size: 0.5rem;
+  --nc-progress-circle-font-size: theme('fontSize.sm');
+  --nc-progress-circle-transition: stroke-dashoffset 0.5s cubic-bezier(0.8, 0.2, 0.2, 0.8);
+}
+
+.nc-progress {
+  --nc-progress-current-color: var(--nc-progress-default-color);
+  --nc-progress-current-size: var(--nc-progress-default-size);
+  --nc-progress-current-background-color: var(--nc-progress-default-background-color);
+
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--nc-progress-radius);
+  height: var(--nc-progress-current-size);
+  background: var(--nc-progress-current-background-color);
+  line-height: 1;
+  font-size: var(--nc-progress-font-size);
+}
+
+.nc-progress .nc-progress-meter {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: rgb(var(--nc-progress-current-color));
+  transition: var(--nc-progress-meter-transition);
+}
+
+.nc-progress .nc-progress-meter-text {
+  color: var(--nc-progress-font-color);
+}
+
+.nc-progress.nc-progress-primary {
+  --nc-progress-current-color: var(--nc-primary-color-rgb);
+}
+
+.nc-progress.nc-progress-secondary {
+  --nc-progress-current-color: var(--nc-secondary-color-rgb);
+}
+
+.nc-progress.nc-progress-success {
+  --nc-progress-current-color: var(--nc-success-color-rgb);
+}
+
+.nc-progress.nc-progress-danger {
+  --nc-progress-current-color: var(--nc-danger-color-rgb);
+}
+
+.nc-progress.nc-progress-warning {
+  --nc-progress-current-color: var(--nc-warning-color-rgb);
+}
+
+.nc-progress-colored {
+  --nc-progress-current-background-color: rgb(var(--nc-progress-current-color) / var(--nc-progress-background-alpha));
+}
+
+.nc-progress-circle {
+  --nc-progress-current-color: var(--nc-progress-default-color);
+  --nc-progress-current-size: var(--nc-progress-circle-default-size);
+  --nc-progress-current-background-color: var(--nc-progress-default-background-color);
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+.nc-progress-circle .nc-progress-container {
+  position: relative;
+  line-height: 1;
+  font-size: 0;
+}
+
+.nc-progress-circle .nc-progress-container .nc-progress-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--nc-progress-circle-font-size);
+  color: rgb(var(--nc-progress-current-color));
+}
+
+.nc-progress-circle .nc-progress-container svg {
+  transform: rotate(-90deg);
+  position: relative;
+}
+
+.nc-progress-circle .nc-progress-container svg circle {
+  stroke: var(--nc-progress-current-background-color);
+  box-sizing: border-box;
+  transition: var(--nc-progress-circle-transition);
+  stroke-width: var(--nc-progress-current-size);
+}
+
+.nc-progress-circle .nc-progress-container svg circle.nc-progress-meter-circle {
+  stroke-linecap: round;
+  stroke: rgb(var(--nc-progress-current-color));
+}
+
+.nc-progress-circle .nc-progress-circle-inner {
+  border-style: solid;
+  border-color: var(--nc-progress-current-background-color);
+  overflow: hidden;
+}
+
+.nc-progress-circle.nc-progress-primary {
+  --nc-progress-current-color: var(--nc-primary-color-rgb);
+}
+
+.nc-progress-circle.nc-progress-secondary {
+  --nc-progress-current-color: var(--nc-secondary-color-rgb);
+}
+
+.nc-progress-circle.nc-progress-success {
+  --nc-progress-current-color: var(--nc-success-color-rgb);
+}
+
+.nc-progress-circle.nc-progress-danger {
+  --nc-progress-current-color: var(--nc-danger-color-rgb);
+}
+
+.nc-progress-circle.nc-progress-warning {
+  --nc-progress-current-color: var(--nc-warning-color-rgb);
+}

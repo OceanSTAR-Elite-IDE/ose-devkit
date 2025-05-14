@@ -1,0 +1,21 @@
+<ng-content></ng-content>
+<nc-overlay
+  [origin]="origin"
+  [position]="position"
+  (afterClosed)="_afterClosed($event)"
+  (afterOpen)="_afterOpen($event)"
+  (beforeClosed)="_beforeClosed($event)"
+  (beforeOpen)="_beforeOpen($event)"
+  (positionChange)="_positionChange($event)"
+  arrow
+  overlayClass="nc-popover-overlay">
+  <div class="nc-popover">
+    <div *ngIf="template" class="nc-popover-title">
+      <ng-container *ngTemplateOutlet="template"></ng-container>
+    </div>
+    <div *ngIf="!template" class="nc-popover-title" [innerHtml]="title"></div>
+    <div class="nc-popover-pane">
+      <ng-content select="nc-popover-pane"></ng-content>
+    </div>
+  </div>
+</nc-overlay>
