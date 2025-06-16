@@ -1,0 +1,27 @@
+name: 🐛 Bug 报告
+description: 创建一个 bug 报告以帮助我们改进
+title: '[🐛 BUG] '
+type: 🐛 Bug
+
+body:
+  - type: dropdown
+    id: module
+    attributes:
+      label: 请选择发现 Bug 的模块
+      options:
+        - Components
+        - Widgets
+        - Schematics
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 详细描述 (比如复现步骤, 预期行为，截图，环境信息等)
+      placeholder: |
+        复现这个 bug 的步骤：
+        1. 进入 '...'
+        2. 点击 '....'
+        3. 滚动到 '....'
+        4. 看到错误

@@ -1,0 +1,36 @@
+name: 💡 IDEA 建议
+description: 分享你的创意和想法
+title: '[💡 IDEA] '
+type: 🏢 Epic
+
+body:
+  - type: dropdown
+    id: module
+    attributes:
+      label: 请选择需求相关的模块
+      options:
+        - Components
+        - Widgets
+        - Schematics
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 你的功能请求是否与某个问题相关？请描述。
+      placeholder: |
+        **你的想法是什么？**
+        请详细描述你的想法或建议。
+
+        **这个想法会带来什么价值？**
+        描述这个想法可能带来的好处和影响。
+
+        **实现建议**
+        如果你有具体的实现建议，请在这里分享。
+
+        **相关资源**
+        如果有任何相关的参考资料、示例或灵感来源，请在这里分享。
+
+        **其他想法**
+        任何其他你想分享的想法或建议。

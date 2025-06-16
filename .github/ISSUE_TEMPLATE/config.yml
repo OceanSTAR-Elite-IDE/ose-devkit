@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links: 
+  - name: 反馈
+    url: https://github.com/OceanSTAR-Elite-IDE/request-forms/issues/new/choose
+    about: 反馈问题或建议
