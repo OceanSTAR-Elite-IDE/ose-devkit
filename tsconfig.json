@@ -3,7 +3,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -11,17 +10,61 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@oceanstar/components/*": ["packages/components/src/*"],
+      "@oceanstar/components/autocomplete": ["packages/components/src/autocomplete/index.ts"],
+      "@oceanstar/components/avatar": ["packages/components/src/avatar/index.ts"],
+      "@oceanstar/components/badge": ["packages/components/src/badge/index.ts"],
+      "@oceanstar/components/breadcrumbs": ["packages/components/src/breadcrumbs/index.ts"],
+      "@oceanstar/components/button": ["packages/components/src/button/index.ts"],
+      "@oceanstar/components/checkbox": ["packages/components/src/checkbox/index.ts"],
+      "@oceanstar/components/contextmenu": ["packages/components/src/contextmenu/index.ts"],
+      "@oceanstar/components/core": ["packages/components/src/core/index.ts"],
+      "@oceanstar/components/datepicker": ["packages/components/src/datepicker/index.ts"],
+      "@oceanstar/components/drawer": ["packages/components/src/drawer/index.ts"],
+      "@oceanstar/components/dropdown": ["packages/components/src/dropdown/index.ts"],
+      "@oceanstar/components/forms": ["packages/components/src/forms/index.ts"],
+      "@oceanstar/components/gantt": ["packages/components/src/gantt/index.ts"],
+      "@oceanstar/components/input": ["packages/components/src/input/index.ts"],
+      "@oceanstar/components/label": ["packages/components/src/label/index.ts"],
+      "@oceanstar/components/modal": ["packages/components/src/modal/index.ts"],
+      "@oceanstar/components/notifier": ["packages/components/src/notifier/index.ts"],
+      "@oceanstar/components/overlay": ["packages/components/src/overlay/index.ts"],
+      "@oceanstar/components/pagination": ["packages/components/src/pagination/index.ts"],
+      "@oceanstar/components/picture": ["packages/components/src/picture/index.ts"],
+      "@oceanstar/components/popconfirm": ["packages/components/src/popconfirm/index.ts"],
+      "@oceanstar/components/popover": ["packages/components/src/popover/index.ts"],
+      "@oceanstar/components/progress": ["packages/components/src/progress/index.ts"],
+      "@oceanstar/components/radio": ["packages/components/src/radio/index.ts"],
+      "@oceanstar/components/scrim": ["packages/components/src/scrim/index.ts"],
+      "@oceanstar/components/select": ["packages/components/src/select/index.ts"],
+      "@oceanstar/components/skeleton": ["packages/components/src/skeleton/index.ts"],
+      "@oceanstar/components/slider": ["packages/components/src/slider/index.ts"],
+      "@oceanstar/components/switch": ["packages/components/src/switch/index.ts"],
+      "@oceanstar/components/table": ["packages/components/src/table/index.ts"],
+      "@oceanstar/components/tooltip": ["packages/components/src/tooltip/index.ts"],
+      "@oceanstar/components/tree": ["packages/components/src/tree/index.ts"],
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
     "strictTemplates": true
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

@@ -1,0 +1,21 @@
+<!-- 月份选择器使用示例 -->
+<div class="p-4">
+  <h2 class="mb-4 text-lg font-semibold">月份选择器示例</h2>
+
+  <!-- 基础月份选择器 -->
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-medium text-gray-700">选择月份：</label>
+    <nc-datepicker [(ngModel)]="selectedMonth" placeholder="请选择月份" unit="month"> </nc-datepicker>
+  </div>
+
+  <!-- 显示选中的月份 -->
+  <div class="mb-4 rounded bg-gray-100 p-3">
+    <p class="text-sm text-gray-600">选中的月份: {{ selectedMonth | date:'yyyy-MM' }}</p>
+  </div>
+
+  <!-- 带限制的月份选择器 -->
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-medium text-gray-700">选择月份（限制范围）：</label>
+    <nc-datepicker [max]="maxDate" [min]="minDate" [(ngModel)]="selectedMonthWithLimit" placeholder="请选择月份" unit="month"> </nc-datepicker>
+  </div>
+</div>

@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "progress",
-    "umdId": "nc.components.progress"
-  }
-}

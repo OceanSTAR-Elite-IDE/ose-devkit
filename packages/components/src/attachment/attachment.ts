@@ -1,11 +1,22 @@
-import { transition, trigger } from '@angular/animations';
 import { BooleanInput, coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, inject, Inject, Input, OnInit, Optional, Output, Self, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Self,
+  ViewEncapsulation
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import {
-  fadeOut,
   findCategoryByExtensions,
   findCategoryByFile,
   NcFileModule,
@@ -16,10 +27,9 @@ import {
   NcUploadHandler,
   NcUploadRef,
   NcUploadResponse,
-  NcUploadStatus,
+  NcUploadStatus
 } from '@oceanstar/components/core';
 import { NcFormFieldControl } from '@oceanstar/components/forms';
-import { NcProgressModule } from '@oceanstar/components/progress';
 
 import { DEFAULT_ATTACHMENC_ICONS, NC_ATTACHMENC_ICONS, NcAttachmentIcons } from './icons';
 
@@ -32,7 +42,7 @@ export class NcAttachmentRef<T> extends NcUploadRef<T, any> {
 
   constructor(
     public override file: File,
-    public override id: string = `nc-attachment-${uniqueId++}`,
+    public override id = `nc-attachment-${uniqueId++}`,
   ) {
     super(file, file.name, file.size);
     this.category = findCategoryByFile(file) || 'default';
@@ -40,8 +50,8 @@ export class NcAttachmentRef<T> extends NcUploadRef<T, any> {
 }
 
 @Component({
-  imports: [CommonModule, NcFileModule, NcProgressModule],
-  selector: 'nc-attachment, [nc-attachment]',
+  imports: [CommonModule, NcFileModule],
+  selector: 'nc-attachment',
   templateUrl: 'attachment.html',
   host: {
     class: 'nc-attachment',
@@ -50,9 +60,8 @@ export class NcAttachmentRef<T> extends NcUploadRef<T, any> {
   },
   encapsulation: ViewEncapsulation.None,
   providers: [{ provide: NcFormFieldControl, useExisting: NcAttachment }],
-  animations: [trigger('fadeOut', [transition('* => void', fadeOut(0.3))])],
 })
-export class NcAttachment<T> implements OnInit, ControlValueAccessor, NcFormFieldControl<NcAttachmentRef<T>[]> {
+export class NcAttachment<T> implements OnInit, ControlValueAccessor, NcFormFieldControl<NcAttachmentRef<T>[]>, OnDestroy {
   _displayAttachmentRefs: NcAttachmentRef<T>[] = [];
 
   private _attachmentRefs: NcAttachmentRef<T>[] = [];
@@ -135,9 +144,9 @@ export class NcAttachment<T> implements OnInit, ControlValueAccessor, NcFormFiel
     this._limitSize = coerceNumberProperty(value, 5);
   }
 
-  @Input() url: string = '';
+  @Input() url = '';
 
-  @Input() name: string = '';
+  @Input() name = '';
 
   @Output() errors = new EventEmitter<NtAttachmentError | NtAttachmentError[]>();
 

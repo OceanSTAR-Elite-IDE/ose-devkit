@@ -36,9 +36,7 @@ export class NcPopoverPane implements AfterContentInit {
   ) {}
 
   ngAfterContentInit() {
-    this._contentSubscription = this._contentObserver
-      .observe(this._elementRef)
-      .subscribe(() => this._checkContentChange());
+    this._contentSubscription = this._contentObserver.observe(this._elementRef).subscribe(() => this._checkContentChange());
   }
 
   ngOnDestroy() {

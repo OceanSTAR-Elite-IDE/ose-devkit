@@ -4,8 +4,6 @@ import { Directive, ElementRef, EventEmitter, Input, Optional, Output, Self } fr
 import { NgControl } from '@angular/forms';
 import { NcFormFieldControl } from '@oceanstar/components/forms';
 
-import './input.css';
-
 @Directive({
   selector: 'input[ncInput], textarea[ncInput]',
   host: {

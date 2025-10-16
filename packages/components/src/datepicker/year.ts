@@ -42,8 +42,7 @@ export class NcCalendarYear<D> implements AfterContentInit, OnDestroy {
   }
   set activeDate(value: D) {
     let oldActiveDate = this._activeDate;
-    const validDate =
-      this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
+    const validDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
     this._activeDate = this._dateAdapter.clampDate(validDate, this.minDate, this.maxDate);
 
     if (this._dateAdapter.getYear(oldActiveDate) !== this._dateAdapter.getYear(this._activeDate)) {
@@ -172,11 +171,7 @@ export class NcCalendarYear<D> implements AfterContentInit, OnDestroy {
     const daysInMonth = this._dateAdapter.getNumDaysInMonth(normalizedDate);
 
     this.selectedChange.emit(
-      this._dateAdapter.createDate(
-        this._dateAdapter.getYear(this.activeDate),
-        month,
-        Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth),
-      ),
+      this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), month, Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth)),
     );
   }
 
@@ -190,9 +185,7 @@ export class NcCalendarYear<D> implements AfterContentInit, OnDestroy {
    * Returns null if the given Date is in another year.
    */
   private _getMonthInCurrentYear(date: D | null) {
-    return date && this._dateAdapter.getYear(date) == this._dateAdapter.getYear(this.activeDate)
-      ? this._dateAdapter.getMonth(date)
-      : null;
+    return date && this._dateAdapter.getYear(date) == this._dateAdapter.getYear(this.activeDate) ? this._dateAdapter.getMonth(date) : null;
   }
 
   /** Creates an MatCalendarCell for the given month. */
@@ -207,12 +200,7 @@ export class NcCalendarYear<D> implements AfterContentInit, OnDestroy {
   private _shouldEnableMonth(month: number) {
     const activeYear = this._dateAdapter.getYear(this.activeDate);
 
-    if (
-      month === undefined ||
-      month === null ||
-      this._isYearAndMonthAfterMaxDate(activeYear, month) ||
-      this._isYearAndMonthBeforeMinDate(activeYear, month)
-    ) {
+    if (month === undefined || month === null || this._isYearAndMonthAfterMaxDate(activeYear, month) || this._isYearAndMonthBeforeMinDate(activeYear, month)) {
       return false;
     }
 
@@ -223,11 +211,7 @@ export class NcCalendarYear<D> implements AfterContentInit, OnDestroy {
     const firstOfMonth = this._dateAdapter.createDate(activeYear, month, 1);
 
     // If any date in the month is enabled count the month as enabled.
-    for (
-      let date = firstOfMonth;
-      this._dateAdapter.getMonth(date) == month;
-      date = this._dateAdapter.addCalendarDays(date, 1)
-    ) {
+    for (let date = firstOfMonth; this._dateAdapter.getMonth(date) == month; date = this._dateAdapter.addCalendarDays(date, 1)) {
       if (this.dateFilter(date)) {
         return true;
       }

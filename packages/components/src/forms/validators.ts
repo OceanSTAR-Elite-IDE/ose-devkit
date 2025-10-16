@@ -9,7 +9,7 @@ import { DateAdapter } from '@oceanstar/components/core';
  * @param control 控件
  * @description 在选项组件中替换 required，在错误时会输出更友好的验证提示
  */
-export function requiredSelection (control: AbstractControl): ValidationErrors | null {
+export function requiredSelection(control: AbstractControl): ValidationErrors | null {
   const errors = Validators.required(control);
   return errors && errors['required'] ? { required: true, selection: true } : null;
 }
@@ -19,7 +19,7 @@ export function requiredSelection (control: AbstractControl): ValidationErrors |
  * @param control 控件
  * @description 在选项组件中替换 required，在错误时会输出更友好的验证提示
  */
-export function requiredUpload (control: AbstractControl): ValidationErrors | null {
+export function requiredUpload(control: AbstractControl): ValidationErrors | null {
   const errors = Validators.required(control);
   return errors && errors['required'] ? { required: true, upload: true } : null;
 }
@@ -29,16 +29,14 @@ export function requiredUpload (control: AbstractControl): ValidationErrors | nu
  * @param equalControl 比较的目标控件
  * @param equalLabel 目标控件的字段名，可选
  */
-export function equalTo (equalControl: AbstractControl, equalLabel: string): ValidatorFn {
+export function equalTo(equalControl: AbstractControl, equalLabel: string): ValidatorFn {
   let subscribe: Subscription;
 
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!subscribe) {
-      subscribe = equalControl.valueChanges
-        .pipe(filter(() => control.touched))
-        .subscribe(() => {
-          control.updateValueAndValidity();
-        });
+      subscribe = equalControl.valueChanges.pipe(filter(() => control.touched)).subscribe(() => {
+        control.updateValueAndValidity();
+      });
     }
 
     const controlValue = control.value;
@@ -53,15 +51,13 @@ export function equalTo (equalControl: AbstractControl, equalLabel: string): Val
  * @param equalControl 比较的目标控件
  * @param unequalLabel 目标控件的字段名，可选
  */
-export function unequalTo (equalControl: AbstractControl, unequalLabel?: string): ValidatorFn {
+export function unequalTo(equalControl: AbstractControl, unequalLabel?: string): ValidatorFn {
   let subscribe: Subscription;
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!subscribe) {
-      subscribe = equalControl.valueChanges
-        .pipe(filter(() => control.touched))
-        .subscribe(() => {
-          control.updateValueAndValidity();
-        });
+      subscribe = equalControl.valueChanges.pipe(filter(() => control.touched)).subscribe(() => {
+        control.updateValueAndValidity();
+      });
     }
 
     const controlValue: string = control.value;
@@ -70,7 +66,7 @@ export function unequalTo (equalControl: AbstractControl, unequalLabel?: string)
   };
 }
 
-export function interval (intervalLabel?: string): ValidatorFn {
+export function interval(intervalLabel?: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (control.value) {
       const controlValue: string = control.value.split(/(\(|\)|\[|\]|,)/g);
@@ -85,16 +81,13 @@ export function interval (intervalLabel?: string): ValidatorFn {
  * @param withControl 比较的目标控件
  * @param ltLabel 目标控件的字段名，可选
  */
-export function ltTo (withControl: AbstractControl, ltLabel?: string): ValidatorFn {
+export function ltTo(withControl: AbstractControl, ltLabel?: string): ValidatorFn {
   let subscribe: Subscription;
   return (control: AbstractControl): { [key: string]: any } | null => {
-
     if (!subscribe) {
-      subscribe = withControl.valueChanges
-        .pipe(filter(() => control.touched))
-        .subscribe(() => {
-          control.updateValueAndValidity();
-        });
+      subscribe = withControl.valueChanges.pipe(filter(() => control.touched)).subscribe(() => {
+        control.updateValueAndValidity();
+      });
     }
 
     const controlValue: string = control.value;
@@ -111,10 +104,9 @@ export function ltTo (withControl: AbstractControl, ltLabel?: string): Validator
  * @param withControl 比较的目标控件
  * @param ltLabel 目标控件的字段名
  */
-export function ltDateTo (withControl: AbstractControl, ltLabel: string, dateAdapter: DateAdapter<any>): ValidatorFn {
+export function ltDateTo(withControl: AbstractControl, ltLabel: string, dateAdapter: DateAdapter<any>): ValidatorFn {
   let subscribe: Subscription;
   return (control: AbstractControl): { [key: string]: any } | null => {
-
     if (!subscribe) {
       subscribe = withControl.valueChanges.subscribe(() => {
         control.updateValueAndValidity();
@@ -122,9 +114,9 @@ export function ltDateTo (withControl: AbstractControl, ltLabel: string, dateAda
     }
 
     if (withControl.value && control.value) {
-      return dateAdapter.compareDate(
-        dateAdapter.deserialize(control.value),
-        dateAdapter.deserialize(withControl.value)) < 0 ? null : { ltDateTo: true, ltLabel };
+      return dateAdapter.compareDate(dateAdapter.deserialize(control.value), dateAdapter.deserialize(withControl.value)) < 0
+        ? null
+        : { ltDateTo: true, ltLabel };
     }
     return null;
   };
@@ -135,10 +127,9 @@ export function ltDateTo (withControl: AbstractControl, ltLabel: string, dateAda
  * @param withControl 比较的目标控件
  * @param gtLabel 目标控件的字段名
  */
-export function gtDateTo (withControl: AbstractControl, gtLabel: string, dateAdapter: DateAdapter<any>): ValidatorFn {
+export function gtDateTo(withControl: AbstractControl, gtLabel: string, dateAdapter: DateAdapter<any>): ValidatorFn {
   let subscribe: Subscription;
   return (control: AbstractControl): { [key: string]: any } | null => {
-
     if (!subscribe) {
       subscribe = withControl.valueChanges.subscribe(() => {
         control.updateValueAndValidity();
@@ -146,9 +137,9 @@ export function gtDateTo (withControl: AbstractControl, gtLabel: string, dateAda
     }
 
     if (withControl.value && control.value) {
-      return dateAdapter.compareDate(
-        dateAdapter.deserialize(control.value),
-        dateAdapter.deserialize(withControl.value)) > 0 ? null : { gtDateTo: true, gtLabel };
+      return dateAdapter.compareDate(dateAdapter.deserialize(control.value), dateAdapter.deserialize(withControl.value)) > 0
+        ? null
+        : { gtDateTo: true, gtLabel };
     }
     return null;
   };

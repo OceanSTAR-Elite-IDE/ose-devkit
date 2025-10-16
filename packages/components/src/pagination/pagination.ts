@@ -1,17 +1,17 @@
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { BooleanInput, coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
+  AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
-  Inject,
+  inject,
   Input,
   OnChanges,
   OnInit,
-  Optional,
   Output,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -24,12 +24,11 @@ export const PAGINATION_ELLIPSIS = '...';
   selector: 'nc-pagination',
   templateUrl: 'pagination.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'nc-pagination -space-x-px rounded-md shadow-sm',
+    class: 'nc-pagination -space-x-px rounded-md',
   },
 })
-export class NcPagination implements OnInit, OnChanges {
+export class NcPagination implements OnInit, OnChanges, AfterViewInit {
   private _totalPage = 1;
 
   get totalPage() {
@@ -42,44 +41,28 @@ export class NcPagination implements OnInit, OnChanges {
     return this._pageItems;
   }
 
-  private _options = new NcPaginationConfig();
+  private _defaultConfig = Object.assign(new NcPaginationConfig(), inject(NC_PAGINATION_CONFIG, { optional: true }));
 
-  @Input()
-  get options() {
-    return this._options;
-  }
-  set options(value: NcPaginationConfig) {
-    if (typeof value === 'object') {
-      this._options = Object.assign({}, this._options, value);
-    }
-  }
+  _itemSize: number = this._defaultConfig.itemSize;
 
-  get itemSize() {
-    return this.options.itemSize;
-  }
-
-  @Input()
-  set pageSize(value: number) {
-    this._options.pageSize = coerceNumberProperty(value);
-  }
-  get pageSize() {
-    return this.options.pageSize;
-  }
+  private _previousLabel: string = this._defaultConfig.previousLabel;
 
   @Input()
   set previousLabel(value: string) {
-    this._options.previousLabel = value;
+    this._previousLabel = value;
   }
   get previousLabel() {
-    return this.options.previousLabel;
+    return this._previousLabel;
   }
+
+  private _nextLabel: string = this._defaultConfig.nextLabel;
 
   @Input()
   set nextLabel(value: string) {
-    this._options.nextLabel = value;
+    this._nextLabel = value;
   }
   get nextLabel() {
-    return this.options.nextLabel;
+    return this._nextLabel;
   }
 
   private _total = 0;
@@ -102,24 +85,74 @@ export class NcPagination implements OnInit, OnChanges {
     return this._pageIndex;
   }
 
-  @Output() pageChange = new EventEmitter<number>();
+  private _pageSizeSteps: number[] = [10, 20, 30, 50];
 
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    @Optional() @Inject(NC_PAGINATION_CONFIG) defaultConfig?: NcPaginationConfig,
-  ) {
-    this._options = { ...this._options, ...(defaultConfig || {}) };
+  @Input()
+  set pageSizeSteps(value: number[]) {
+    this._pageSizeSteps = value.map(item => coerceNumberProperty(item));
+  }
+  get pageSizeSteps() {
+    return this._pageSizeSteps;
   }
 
+  private _pageSize: number = this._pageSizeSteps[0];
+
+  @Input()
+  set pageSize(value: number) {
+    this._pageSize = coerceNumberProperty(value);
+  }
+  get pageSize() {
+    return this._pageSize;
+  }
+
+  private _pageSizeChangeable = false;
+
+  @Input()
+  set pageSizeChangeable(value: BooleanInput) {
+    this._pageSizeChangeable = coerceBooleanProperty(value);
+  }
+  get pageSizeChangeable() {
+    return this._pageSizeChangeable;
+  }
+
+  @Output() pageChange = new EventEmitter<number>();
+
+  @Output() pageSizeChange = new EventEmitter<number>();
+
+  @ViewChild('pageSizeSelector') pageSizeSelector?: ElementRef<HTMLSelectElement>;
+
   ngOnInit() {
+    // 确保 pageSize 在 pageSizeSteps 中存在，否则使用第一个值
+    if (!this.pageSizeSteps.includes(this.pageSize)) {
+      this._pageSize = this.pageSizeSteps[0];
+    }
     this._calcPageItems();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const change = changes['total'] || changes['pageIndex'];
-    if (change && !change.firstChange) {
+    const change = changes['total'] || changes['pageIndex'] || changes['pageSize'] || changes['pageSizeSteps'];
+    if (change) {
+      // 如果 pageSize 或 pageSizeSteps 发生变化，确保 pageSize 仍然有效
+      if (changes['pageSize'] || changes['pageSizeSteps']) {
+        if (!this.pageSizeSteps.includes(this.pageSize)) {
+          this._pageSize = this.pageSizeSteps[0];
+        }
+      }
       this._calcPageItems();
     }
+  }
+
+  ngAfterViewInit(): void {
+    // @TODO: pageSize 的 html 绑定在初始化时不会被正确设置
+    // 因此直接使用 select 赋值的方式来处理这个问题
+    if (this.pageSizeSelector && this.pageSizeSelector.nativeElement) {
+      this.pageSizeSelector.nativeElement.value = `${this.pageSize}`;
+    }
+  }
+
+  _pageSizeChange(event: Event) {
+    this.pageSize = coerceNumberProperty((event.target as HTMLSelectElement).value);
+    this.pageSizeChange.emit(this.pageSize);
   }
 
   _pageChange(index: number) {
@@ -153,7 +186,10 @@ export class NcPagination implements OnInit, OnChanges {
     }
 
     if (this._totalPage > 1) {
-      let [start, end] = [Math.max(this.pageIndex - this.itemSize, 2), Math.min(this.pageIndex + this.itemSize, this.totalPage - 1)];
+      let [start, end] = [
+        Math.max(this.pageIndex - this._itemSize, 2),
+        Math.min(this.pageIndex + this._itemSize, this.totalPage - 1),
+      ];
 
       if (start - 2 >= 1) {
         pageItems.push(PAGINATION_ELLIPSIS);

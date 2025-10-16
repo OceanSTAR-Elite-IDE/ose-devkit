@@ -6,7 +6,7 @@ import { GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
 import { Location } from '@angular/common';
 import { TemplateRef } from '@angular/core';
 
-import { NcContextMenuPane } from './contextmenu-pane';
+import { NcContextMenuAnimationEvent, NcContextMenuPane } from './contextmenu-pane';
 
 let uniqueId = 0;
 
@@ -32,7 +32,7 @@ export class NcContextMenuRef {
     // Emit when opening animation completes
     _containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'enter'),
+        filter((event: NcContextMenuAnimationEvent) => event.state === 'done' && event.originalEvent.animationName === 'enter'),
         take(1),
       )
       .subscribe(() => {
@@ -43,7 +43,7 @@ export class NcContextMenuRef {
     // Dispose overlay when closing animation is complete
     _containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'exit'),
+        filter((event: NcContextMenuAnimationEvent) => event.state === 'done' && event.originalEvent.animationName === 'leave'),
         take(1),
       )
       .subscribe(() => {
@@ -71,7 +71,7 @@ export class NcContextMenuRef {
     // Transition the backdrop in parallel to the menu.
     this._containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'start'),
+        filter((event: NcContextMenuAnimationEvent) => event.state === 'start'),
         take(1),
       )
       .subscribe(() => {
@@ -79,8 +79,6 @@ export class NcContextMenuRef {
         this._beforeClose.complete();
         this._overlayRef.detachBackdrop();
       });
-
-    this._containerInstance.exit();
   }
 
   afterOpen(): Observable<void> {

@@ -5,7 +5,7 @@ import { ESCAPE } from '@angular/cdk/keycodes';
 import { GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
 import { Location } from '@angular/common';
 
-import { NcModal } from './modal';
+import { NcModal, NcModalAnimationEvent } from './modal';
 
 // Counter for unique modal ids.
 let uniqueId = 0;
@@ -32,7 +32,7 @@ export class NcModalRef<T, R = any> {
     // Emit when opening animation completes
     _containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'enter'),
+        filter((event: NcModalAnimationEvent) => event.phaseName === 'done' && event.toState === 'enter'),
         take(1),
       )
       .subscribe(() => {
@@ -43,7 +43,7 @@ export class NcModalRef<T, R = any> {
     // Dispose overlay when closing animation is complete
     _containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'exit'),
+        filter((event: NcModalAnimationEvent) => event.phaseName === 'done' && event.toState === 'exit'),
         take(1),
       )
       .subscribe(() => {
@@ -74,7 +74,7 @@ export class NcModalRef<T, R = any> {
     // Transition the backdrop in parallel to the modal.
     this._containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'start'),
+        filter((event: NcModalAnimationEvent) => event.phaseName === 'start'),
         take(1),
       )
       .subscribe(() => {

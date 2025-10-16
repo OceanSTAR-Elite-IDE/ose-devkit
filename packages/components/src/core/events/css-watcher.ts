@@ -11,7 +11,7 @@ export class CssMonitor {
 
   // 监听 CSS 变量变化（支持全局或特定元素）
   watchCssVariable(varName: string, element: HTMLElement = document.documentElement): Observable<string> {
-    return new Observable<string>(subscriber => {
+    return new Observable<string>((subscriber: any) => {
       // 获取当前值
       const currentValue = getComputedStyle(element).getPropertyValue(varName).trim();
 

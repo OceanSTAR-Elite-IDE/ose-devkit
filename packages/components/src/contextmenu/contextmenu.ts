@@ -104,6 +104,7 @@ export class NcContextMenu<T> {
       scrollStrategy: this._overlay.scrollStrategies.block(),
       positionStrategy: positionStrategy,
       hasBackdrop: true,
+      backdropClass: 'bg-transparent',
     });
 
     return overlayConfig;

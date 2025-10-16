@@ -40,9 +40,7 @@ import { BOTTOM_LEFT, TOP_LEFT } from '@oceanstar/components/overlay';
 import { NcAutocomplete } from './autocomplete';
 import { NcAutocompleteOrigin } from './autocomplete-origin';
 
-export const NC_AUTOCOMPLETE_SCROLL_STRATEGY = new InjectionToken<() => ScrollStrategy>(
-  'nc-autocomplete-scroll-strategy',
-);
+export const NC_AUTOCOMPLETE_SCROLL_STRATEGY = new InjectionToken<() => ScrollStrategy>('nc-autocomplete-scroll-strategy');
 
 export function NC_AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY(overlay: Overlay): () => ScrollStrategy {
   return () => overlay.scrollStrategies.reposition();
@@ -259,8 +257,8 @@ export class NcAutocompleteTrigger implements ControlValueAccessor, AfterViewIni
     this._element.nativeElement.disabled = isDisabled;
   }
 
-  _handleKeydown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+  _handleKeydown(event: Event): void {
+    const keyCode = (event as KeyboardEvent).keyCode;
 
     if (keyCode === ESCAPE) {
       event.preventDefault();
@@ -275,7 +273,7 @@ export class NcAutocompleteTrigger implements ControlValueAccessor, AfterViewIni
       const isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;
 
       if (this.panelOpen || keyCode === TAB) {
-        this.autocomplete._keyManager.onKeydown(event);
+        this.autocomplete._keyManager.onKeydown(event as any);
       } else if (isArrowKey && this._canOpen()) {
         this.openPanel();
       }
@@ -286,7 +284,7 @@ export class NcAutocompleteTrigger implements ControlValueAccessor, AfterViewIni
     }
   }
 
-  _handleInput(event: KeyboardEvent): void {
+  _handleInput(event: Event): void {
     let target = event.target as HTMLInputElement;
     let value: number | string | null = target.value;
 
@@ -314,10 +312,7 @@ export class NcAutocompleteTrigger implements ControlValueAccessor, AfterViewIni
   }
 
   private _getOutsideClickStream(): Observable<any> {
-    return fromOutsideElementClick(
-      [this._element.nativeElement, this.autocomplete.panel.nativeElement],
-      this._document,
-    );
+    return fromOutsideElementClick([this._element.nativeElement, this.autocomplete.panel.nativeElement], this._document);
   }
 
   private _resetLabel(): void {
@@ -480,11 +475,7 @@ export class NcAutocompleteTrigger implements ControlValueAccessor, AfterViewIni
   }
 
   private _getOverlayPosition(): PositionStrategy {
-    const strategy = this._overlay
-      .position()
-      .flexibleConnectedTo(this._getConnectedElement())
-      .withFlexibleDimensions(false)
-      .withPush(false);
+    const strategy = this._overlay.position().flexibleConnectedTo(this._getConnectedElement()).withFlexibleDimensions(false).withPush(false);
 
     this._setStrategyPositions(strategy);
     this._positionStrategy = strategy;

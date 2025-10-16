@@ -1,37 +1,122 @@
-<a class="nt-attachment-trigger"
-  *ngIf="!notrigger"
-  ncFileSelect
-  [limitSize]="limitSize"
-  [multiple]="multiple"
-  [disabled]="disabled || readonly"
-  (select)="_select($event)">
-  <ng-content></ng-content>
-</a>
-<div class="nt-attachment-list">
-  <div class="nt-attachment-item" *ngFor="let item of _displayAttachmentRefs" [@fadeOut]>
-    <div class="nt-attachment-task grid-x"
-    [class.success]="item.status === 2"
-    [class.error]="item.status === 3">
-      <div class="nt-attachment-symbol cell shrink">
-        <span [class]="icons[item.category]"></span>
-      </div>
-      <div class="task-info cell auto">
-        <a class="task-name" [attr.href]="item.link" target="_blank">{{item.name}}</a>
-        <span *ngIf="item.size">{{ item.size | filesize | uppercase }}</span>
-        <span class="task-error" *ngIf="item.error">Error&nbsp;-&nbsp;{{item.error}}</span>
-      </div>
-      <div class="task-action cell shrink"
-        *ngIf="!disabled && !readonly"
-        (click)="_remove(item)">
-        <span aria-hidden="true">&times;</span>
+@if(!notrigger) {
+  <a
+    class="nc-attachment-trigger"
+    [disabled]="disabled || readonly"
+    [limitSize]="limitSize"
+    [multiple]="multiple"
+    (select)="_select($event)"
+    ncFileSelect>
+    <ng-content></ng-content>
+  </a>
+}
+<div class="my-4 space-y-2">
+  @for(item of _displayAttachmentRefs; track item) {
+    <div
+      class="nc-attachment-file"
+      [class.pending]="item.status === 0"
+      [class.uploading]="item.status === 1"
+      [class.success]="item.status === 2"
+      [class.error]="item.status === 3"
+      [class.success]="item.status === 4"
+      animate.enter="animate-fade-in"
+      animate.leave="animate-fade-out">
+      <div class="flex items-start space-x-3">
+        <!-- File Icon -->
+        <div class="flex-shrink-0">
+          <div class="relative flex h-8 w-8 items-center justify-center rounded-lg">
+            <!-- File type icon - always show -->
+            <span class="text-base" [class]="icons[item.category]"></span>
+
+            <!-- Success indicator - overlay on top right corner -->
+             @if(item.status === 2) {
+              <div class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-500">
+                <svg class="h-2.5 w-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    clip-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </div>
+            }
+
+            <!-- Error indicator - overlay on top right corner -->
+            @if(item.status === 3) {
+              <div class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
+                <svg class="h-2.5 w-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    clip-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- File Info -->
+        <div class="min-w-0 flex-1">
+          <!-- File name and remove button row -->
+          <div class="flex items-start justify-between">
+            <div class="min-w-0 flex-1 pr-2">
+              <a
+                class="block text-sm font-medium break-words text-gray-900 transition-colors duration-200 hover:text-blue-600"
+                [attr.href]="item.link"
+                [class.cursor-default]="!item.link"
+                [class.text-gray-500]="!item.link"
+                target="_blank">
+                {{item.name}}
+              </a>
+            </div>
+
+            <!-- Remove Button -->
+            <button
+              *ngIf="!disabled && !readonly"
+              class="flex-shrink-0 rounded-full p-1 text-gray-400 transition-all duration-200 hover:bg-red-50 hover:text-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
+              [attr.aria-label]="'Remove ' + item.name"
+              (click)="_remove(item)"
+              (keyup.enter)="_remove(item)"
+              (keyup.space)="_remove(item)"
+              type="button">
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  clip-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  fill-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- File size and error info -->
+          <div class="mt-1 flex items-center space-x-2">
+            @if(item.size) {
+              <span class="text-xs text-gray-500"> {{ item.size | filesize | uppercase }} </span>
+            }
+
+            @if(item.error) {
+              <span class="text-xs font-medium text-red-600"> Error - {{item.error}} </span>
+            }
+
+          </div>
+
+          <!-- Progress Bar - Only show when uploading (status === 1) -->
+          @if(item.status === 1) {
+            <div class="mt-2" animate.leave="animate-fade-out">
+              <div class="relative">
+                <div class="flex h-2 overflow-hidden rounded-full bg-gray-200 text-xs">
+                  <div
+                    class="flex flex-col justify-center bg-blue-500 text-center whitespace-nowrap text-white shadow-none transition-all duration-300 ease-out"
+                    [style.width.%]="item.progress || 0"></div>
+                </div>
+                <div class="mt-1 flex justify-between text-xs text-gray-500">
+                  <span>{{item.progress || 0}}%</span>
+                  <span>Uploading...</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
-    <nc-progress class="nt-attachment-progress"
-      *ngIf="item.status >= 1"
-      [class.success]="item.status === 2"
-      [class.alert]="item.status === 3"
-      [value]="item.progress || 0"
-      size="tiny"
-      [@fadeOut]></nc-progress>
-  </div>
+  }
+
 </div>

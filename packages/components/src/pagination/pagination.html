@@ -1,31 +1,42 @@
+@if(pageSizeChangeable) {
+<select
+  class="nc-pagination-pagesize-select rounded-md ring-1 ring-gray-300 ring-inset"
+  [value]="pageSize"
+  (change)="_pageSizeChange($event)"
+  #pageSizeSelector>
+  @for(step of pageSizeSteps; track step) {
+  <option [value]="step">{{ step }} items</option>
+  }
+</select>
+}
+
 <a
-  class="nc-pagination-previous rounded-l-md ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+  class="nc-pagination-previous rounded-l-md ring-1 ring-gray-300 ring-inset focus:outline-offset-0"
   [class.disabled]="pageIndex === 1"
   (click)="_previousPage()">
   {{ previousLabel }}
 </a>
 
-<ng-container *ngFor="let item of pageItems">
-  <a
-    *ngIf="item === pageIndex"
-    class="nc-pagination-item ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
-    [class.!ring-0]="item === pageIndex"
-    [class.nc-pagination-current]="item === pageIndex">
-    {{ item }}
-  </a>
-  <a
-    *ngIf="item !== pageIndex && item !== '...'"
-    class="nc-pagination-item ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
-    (click)="_pageChange(item)">
-    {{ item }}
-  </a>
-  <span *ngIf="item === '...'" class="nc-pagination-ellipsis ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-    {{ item }}
-  </span>
-</ng-container>
+@for(item of pageItems; track item){ @if(item === pageIndex) {
+<a
+  class="nc-pagination-item ring-1 ring-gray-300 ring-inset focus:outline-offset-0"
+  [class.!ring-0]="item === pageIndex"
+  [class.nc-pagination-current]="item === pageIndex">
+  {{ item }}
+</a>
+} @else if(item !== pageIndex && item !== '...') {
+<a
+  *ngIf="item !== pageIndex && item !== '...'"
+  class="nc-pagination-item ring-1 ring-gray-300 ring-inset focus:outline-offset-0"
+  (click)="_pageChange(item)">
+  {{ item }}
+</a>
+} @else if(item === '...') {
+<span class="nc-pagination-ellipsis ring-1 ring-gray-300 ring-inset focus:outline-offset-0"> {{ item }} </span>
+} }
 
 <a
-  class="nc-pagination-next rounded-r-md ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+  class="nc-pagination-next rounded-r-md ring-1 ring-gray-300 ring-inset focus:outline-offset-0"
   [class.disabled]="pageIndex === totalPage"
   (click)="_nextPage()">
   {{ nextLabel }}

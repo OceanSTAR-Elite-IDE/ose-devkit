@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "dropdown",
-    "umdId": "nc.components.dropdown"
-  }
-}

@@ -2,12 +2,14 @@
   *ngFor="let item of _displayPictureRefs"
   [style.backgroundImage]="item.thumbnail ? 'url(' + item.thumbnail + ')' : 'unset'"
   [class.nt-upload-error]="item.status === 3"
-  [class.nt-upload-success]="item.status === 2">
+  [class.nt-upload-success]="item.status === 2"
+  animate.enter="animate-fade-in"
+  animate.leave="animate-fade-out">
   <div class="nt-picture-action" *ngIf="item.status !== 0 && item.status !== 1">
     <span class="nt-picture-symbol {{ icons.preview }}" (click)="preview(item)"></span>
     <span *ngIf="!readonly && !disabled" class="nt-picture-symbol {{ icons.remove }}" (click)="_remove(item)"></span>
   </div>
-  <div class="nt-picture-progress" *ngIf="item.status === 1" [@fadeOut]>
+  <div class="nt-picture-progress" *ngIf="item.status === 1" animate.leave="animate-fade-out">
     <nc-progress *ngIf="item.status === 1" [value]="item.progress || 0" size="tiny" color="success"></nc-progress>
   </div>
 </div>

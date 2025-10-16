@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "attachment",
-    "umdId": "nc.components.attachment"
-  }
-}

@@ -40,10 +40,7 @@ export class WeeklyNcCalendarRangeStrategy<D> implements NcDateRangeSelectionStr
 }
 
 /** @docs-private */
-export function WEEKLY_NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
-  parent: NcDateRangeSelectionStrategy<unknown>,
-  adapter: DateAdapter<unknown>,
-) {
+export function WEEKLY_NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(parent: NcDateRangeSelectionStrategy<unknown>, adapter: DateAdapter<unknown>) {
   return parent || new WeeklyNcCalendarRangeStrategy(adapter);
 }
 

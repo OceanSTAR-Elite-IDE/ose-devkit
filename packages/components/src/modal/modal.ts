@@ -1,9 +1,20 @@
-import { AnimationEvent, transition, trigger } from '@angular/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
+import {
+  BasePortalOutlet,
+  CdkPortalOutlet,
+  ComponentPortal,
+  PortalModule,
+  TemplatePortal
+} from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
-import { Component, ComponentRef, EmbeddedViewRef, EventEmitter, ViewChild, ViewEncapsulation } from '@angular/core';
-import { fadeInY, fadeOutY } from '@oceanstar/components/core';
+import {
+  Component,
+  ComponentRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 
 import { NcModalConfig } from './modal-config';
 
@@ -11,27 +22,32 @@ export function throwNcModalContentAlreadyAttachedError() {
   throw Error('Attempting to attach modal content after content is already attached');
 }
 
+export interface NcModalAnimationEvent {
+  phaseName: 'start' | 'done';
+  toState: 'enter' | 'exit';
+  originalEvent: AnimationEvent;
+}
+
 @Component({
   imports: [CommonModule, PortalModule, OverlayModule],
   selector: 'nc-modal',
   template: `
-    <ng-template cdkPortalOutlet></ng-template>
-    <button *ngIf="config.closable" class="nc-modal-close-button" (click)="exit()" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <div
+      class="nc-modal-surface"
+      (animationstart)="onAnimationStart($event)"
+      (animationend)="onAnimationDone($event)">
+      <ng-template cdkPortalOutlet></ng-template>
+      <button *ngIf="config.closable" class="nc-modal-close-button" (click)="exit()" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   `,
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('fade', [transition('void => *', fadeInY({ from: '-5%', to: 0 }, 0.2)), transition('* => exit', fadeOutY({ from: 0, to: '-5%' }, 0.2))]),
-  ],
   host: {
     class: 'nc-modal',
     '[class.nc-modal-transparent]': '_config.transparent',
     '[style.width]': '_config.width',
     '[style.height]': '_config.height',
-    '[@fade]': 'state',
-    '(@fade.start)': 'onAnimationStart($event)',
-    '(@fade.done)': 'onAnimationDone($event)',
   },
 })
 export class NcModal extends BasePortalOutlet {
@@ -46,9 +62,9 @@ export class NcModal extends BasePortalOutlet {
     return this._config;
   }
 
-  state: 'void' | 'enter' | 'exit' = 'enter';
+  state: 'enter' | 'exit' = 'enter';
 
-  animationStateChanged = new EventEmitter<AnimationEvent>();
+  animationStateChanged = new EventEmitter<NcModalAnimationEvent>();
 
   constructor() {
     super();
@@ -69,11 +85,21 @@ export class NcModal extends BasePortalOutlet {
   }
 
   onAnimationDone(event: AnimationEvent): void {
-    this.animationStateChanged.emit(event);
+    const detail: NcModalAnimationEvent = {
+      phaseName: 'done',
+      toState: this.state,
+      originalEvent: event,
+    };
+    this.animationStateChanged.emit(detail);
   }
 
   onAnimationStart(event: AnimationEvent): void {
-    this.animationStateChanged.emit(event);
+    const detail: NcModalAnimationEvent = {
+      phaseName: 'start',
+      toState: this.state,
+      originalEvent: event,
+    };
+    this.animationStateChanged.emit(detail);
   }
 
   exit() {

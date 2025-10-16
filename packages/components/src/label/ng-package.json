@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "label",
-    "umdId": "nc.components.label"
-  }
-}

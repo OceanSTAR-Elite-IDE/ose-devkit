@@ -49,8 +49,7 @@ export class NcCalendarMonth<D> implements AfterContentInit, OnChanges, OnDestro
   }
   set activeDate(value: D) {
     const oldActiveDate = this._activeDate;
-    const validDate =
-      this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
+    const validDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
     this._activeDate = this._dateAdapter.clampDate(validDate, this.minDate, this.maxDate);
     if (!this._hasSameMonthAndYear(oldActiveDate, this._activeDate)) {
       this._init();
@@ -109,9 +108,7 @@ export class NcCalendarMonth<D> implements AfterContentInit, OnChanges, OnDestro
   @Output() readonly selectedChange: EventEmitter<D | null> = new EventEmitter<D | null>();
 
   /** Emits when any date is selected. */
-  @Output() readonly _userSelection: EventEmitter<NcCalendarUserEvent<D | null>> = new EventEmitter<
-    NcCalendarUserEvent<D | null>
-  >();
+  @Output() readonly _userSelection: EventEmitter<NcCalendarUserEvent<D | null>> = new EventEmitter<NcCalendarUserEvent<D | null>>();
 
   /** Emits when any date is activated. */
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
@@ -225,18 +222,10 @@ export class NcCalendarMonth<D> implements AfterContentInit, OnChanges, OnDestro
   _init() {
     this._setRanges(this.selected);
     this._todayDate = this._getCellCompareValue(this._dateAdapter.today());
-    this._monthLabel = this._dateAdapter
-      .getMonthNames('short')
-      [this._dateAdapter.getMonth(this.activeDate)].toLocaleUpperCase();
+    this._monthLabel = this._dateAdapter.getMonthNames('short')[this._dateAdapter.getMonth(this.activeDate)].toLocaleUpperCase();
 
-    let firstOfMonth = this._dateAdapter.createDate(
-      this._dateAdapter.getYear(this.activeDate),
-      this._dateAdapter.getMonth(this.activeDate),
-      1,
-    );
-    this._firstWeekOffset =
-      (DAYS_PER_WEEK + this._dateAdapter.getDayOfWeek(firstOfMonth) - this._dateAdapter.getFirstDayOfWeek()) %
-      DAYS_PER_WEEK;
+    let firstOfMonth = this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), this._dateAdapter.getMonth(this.activeDate), 1);
+    this._firstWeekOffset = (DAYS_PER_WEEK + this._dateAdapter.getDayOfWeek(firstOfMonth) - this._dateAdapter.getFirstDayOfWeek()) % DAYS_PER_WEEK;
 
     this._initWeekdays();
     this._createWeekCells();
@@ -289,18 +278,12 @@ export class NcCalendarMonth<D> implements AfterContentInit, OnChanges, OnDestro
         this._weeks.push([]);
         cell = 0;
       }
-      const date = this._dateAdapter.createDate(
-        this._dateAdapter.getYear(this.activeDate),
-        this._dateAdapter.getMonth(this.activeDate),
-        i + 1,
-      );
+      const date = this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), this._dateAdapter.getMonth(this.activeDate), i + 1);
       const enabled = this._shouldEnableDate(date);
       // const ariaLabel = this._dateAdapter.format(date, this._dateFormats.display.dateA11yLabel);
       const cellClasses = this.dateClass ? this.dateClass(date, 'month') : undefined;
 
-      this._weeks[this._weeks.length - 1].push(
-        new NcCalendarCell<D>(i + 1, dateNames[i], enabled, cellClasses, this._getCellCompareValue(date)!, date),
-      );
+      this._weeks[this._weeks.length - 1].push(new NcCalendarCell<D>(i + 1, dateNames[i], enabled, cellClasses, this._getCellCompareValue(date)!, date));
     }
 
     this._fillBeforeCells();
@@ -374,12 +357,7 @@ export class NcCalendarMonth<D> implements AfterContentInit, OnChanges, OnDestro
 
   /** Checks whether the 2 dates are non-null and fall within the same month of the same year. */
   private _hasSameMonthAndYear(d1: D | null, d2: D | null): boolean {
-    return !!(
-      d1 &&
-      d2 &&
-      this._dateAdapter.getMonth(d1) == this._dateAdapter.getMonth(d2) &&
-      this._dateAdapter.getYear(d1) == this._dateAdapter.getYear(d2)
-    );
+    return !!(d1 && d2 && this._dateAdapter.getMonth(d1) == this._dateAdapter.getMonth(d2) && this._dateAdapter.getYear(d1) == this._dateAdapter.getYear(d2));
   }
 
   /** Gets the value that will be used to one cell to another. */

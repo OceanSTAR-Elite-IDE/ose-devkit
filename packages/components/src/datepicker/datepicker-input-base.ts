@@ -2,24 +2,14 @@ import { Subject, Subscription } from 'rxjs';
 
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Directive, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  NgControl,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-} from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { DateAdapter } from '@oceanstar/components/core';
 
 import { DateFilterFn } from './datepicker-control';
 import { ExtractDateTypeFromSelection, NcDateSelectionModel } from './selections';
 
 @Directive()
-export abstract class NcDatePickerInputBase<S, D = ExtractDateTypeFromSelection<S>>
-  implements OnInit, OnDestroy, ControlValueAccessor, Validator
-{
+export abstract class NcDatePickerInputBase<S, D = ExtractDateTypeFromSelection<S>> implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   ngControl!: NgControl | null;
 
   private _value!: D | null;
@@ -186,18 +176,14 @@ export abstract class NcDatePickerInputBase<S, D = ExtractDateTypeFromSelection<
   private _minValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const controlValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(control.value));
     const min = this._getMinDate();
-    return !min || !controlValue || this._dateAdapter.compareDate(min, controlValue) <= 0
-      ? null
-      : { NcDatePickerMin: { min: min, actual: controlValue } };
+    return !min || !controlValue || this._dateAdapter.compareDate(min, controlValue) <= 0 ? null : { NcDatePickerMin: { min: min, actual: controlValue } };
   };
 
   /** The form control validator for the max date. */
   private _maxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const controlValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(control.value));
     const max = this._getMaxDate();
-    return !max || !controlValue || this._dateAdapter.compareDate(max, controlValue) >= 0
-      ? null
-      : { NcDatePickerMax: { max: max, actual: controlValue } };
+    return !max || !controlValue || this._dateAdapter.compareDate(max, controlValue) >= 0 ? null : { NcDatePickerMax: { max: max, actual: controlValue } };
   };
 
   /** Gets the base validator functions. */

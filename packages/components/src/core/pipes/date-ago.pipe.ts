@@ -12,7 +12,6 @@ const INTERVALS: { [key: string]: number } = {
 
 @Pipe({
   name: 'dateAgo',
-  standalone: true,
 })
 export class DateAgoPipe implements PipeTransform {
   transform(value: any, args?: any): any {

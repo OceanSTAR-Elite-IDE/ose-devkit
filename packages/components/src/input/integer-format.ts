@@ -87,9 +87,7 @@ export class NcIntegerFormat implements AfterViewInit {
     } else if (this._specialKeys.indexOf(event.key) > -1) {
       return;
     } else {
-      const matches = this.allowNegative
-        ? event.key.match(this._regex.allIntegal)
-        : event.key.match(this._regex.positiveIntegal);
+      const matches = this.allowNegative ? event.key.match(this._regex.allIntegal) : event.key.match(this._regex.positiveIntegal);
       if (!matches) {
         event.preventDefault();
       }

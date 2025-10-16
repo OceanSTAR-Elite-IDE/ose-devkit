@@ -10,14 +10,18 @@
   <div
     class="nc-overlay-container {{paddingClass}} {{overlayClass}}"
     [class.nospacing]="nospacing"
-    (@fade.done)="onAnimationDone($event)"
-    (@fade.start)="onAnimationStart($event)"
+    animate.enter="animate-fade-in"
+    animate.leave="animate-fade-out"
+    (animationstart)="onAnimationStart($event)"
+    (animationend)="onAnimationDone($event)"
     (click)="$event.stopPropagation()"
     (mouseenter)="overlayEnter.emit($event)"
     (mouseleave)="overlayLeave.emit($event)"
-    [@fade]>
+    >
     <div class="nc-overlay-shadow"></div>
-    <div *ngIf="arrow" class="nc-overlay-arrow"></div>
+    @if(arrow) {
+      <div class="nc-overlay-arrow"></div>
+    }
     <div class="nc-overlay-pane">
       <ng-content></ng-content>
     </div>

@@ -1,13 +1,5 @@
 import { Directive, Inject, InjectionToken, Injector, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { DateAdapter } from '@oceanstar/components/core';
 
 import { DateFilterFn } from './datepicker-control';
@@ -78,9 +70,7 @@ export class NcDateRangeStart<D> extends NcDateRangePart<D> {
   private _startValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const start = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(control.value));
     const end = this._model ? this._model.selection.end : null;
-    return !start || !end || this._dateAdapter.compareDate(start, end) <= 0
-      ? null
-      : { NcDateRangeStartInvalid: { end: end, actual: start } };
+    return !start || !end || this._dateAdapter.compareDate(start, end) <= 0 ? null : { NcDateRangeStartInvalid: { end: end, actual: start } };
   };
 
   protected _assignValueToModel(value: D): void {
@@ -112,9 +102,7 @@ export class NcDateRangeEnd<D> extends NcDateRangePart<D> {
   private _endValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const end = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(control.value));
     const start = this._model ? this._model.selection.start : null;
-    return !end || !start || this._dateAdapter.compareDate(end, start) >= 0
-      ? null
-      : { NcDateRangeEndInvalid: { start: start, actual: end } };
+    return !end || !start || this._dateAdapter.compareDate(end, start) >= 0 ? null : { NcDateRangeEndInvalid: { start: start, actual: end } };
   };
 
   protected _assignValueToModel(value: D): void {

@@ -50,6 +50,9 @@ export class NcDatePickerCalendar<D> implements AfterContentInit, OnChanges, OnD
   /** Whether the calendar should be started in month or year view. */
   @Input() startView: NcDatePickerViewType = 'month';
 
+  /** Whether the calendar is in month selection mode. */
+  @Input() monthSelectionMode: boolean = false;
+
   private _startAt!: D | null;
 
   @Input()
@@ -120,9 +123,7 @@ export class NcDatePickerCalendar<D> implements AfterContentInit, OnChanges, OnD
 
   @Output() readonly viewChanged: EventEmitter<NcDatePickerViewType> = new EventEmitter<NcDatePickerViewType>(true);
 
-  @Output() readonly _userSelection: EventEmitter<NcCalendarUserEvent<D | null>> = new EventEmitter<
-    NcCalendarUserEvent<D | null>
-  >();
+  @Output() readonly _userSelection: EventEmitter<NcCalendarUserEvent<D | null>> = new EventEmitter<NcCalendarUserEvent<D | null>>();
 
   @ViewChild(NcCalendarMonth) monthView!: NcCalendarMonth<D>;
 
@@ -249,6 +250,11 @@ export class NcDatePickerCalendar<D> implements AfterContentInit, OnChanges, OnD
   /** Handles month selection in the year view. */
   _monthSelectedInYearView(normalizedMonth: D) {
     this.monthSelected.emit(normalizedMonth);
+
+    // 在月份选择模式下，直接触发用户选择事件
+    if (this.monthSelectionMode) {
+      this._userSelection.emit({ value: normalizedMonth, event: null as any });
+    }
   }
 
   /** Handles year/month selection in the multi-year/year views. */

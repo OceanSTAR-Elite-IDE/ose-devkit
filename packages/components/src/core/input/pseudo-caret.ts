@@ -8,13 +8,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      right: var(--nc-pseudo-caret-padding);
       font-size: 1em;
-      line-height: 1.5rem;
+      min-height: 1.5em;
       color: var(--nc-input-color-placeholder);
       pointer-events: none;
     }
   `,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'nc-pseudo-caret',
+  },
 })
 export class NcPseudoCaret {}

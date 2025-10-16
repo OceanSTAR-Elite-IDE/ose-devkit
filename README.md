@@ -1,42 +1,103 @@
-# GitLab to GitHub Issue Migration Tool
+<p align="center">
+  <a href="https://www.chromatic.com/">
+    <img alt="Chromatic" src="https://avatars2.githubusercontent.com/u/24584319?s=200&v=4" width="60" />
+  </a>
+</p>
 
-这个工具可以帮助你将 GitLab 项目中的 issues 迁移到 GitHub 仓库。
+<h1 align="center">
+  Chromatic's Intro to Storybook Angular template
+</h1>
 
-## 前提条件
+This template ships with the main Angular and Storybook configuration files you'll need to get up and running fast.
 
-1. Node.js 环境
-2. GitLab 个人访问令牌 (Personal Access Token)
-3. GitHub 个人访问令牌 (Personal Access Token)
+## 🚅 Quick start
 
-## 安装
+1.  **Create the application.**
 
-1. 克隆此仓库
-2. 安装依赖：
-```bash
-npm install
-```
+    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
 
-## 配置
+    ```shell
+    # Clone the template
+    npx degit chromaui/intro-storybook-angular-template taskbox
+    ```
 
-1. 复制 `.env.example` 文件为 `.env`
-2. 在 `.env` 文件中填入以下信息：
-   - GitLab 个人访问令牌
-   - GitLab 项目 ID
-   - GitHub 个人访问令牌
-   - GitHub 用户名
-   - GitHub 仓库名
+1.  **Install the dependencies.**
 
-## 使用方法
+    Navigate into your new site’s directory and install the necessary dependencies.
 
-运行以下命令开始迁移：
+    ```shell
+    # Navigate to the directory
+    cd taskbox/
 
-```bash
-npm start
-```
+    # Install the dependencies
+    npm install
+    ```
 
-## 注意事项
+1.  **Open the source code and start editing!**
 
-- 确保你有足够的权限访问源 GitLab 项目和目标 GitHub 仓库
-- 迁移过程中会保留 issue 的标题、描述和标签
-- 为了避免 API 限制，每个 issue 创建之间会有 1 秒的延迟
-- 建议在迁移前备份重要数据
+    Open the `taskbox` directory in your code editor of choice and building your first component!
+
+1.  **Browse your stories!**
+
+    Run `npm run storybook` to see your component's stories at `http://localhost:6006`.
+
+## 🔎 What's inside?
+
+A quick look at the top-level files and directories included with this template.
+
+    .
+    ├── .storybook
+    ├── .vscode
+    ├── node_modules
+    ├── public
+    ├── src
+    ├── .editorconfig
+    ├── .gitignore
+    ├── angular.json
+    ├── LICENSE
+    ├── package-lock.json
+    ├── package.json
+    ├── tsconfig.app.json
+    ├── tsconfig.json
+    ├── tsconfig.spec.json
+    └── README.md
+
+1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/react/configure/overview) files.
+
+2.  **`.vscode`**: This directory contains [Visual Studio Code](https://code.visualstudio.com/) specific settings, like recommended extensions.
+
+3.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
+
+4.  **`public`**: This directory will contain the development and production build of the site.
+
+5.  **`src`**: This directory will contain all of the code related to what you will see on your application.
+
+6.  **`.editorconfig`**: This file contains the configurations for [EditorConfig](https://editorconfig.org/).
+
+7.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
+
+8.  **`angular.json`**: This file contains all the configurations required for your Angular project.
+
+9.  **`LICENSE`**: The template is licensed under the MIT licence.
+
+10. **`package-lock.json`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
+
+11. **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
+
+12. **`tsconfig.app.json`**: This file contains auxiliary configurations for your Angular project.
+
+13. **`tsconfig.json`**: This file contains configurations the required configurations for TypeScript.
+
+14. **`tsconfig.spec.json`**: This is a TypeScript configuration file aimed for application testing.
+
+15. **`README.md`**: A text file containing useful reference information about the project.
+
+## Contribute
+
+If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
+
+## Learning Storybook
+
+1. Read our introductory tutorial at [Learn Storybook](https://storybook.js.org/tutorials/intro-to-storybook/angular/en/get-started/).
+
+2. See our official documentation at [Storybook](https://storybook.js.org/).

@@ -1,6 +1,5 @@
 import 'blueimp-load-image';
 
-import { transition, trigger } from '@angular/animations';
 import { BooleanInput, coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
 import {
@@ -16,13 +15,11 @@ import {
   Self,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import {
-  fadeIn,
-  fadeOut,
   NcFileModule,
   NcFileSizeError,
   NcFileTypeError,
@@ -31,12 +28,12 @@ import {
   NcUploadHandler,
   NcUploadRef,
   NcUploadResponse,
-  NcUploadStatus,
+  NcUploadStatus
 } from '@oceanstar/components/core';
 import { NcFormFieldControl } from '@oceanstar/components/forms';
 import { NcModalModule, NcModalService } from '@oceanstar/components/modal';
+import { NcProgressModule } from '@oceanstar/components/progress';
 
-import { NcProgressModule } from '../progress';
 import { DEFAULT_PICTURE_ICONS, NC_PICTURE_ICONS, NtPictureIcons } from './picture-icons';
 
 /**
@@ -91,13 +88,10 @@ export class NcPictureRef<T, E> extends NcUploadRef<T, E> {
   },
   encapsulation: ViewEncapsulation.None,
   providers: [{ provide: NcFormFieldControl, useExisting: NcPicture }],
-  animations: [
-    trigger('fade', [transition('* => void', fadeOut(0.3)), transition('void => *', fadeIn(0.3))]),
-    trigger('fadeOut', [transition('* => void', fadeOut(0.3))]),
-  ],
 })
 export class NcPicture<T, E = string> implements OnInit, ControlValueAccessor, NcFormFieldControl<NcPictureRef<T, E>[]> {
   private _destroyRef = inject(DestroyRef);
+
 
   private _accept = NC_PICTURE_ACCEPTS.join(',');
 

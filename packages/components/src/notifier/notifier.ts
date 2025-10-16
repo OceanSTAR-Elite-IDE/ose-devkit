@@ -52,6 +52,9 @@ const TYPE_COLORS_MAP: { [key: string]: any } = {
   },
 })
 export class NcNotifier implements AfterViewInit {
+  notify(arg0: string, arg1: string) {
+    throw new Error('Method not implemented.');
+  }
   /**
    * Input: Notification object, contains all details necessary to construct the notification
    */
@@ -165,19 +168,12 @@ export class NcNotifier implements AfterViewInit {
       // Are animations enabled?
       if (this.config.animations.enabled && this.config.animations.show.speed > 0) {
         // Get animation data
-        const animationData: NcNotifierAnimationData = this._notifierAnimation.getAnimationData(
-          'show',
-          this.notification,
-        );
+        const animationData: NcNotifierAnimationData = this._notifierAnimation.getAnimationData('show', this.notification);
 
         // Set initial styles (styles before animation), prevents quick flicker when animation starts
         const animatedProperties: Array<string> = Object.keys(animationData.keyframes[0]);
         for (let i: number = animatedProperties.length - 1; i >= 0; i--) {
-          this.renderer.setStyle(
-            this._element,
-            animatedProperties[i],
-            animationData.keyframes[0][animatedProperties[i]],
-          );
+          this.renderer.setStyle(this._element, animatedProperties[i], animationData.keyframes[0][animatedProperties[i]]);
         }
 
         // Animate notification in
@@ -207,10 +203,7 @@ export class NcNotifier implements AfterViewInit {
 
       // Are animations enabled?
       if (this.config.animations.enabled && this.config.animations.hide.speed > 0) {
-        const animationData: NcNotifierAnimationData = this._notifierAnimation.getAnimationData(
-          'hide',
-          this.notification,
-        );
+        const animationData: NcNotifierAnimationData = this._notifierAnimation.getAnimationData('hide', this.notification);
         const animation: Animation = this._element.animate(animationData.keyframes, animationData.options);
         animation.onfinish = () => {
           resolve(); // Done
@@ -266,11 +259,7 @@ export class NcNotifier implements AfterViewInit {
           resolve(); // Done
         };
       } else {
-        this.renderer.setStyle(
-          this._element,
-          'transform',
-          `translate3d( ${horizontalPosition}, ${newElementShift}px, 0 )`,
-        );
+        this.renderer.setStyle(this._element, 'transform', `translate3d( ${horizontalPosition}, ${newElementShift}px, 0 )`);
         this._elementShift = newElementShift;
         resolve(); // Done
       }

@@ -12,9 +12,7 @@ import { DateAdapter } from '@oceanstar/components/core';
 import { DateRange } from './date-selection-model';
 
 /** Injection token used to customize the date range selection behavior. */
-export const NC_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<NcDateRangeSelectionStrategy<any>>(
-  'NC_DATE_RANGE_SELECTION_STRATEGY',
-);
+export const NC_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<NcDateRangeSelectionStrategy<any>>('NC_DATE_RANGE_SELECTION_STRATEGY');
 
 /** Object that can be provided in order to customize the date range selection behavior. */
 export interface NcDateRangeSelectionStrategy<D> {
@@ -84,10 +82,7 @@ export class DefaultNcCalendarRangeStrategy<D> implements NcDateRangeSelectionSt
 }
 
 /** @docs-private */
-export function NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
-  parent: NcDateRangeSelectionStrategy<unknown>,
-  adapter: DateAdapter<unknown>,
-) {
+export function NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(parent: NcDateRangeSelectionStrategy<unknown>, adapter: DateAdapter<unknown>) {
   return parent || new DefaultNcCalendarRangeStrategy(adapter);
 }
 

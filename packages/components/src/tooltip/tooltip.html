@@ -11,8 +11,11 @@
   (overlayEnter)="_onMouseEnter($event)"
   (overlayLeave)="_onMouseLeave($event)"
   (positionChange)="_positionChange($event)">
-  <div class="nc-tooltip-content" *ngIf="template">
-    <ng-container *ngTemplateOutlet="template"></ng-container>
-  </div>
-  <div class="nc-tooltip-content" *ngIf="!template" [innerHtml]="title"></div>
+  @if(template) {
+    <div class="nc-tooltip-content">
+      <ng-container *ngTemplateOutlet="template"></ng-container>
+    </div>
+  } @else {
+    <div class="nc-tooltip-content" [innerHtml]="title"></div>
+  }
 </nc-overlay>

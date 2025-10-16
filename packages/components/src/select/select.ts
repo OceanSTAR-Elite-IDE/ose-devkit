@@ -1,7 +1,6 @@
 import { defer, merge, Observable } from 'rxjs';
 import { filter, startWith, switchMap, take, takeUntil } from 'rxjs/operators';
 
-import { transition, trigger } from '@angular/animations';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -29,10 +28,17 @@ import {
   Self,
   ViewChild,
   ViewEncapsulation,
+  OnInit,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { fadeIn, fadeOut, NC_OPTION_PARENT, NcOption, NcOptionParent, NcOptionSelectionChange, NcPseudoInputModule } from '@oceanstar/components/core';
+import {
+  NC_OPTION_PARENT,
+  NcOption,
+  NcOptionParent,
+  NcOptionSelectionChange,
+  NcPseudoInputModule,
+} from '@oceanstar/components/core';
 import { NcFormFieldControl } from '@oceanstar/components/forms';
 import { BOTTOM_LEFT, NcOverlay, NcOverlayModule, TOP_LEFT } from '@oceanstar/components/overlay';
 
@@ -50,11 +56,18 @@ export function getNcSelectNonFunctionValueError() {
   return Error('`compareWith` must be a function.');
 }
 
+export type NcSelectFilterType = (input: string, option: NcOption) => boolean;
+
 export class NcSelectChange {
   constructor(
     public source: NcSelect,
     public value: any,
   ) {}
+}
+
+export enum NcSelectDisplayType {
+  Value = 'value',
+  Content = 'content',
 }
 
 @Component({
@@ -67,13 +80,13 @@ export class NcSelectChange {
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [trigger('fade', [transition('* => void', fadeOut(0.15)), transition('void => *', fadeIn(0.15))])],
   host: {
     class: 'nc-select',
     '(window:resize)': 'onResize()',
+    '(focus)': '_onInputFocus($event)',
   },
 })
-export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptionParent, NcFormFieldControl<any> {
+export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptionParent, NcFormFieldControl<any>, OnInit {
   private _destroyRef = inject(DestroyRef);
 
   readonly origin: CdkOverlayOrigin;
@@ -106,6 +119,19 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
     return this._selectionModel.selected[0].label;
   }
 
+  get displayContent(): string {
+    if (this.empty) {
+      return '';
+    }
+
+    if (this._multiple) {
+      const selectedOptions = this._selectionModel.selected.map(option => option.innerHtml);
+      return selectedOptions.join(', ');
+    }
+
+    return this._selectionModel.selected[0].innerHtml;
+  }
+
   get empty(): boolean {
     return !this._selectionModel || this._selectionModel.isEmpty();
   }
@@ -118,6 +144,20 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
 
   get focused(): boolean {
     return this._focused;
+  }
+
+  private _displayType = NcSelectDisplayType.Value;
+
+  @Input()
+  get displayType(): NcSelectDisplayType {
+    return this._displayType;
+  }
+  set displayType(value: NcSelectDisplayType | string) {
+    if (value === 'content') {
+      this._displayType = NcSelectDisplayType.Content;
+    } else {
+      this._displayType = NcSelectDisplayType.Value;
+    }
   }
 
   private _disabled = false;
@@ -172,13 +212,13 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
     this._multiple = coerceBooleanProperty(value);
   }
 
-  private _filter!: (keyword: string, option: NcOption) => boolean;
+  private _filter!: NcSelectFilterType;
 
   @Input()
   get filter() {
     return this._filter;
   }
-  set filter(value: (input: string, option: NcOption) => boolean) {
+  set filter(value: NcSelectFilterType | BooleanInput) {
     if (typeof value === 'function') {
       this._filter = value;
     } else if (coerceBooleanProperty(value)) {
@@ -247,7 +287,7 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
   }
 
   readonly optionSelectionChanges: Observable<NcOptionSelectionChange> = defer(() => {
-    const options = this.options;
+    const { options } = this;
 
     if (options) {
       return options.changes.pipe(
@@ -298,8 +338,8 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
 
   _onSearch(event: KeyboardEvent) {
     if (this.overlay.opened && this.filter && !this.disabled) {
-      const target: any = event.target;
-      this.options.forEach(option => (option.hidden = !this.filter(target.value, option)));
+      const { target }: any = event;
+      this.options.forEach(option => (option.hidden = !this._filter(target.value, option)));
     }
   }
 
@@ -337,9 +377,12 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
     event.stopPropagation();
   }
 
-  _onInputFocus() {
+  _onInputFocus(event: Event) {
     this._focused = true;
+    // 当有 filter 时，不自动打开下拉选项，只有点击时才打开
+    // if (!this.filter) {
     this.overlay.markOpen();
+    // }
   }
 
   _onInputBlur() {
@@ -397,7 +440,7 @@ export class NcSelect implements AfterContentInit, ControlValueAccessor, NcOptio
 
   /** Handles keyboard events when the selected is open. */
   private _handleOpenKeydown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+    const { keyCode } = event;
     const isArrowKey = keyCode === DOWN_ARROW || keyCode === UP_ARROW;
     const manager = this._keyManager;
     if (keyCode === HOME || keyCode === END) {

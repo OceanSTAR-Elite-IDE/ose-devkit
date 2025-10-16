@@ -18,6 +18,8 @@ export abstract class NcFormFieldControl<T> {
 
   readonly disabled?: BooleanInput;
 
+  readonly readonly?: BooleanInput;
+
   getErrors?(): ValidationErrors | null;
 
   focus?(): void;

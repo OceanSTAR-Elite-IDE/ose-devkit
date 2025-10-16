@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "picture",
-    "umdId": "nc.components.picture"
-  }
-}

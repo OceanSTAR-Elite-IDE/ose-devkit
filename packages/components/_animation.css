@@ -1,0 +1,199 @@
+@theme {
+  --nc-animation-duration: 0.15s;
+  --animate-fade-in: nc-fade-in var(--nc-animation-duration) ease forwards;
+  --animate-fade-in-down: nc-fade-in-down var(--nc-animation-duration) ease forwards;
+  --animate-fade-in-left: nc-fade-in-left var(--nc-animation-duration) ease forwards;
+  --animate-fade-in-right: nc-fade-in-right var(--nc-animation-duration) ease forwards;
+  --animate-fade-in-up: nc-fade-in-up var(--nc-animation-duration) ease forwards;
+  --animate-fade-out: nc-fade-out var(--nc-animation-duration) ease forwards;
+  --animate-fade-out-down: nc-fade-out-down var(--nc-animation-duration) ease forwards;
+  --animate-fade-out-left: nc-fade-out-left var(--nc-animation-duration) ease forwards;
+  --animate-fade-out-right: nc-fade-out-right var(--nc-animation-duration) ease forwards;
+  --animate-fade-out-up: nc-fade-out-up var(--nc-animation-duration) ease forwards;
+  --animate-slide-in-down: nc-slide-in-down var(--nc-animation-duration) ease forwards;
+  --animate-slide-in-left: nc-slide-in-left var(--nc-animation-duration) ease forwards;
+  --animate-slide-in-right: nc-slide-in-right var(--nc-animation-duration) ease forwards;
+  --animate-slide-in-up: nc-slide-in-up var(--nc-animation-duration) ease forwards;
+  --animate-slide-out-down: nc-slide-out-down var(--nc-animation-duration) ease forwards;
+  --animate-slide-out-left: nc-slide-out-left var(--nc-animation-duration) ease forwards;
+  --animate-slide-out-right: nc-slide-out-right var(--nc-animation-duration) ease forwards;
+  --animate-slide-out-up: nc-slide-out-up var(--nc-animation-duration) ease forwards;
+
+  @keyframes nc-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes nc-fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes nc-fade-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes nc-fade-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes nc-fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes nc-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes nc-fade-out-down {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes nc-fade-out-left {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes nc-fade-out-right {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes nc-fade-out-up {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes nc-slide-in-down {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes nc-slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes nc-slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes nc-slide-in-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes nc-slide-out-down {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes nc-slide-out-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes nc-slide-out-right {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes nc-slide-out-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+}

@@ -96,6 +96,10 @@ export class NcOption implements AfterViewChecked, Highlightable, ListKeyManager
     return this._selected;
   }
 
+  get innerHtml() {
+    return this._element.nativeElement.innerHTML;
+  }
+
   readonly stateChanges = new Subject<void>();
 
   @Output() readonly selectionChange = new EventEmitter<NcOptionSelectionChange>();

@@ -1,5 +1,5 @@
-:root {
-  --nc-badge-color-default: var(--nc-primary-color-rgb);
+@theme {
+  --nc-badge-color-default: var(--nc-primary-color);
   --nc-badge-background-alpha: 0.1;
   --nc-badge-border-width: 0px;
   --nc-badge-border-radius: var(--nc-global-border-radius);
@@ -14,74 +14,77 @@
   --nc-badge-close-radius: 2px;
 }
 
-.nc-badge {
-  --nc-badge-current-color: var(--nc-badge-color-default);
+@layer components {
 
-  display: inline-flex;
-  padding: var(--nc-badge-padding);
-  border-color: rgb(var(--nc-badge-current-color));
-  border-width: var(--nc-badge-border-width);
-  border-style: solid;
-  border-radius: var(--nc-badge-border-radius);
-  outline-width: var(--nc-badge-outline-width);
-  outline-style: var(--nc-badge-outline-style);
-  outline-color: rgb(var(--nc-badge-current-color) / var(--nc-badge-outline-alpha));
-  color: rgb(var(--nc-badge-current-color));
-  font-size: var(--nc-badge-font-size);
-  line-height: var(--nc-badge-line-height);
-  background-color: rgb(var(--nc-badge-current-color) / var(--nc-badge-background-alpha));
-  column-gap: 4px;
-  align-items: center;
-}
+  .nc-badge {
+    --nc-badge-current-color: var(--nc-badge-color-default);
 
-.nc-badge svg.nc-badge-dot {
-  width: var(--nc-badge-dot-size);
-  height: var(--nc-badge-dot-size);
-  fill: rgb(var(--nc-badge-current-color));
-  border-radius: 50%;
-  display: none;
-}
+    display: inline-flex;
+    padding: var(--nc-badge-padding);
+    border-color: var(--nc-badge-current-color);
+    border-width: var(--nc-badge-border-width);
+    border-style: solid;
+    border-radius: var(--nc-badge-border-radius);
+    outline-width: var(--nc-badge-outline-width);
+    outline-style: var(--nc-badge-outline-style);
+    outline-color: oklch(from var(--nc-badge-current-color) l c h / var(--nc-badge-outline-alpha));
+    color: var(--nc-badge-current-color);
+    font-size: var(--nc-badge-font-size);
+    line-height: var(--nc-badge-line-height);
+    background-color: oklch(from var(--nc-badge-current-color) l c h / var(--nc-badge-background-alpha));
+    column-gap: 4px;
+    align-items: center;
+  }
 
-.nc-badge.nc-badge-dotted .nc-badge-dot {
-  display: inline-block;
-}
+  .nc-badge .nc-badge-dot {
+    width: var(--nc-badge-dot-size);
+    height: var(--nc-badge-dot-size);
+    background-color: var(--nc-badge-current-color);
+    border-radius: 50%;
+    display: none;
+  }
 
-.nc-badge .nc-badge-close {
-  display: none;
-  position: relative;
-  width: var(--nc-badge-close-size);
-  height: var(--nc-badge-close-size);
-  stroke: rgb(var(--nc-badge-current-color) / 0.5);
-  border-radius: var(--nc-badge-close-radius);
-  margin-right: -0.25em;
-}
+  .nc-badge.nc-badge-dotted .nc-badge-dot {
+    display: inline-flex;
+  }
 
-.nc-badge .nc-badge-close:hover {
-  stroke: rgb(var(--nc-badge-current-color));
-  background-color: rgb(var(--nc-badge-current-color) / 0.2);
-}
+  .nc-badge .nc-badge-close {
+    display: none;
+    position: relative;
+    width: var(--nc-badge-close-size);
+    height: var(--nc-badge-close-size);
+    stroke: oklch(from var(--nc-badge-current-color) l c h / 0.5);
+    border-radius: var(--nc-badge-close-radius);
+    margin-right: -0.25em;
+  }
 
-.nc-badge.nc-badge-observed .nc-badge-close {
-  display: inline-block;
-}
+  .nc-badge .nc-badge-close:hover {
+    stroke: var(--nc-badge-current-color);
+    background-color: oklch(from var(--nc-badge-current-color) l c h / 0.2);
+  }
 
-.nc-badge.nc-badge-reverse {
-  outline-color: var(--nc-badge-current-color);
-  background-color: unset;
-}
+  .nc-badge.nc-badge-observed .nc-badge-close {
+    display: inline-flex;
+  }
 
-.nc-badge.nc-badge-secondary {
-  --nc-badge-current-color: var(--nc-secondary-color-rgb);
-}
+  .nc-badge.nc-badge-reverse {
+    outline-color: var(--nc-badge-current-color);
+    background-color: unset;
+  }
 
-.nc-badge.nc-badge-success {
-  --nc-badge-current-color: var(--nc-success-color-rgb);
-}
+  .nc-badge.nc-badge-secondary {
+    --nc-badge-current-color: var(--nc-secondary-color);
+  }
 
-.nc-badge.nc-badge-danger {
-  --nc-badge-current-color: var(--nc-danger-color-rgb);
-}
+  .nc-badge.nc-badge-success {
+    --nc-badge-current-color: var(--nc-success-color);
+  }
 
-.nc-badge.nc-badge-warning {
-  --nc-badge-current-color: var(--nc-warning-color-rgb);
+  .nc-badge.nc-badge-danger {
+    --nc-badge-current-color: var(--nc-danger-color);
+  }
+
+  .nc-badge.nc-badge-warning {
+    --nc-badge-current-color: var(--nc-warning-color);
+  }
 }

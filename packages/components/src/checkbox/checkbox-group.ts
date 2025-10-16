@@ -41,7 +41,9 @@ let uniqueId = 0;
       display: block;
     }
   `,
-  providers: [{ provide: NcFormFieldControl, useExisting: NcCheckboxGroup }],
+  providers: [
+    { provide: NcFormFieldControl, useExisting: NcCheckboxGroup }
+  ],
   host: {
     class: 'nc-checkbox-group',
   },
@@ -163,9 +165,7 @@ export class NcCheckboxGroup<T> implements ControlValueAccessor, AfterViewInit, 
   private _resetCheckboxs() {
     const changedOrDestroyed = this.checkboxes.changes;
 
-    this.checkedChanges
-      .pipe(takeUntilDestroyed(this._destroyRef), takeUntil(changedOrDestroyed))
-      .subscribe(() => this._setValues());
+    this.checkedChanges.pipe(takeUntilDestroyed(this._destroyRef), takeUntil(changedOrDestroyed)).subscribe(() => this._setValues());
 
     merge(...this.checkboxes.map(item => item.change))
       .pipe(takeUntilDestroyed(this._destroyRef), takeUntil(changedOrDestroyed))

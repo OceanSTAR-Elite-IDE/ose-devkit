@@ -1,6 +1,8 @@
-.nc-tree {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  position: relative;
+@layer components {
+  .nc-tree {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+  }
 }

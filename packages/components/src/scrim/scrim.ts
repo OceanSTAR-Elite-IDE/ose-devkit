@@ -1,4 +1,3 @@
-import { transition, trigger } from '@angular/animations';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
@@ -15,7 +14,6 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { fadeIn, fadeOut } from '@oceanstar/components/core';
 
 import { NC_SCRIM_CONTAINER, NcScrimContainer } from './scrim-container';
 
@@ -24,7 +22,6 @@ import { NC_SCRIM_CONTAINER, NcScrimContainer } from './scrim-container';
   selector: '[nc-scrim], nc-scrim',
   templateUrl: 'scrim.html',
   encapsulation: ViewEncapsulation.None,
-  animations: [trigger('fade', [transition('void => *', fadeIn(0.15)), transition('* => void', fadeOut(0.15))])],
   host: {
     class: 'nc-scrim',
     '[class.nc-scrim-visible]': 'isOpen',

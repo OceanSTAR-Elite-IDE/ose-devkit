@@ -1,6 +1,6 @@
 <ng-container *ngIf="isOpen">
-  <div class="nc-scrim-animation">
+  <div class="nc-scrim-animation" animate.enter="animate-fade-in" animate.leave="animate-fade-out">
     <div class="nc-scrim-loading"></div>
   </div>
-  <h3 class="nc-scrim-text">{{ text }}</h3>
+  <h3 class="nc-scrim-text" animate.enter="animate-fade-in" animate.leave="animate-fade-out">{{ text }}</h3>
 </ng-container>

@@ -1,0 +1,37 @@
+{
+  "name": "@oceanstar/components",
+  "version": "1.0.0",
+  "description": "Enterprise Angular UI Components Library",
+  "main": "./fesm2022/oceanstar-components.mjs",
+  "module": "./fesm2022/oceanstar-components.mjs",
+  "typings": "./index.d.ts",
+  "type": "module",
+  "peerDependencies": {
+    "@angular/animations": "^20.0.0",
+    "@angular/cdk": "^20.0.0",
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "rxjs": "^7.8.0"
+  },
+  "keywords": [
+    "angular",
+    "components",
+    "ui",
+    "library",
+    "oceanstar",
+    "enterprise"
+  ],
+  "author": "OceanStar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oceanstar/components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oceanstar/components/issues"
+  },
+  "homepage": "https://github.com/oceanstar/components#readme",
+  "sideEffects": false
+}

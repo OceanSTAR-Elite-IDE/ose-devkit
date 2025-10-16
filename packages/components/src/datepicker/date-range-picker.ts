@@ -1,4 +1,3 @@
-import { transition, trigger } from '@angular/animations';
 import { A11yModule } from '@angular/cdk/a11y';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { PortalModule } from '@angular/cdk/portal';
@@ -19,32 +18,15 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlContainer, NgControl } from '@angular/forms';
-import {
-  DateAdapter,
-  fadeIn,
-  fadeOut,
-  NC_DATE_FORMATS,
-  NcDateFormats,
-  NcPseudoInputModule,
-} from '@oceanstar/components/core';
+import { DateAdapter, NC_DATE_FORMATS, NcDateFormats, NcPseudoInputModule } from '@oceanstar/components/core';
 import { NcFormFieldControl } from '@oceanstar/components/forms';
 
-import { NcOverlayModule } from '../overlay';
-import {
-  NC_DATE_RANGE_PICKER_PARENT,
-  NcDateRangeEnd,
-  NcDateRangePickerParent,
-  NcDateRangeStart,
-} from './date-range-parts';
+import { NcOverlayModule } from '@oceanstar/components/overlay';
+import { NC_DATE_RANGE_PICKER_PARENT, NcDateRangeEnd, NcDateRangePickerParent, NcDateRangeStart } from './date-range-parts';
 import { NcDatePickerBase } from './datepicker-base';
 import { NC_DATE_PICKER_CONTROL } from './datepicker-control';
 import { NC_DATEPICKER_ICONS, NcDatePickerIcons } from './datepicker-icons';
-import {
-  DateRange,
-  NC_CALENDAR_RANGE_STRATEGY_PROVIDER,
-  NC_RANGE_DATE_SELECTION_MODEL_PROVIDER,
-  NcDateSelectionModel,
-} from './selections';
+import { DateRange, NC_CALENDAR_RANGE_STRATEGY_PROVIDER, NC_RANGE_DATE_SELECTION_MODEL_PROVIDER, NcDateSelectionModel } from './selections';
 
 let datepickerUid = 0;
 
@@ -58,7 +40,6 @@ let datepickerUid = 0;
     class: 'nc-datepicker nc-date-range-picker',
     '(click)': '_onClick($event)',
   },
-  animations: [trigger('fade', [transition('* => void', fadeOut(0.15)), transition('void => *', fadeIn(0.15))])],
   providers: [
     { provide: NcFormFieldControl, useExisting: NcDateRangePicker },
     { provide: NC_DATE_PICKER_CONTROL, useExisting: NcDateRangePicker },

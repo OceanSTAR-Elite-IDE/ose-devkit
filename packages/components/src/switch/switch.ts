@@ -12,6 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 let uniqueId = 0;
 
@@ -24,16 +25,27 @@ export class NcSwitchChange<T> {
 
 @Component({
   selector: 'nc-switch',
-  templateUrl: 'switch.html',
+  template: `
+    <span class="nc-switch-toggle"></span>
+    <input
+      class="nc-switch-input"
+      [attr.id]="id"
+      [checked]="checked"
+      [disabled]="disabled"
+      [tabIndex]="tabIndex"
+      (change)="_onInteractionEvent($event)"
+      (click)="_onInputClick($event)"
+      type="checkbox" />
+  `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'nc-switch',
-    '[class.nt-switch-checked]': 'checked',
-    '[class.nt-switch-disabled]': 'disabled',
-    '[class.nt-switch-circle]': 'circle',
+    '[class.nc-switch-checked]': 'checked',
+    '[class.nc-switch-disabled]': 'disabled',
   },
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: NcSwitch, multi: true }],
+  imports: [CommonModule],
 })
 export class NcSwitch<T> implements ControlValueAccessor {
   readonly id: string = `nc-switch-${uniqueId++}`;

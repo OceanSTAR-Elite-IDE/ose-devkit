@@ -1,14 +1,28 @@
-<div cdkTrapFocus>
-  <nc-datepicker-calendar
-    [comparisonEnd]="comparisonEnd"
-    [comparisonStart]="comparisonStart"
-    [dateClass]="datepicker.dateClass"
-    [dateFilter]="datepicker.dateFilter"
-    [id]="datepicker.id"
-    [maxDate]="datepicker.max"
-    [minDate]="datepicker.min"
-    [selected]="_getSelected()"
-    [startAt]="datepicker.startAt"
-    (_userSelection)="_handleUserSelection($event)">
-  </nc-datepicker-calendar>
+<div [ngClass]="datepicker.unit === 'time' ? 'block' : 'flex'" cdkTrapFocus>
+  <div *ngIf="datepicker.unit !== 'time'" class="flex-shrink-0">
+    <nc-datepicker-calendar
+      [comparisonEnd]="comparisonEnd"
+      [comparisonStart]="comparisonStart"
+      [dateClass]="datepicker.dateClass"
+      [dateFilter]="datepicker.dateFilter"
+      [id]="datepicker.id"
+      [maxDate]="datepicker.max"
+      [minDate]="datepicker.min"
+      [monthSelectionMode]="datepicker.unit === 'month'"
+      [selected]="_getSelected()"
+      [startAt]="datepicker.startAt"
+      [startView]="_getCalendarStartView()"
+      (_userSelection)="_handleUserSelection($event)">
+    </nc-datepicker-calendar>
+  </div>
+
+  <lib-time-picker
+    *ngIf="_shouldShowTimePicker()"
+    [class]="datepicker.unit === 'time' ? 'border-l-0' : 'h-[220px]'"
+    [hour]="_getSelectedHour()"
+    [minute]="_getSelectedMinute()"
+    (hourSelected)="_onTimeChange($event, 'hour')"
+    (minuteSelected)="_onTimeChange($event, 'minute')"
+    (timeChange)="_onTimeChange($event)">
+  </lib-time-picker>
 </div>

@@ -6,7 +6,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   template: `<ng-content select="nc-button" />`,
   encapsulation: ViewEncapsulation.None,
   host: {
-    '[class]': 'nc-button-group',
+    class: 'nc-button-group',
   },
 })
 export class NcButtonGroup {

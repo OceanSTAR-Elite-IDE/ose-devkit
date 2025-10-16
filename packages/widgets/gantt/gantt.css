@@ -1,0 +1,300 @@
+:root {
+  --nc-gantt-bar-progress-color: #3b82f6;
+  --nc-gantt-bar-progress-opacity: 0.9;
+  --nc-gantt-bar-progress-radius: 3px;
+  --nc-gantt-border-color: #e5e7eb;
+  --nc-gantt-header-background: #f9fafb;
+  --nc-gantt-header-text-color: #475569;
+  --nc-gantt-shadow: 0 0 0 1px var(--nc-gantt-border-color);
+  --nc-gantt-transition-duration: 0.2s;
+  --nc-gantt-z-index-table: 20;
+  --nc-gantt-z-index-header: 10;
+
+  --nc-gantt-row-border: 1px solid var(--nc-gantt-border-color);
+
+  --nc-gantt-body-row-height: 28px;
+
+  --nc-gantt-calendar-cell-width-daily: 30px;
+  --nc-gantt-calendar-cell-width-weekly: 128px;
+  --nc-gantt-calendar-cell-width-monthly: 184px;
+
+  --nc-gantt-calendar-cell-holiday-color: #ef4444;
+
+  --nc-gantt-calendar-pre-fill-value: 0;
+}
+
+/* 定义甘特图视口的样式，包含整体布局和滚动条样式 */
+.nc-gantt {
+  /* font-size: 1rem; */
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  overflow: auto;
+  border: 1px solid var(--nc-gantt-border-color);
+}
+
+.nc-gantt.nc-gantt-daily {
+  --nc-gantt-calendar-cell-width: var(--nc-gantt-calendar-cell-width-daily);
+}
+
+.nc-gantt.nc-gantt-weekly {
+  --nc-gantt-calendar-cell-width: var(--nc-gantt-calendar-cell-width-weekly);
+}
+
+.nc-gantt.nc-gantt-monthly {
+  --nc-gantt-calendar-cell-width: var(--nc-gantt-calendar-cell-width-monthly);
+}
+
+/* 定义甘特图表格容器 */
+.nc-gantt-table-container {
+  flex-shrink: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  min-height: 100%;
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: var(--nc-gantt-z-index-table);
+  box-shadow: var(--nc-gantt-shadow);
+}
+
+/* 定义甘特图表格的样式，包括固定宽度、粘性定位和阴影效果 */
+.nc-gantt-table {
+  flex: 1;
+  height: fit-content;
+  min-width: 0; /* 确保表格可以收缩 */
+  width: auto; /* 让表格宽度由内容决定 */
+}
+
+.nc-gantt-table .nc-gantt-table-body {
+  box-shadow: var(--nc-gantt-shadow);
+}
+
+/* 在表格中，定义头部和行的布局方式，以及灵活的宽度分配 */
+.nc-gantt-table .nc-gantt-table-row {
+  display: flex;
+  width: 100%; /* 确保行宽度与表格相同 */
+}
+
+.nc-gantt-table .nc-gantt-table-header-row {
+  height: 100%;
+}
+
+/* 定义表格头部和时间线日历的粘性定位和底部边框，以及背景色 */
+.nc-gantt-table .nc-gantt-table-header,
+.nc-gantt-timeline .nc-gantt-calendar {
+  position: sticky;
+  top: 0;
+  z-index: var(--nc-gantt-z-index-header);
+  border-bottom: 1px solid var(--nc-gantt-border-color);
+  background: var(--nc-gantt-header-background);
+  color: var(--nc-gantt-header-text-color);
+}
+
+/* 防止表格单元格缩小，并定义可伸缩的宽度 */
+.nc-gantt-table .nc-gantt-cell {
+  flex: 1 1 0%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-wrap-mode: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.nc-gantt-table .nc-gantt-cell.nc-gantt-header-cell {
+  font-weight: 600;
+}
+
+.nc-gantt-table .nc-gantt-cell.nc-gantt-fixed-width {
+  flex-shrink: 0;
+  flex: inherit;
+}
+
+/* 定义时间线的伸缩性和阴影效果 */
+.nc-gantt-timeline {
+  flex: 1 1 0%;
+  height: fit-content;
+  min-height: 100%;
+  box-shadow: var(--nc-gantt-shadow);
+  background: white;
+}
+
+/* 开始定义时间线日历的样式 */
+.nc-gantt-calendar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* 在时间线日历中，定义部分的布局和伸缩性 */
+.nc-gantt-calendar .nc-gantt-calendar-part {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: linear-gradient(90deg, var(--nc-gantt-border-color) 1px, transparent 0px);
+  background-size: 100%;
+}
+
+.nc-gantt-calendar .nc-gantt-calendar-part > * {
+  flex: 1 1 0%;
+}
+
+/* 定义时间线日历中的组和单元格的布局和对齐方式 */
+.nc-gantt-calendar .nc-gantt-calendar-group {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.nc-gantt-calendar .nc-gantt-calendar-group-title {
+  font-weight: 600;
+}
+
+.nc-gantt-calendar .nc-gantt-calendar-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  width: var(--nc-gantt-calendar-cell-width);
+}
+
+.nc-gantt-calendar .nc-gantt-calendar-cell-holiday {
+  color: var(--nc-gantt-calendar-cell-holiday-color);
+}
+
+/* 为时间线身体定义背景渐变和高度 */
+.nc-gantt-timeline .nc-gantt-timeline-body {
+  background: linear-gradient(90deg, var(--nc-gantt-border-color) 1px, transparent 0px);
+  height: fit-content;
+  box-shadow: var(--nc-gantt-shadow);
+  background-size: var(--nc-gantt-calendar-cell-width);
+}
+
+/* 定义时间线行的布局和文本溢出处理 */
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: calc(var(--offset-value) * var(--nc-gantt-calendar-cell-width));
+}
+
+.nc-gantt-daily .nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row {
+  --offset-value: var(--offset-value-daily);
+  --width-value: var(--width-value-daily);
+}
+
+.nc-gantt-weekly .nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row {
+  --offset-value: var(--offset-value-weekly);
+  --width-value: var(--width-value-weekly);
+}
+
+.nc-gantt-monthly .nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row {
+  --offset-value: var(--offset-value-monthly);
+  --width-value: var(--width-value-monthly);
+}
+
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row .nc-gantt-timeline-bar {
+  display: flex;
+  align-items: stretch;
+  padding: 0.5rem 0;
+}
+
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row .nc-gantt-timeline-content {
+  display: flex;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row .nc-gantt-timeline-progress {
+  display: flex;
+  opacity: var(--nc-gantt-bar-progress-opacity);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--nc-gantt-bar-progress-color) 10%, transparent);
+  border-radius: var(--nc-gantt-bar-progress-radius);
+  width: calc(var(--width-value) * var(--nc-gantt-calendar-cell-width));
+  cursor: pointer;
+
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row .nc-gantt-timeline-progress:hover {
+  box-shadow: 0 0 0 1px var(--nc-gantt-bar-progress-color);
+}
+
+.nc-gantt-timeline .nc-gantt-timeline-body > .nc-gantt-timeline-row .nc-gantt-timeline-progress > .nc-gantt-timeline-progress-meter {
+  display: flex;
+  background-color: var(--nc-gantt-bar-progress-color);
+  background-image: linear-gradient(
+    -45deg,
+    hsla(0, 0%, 100%, 0.15) 25%,
+    transparent 0,
+    transparent 50%,
+    hsla(0, 0%, 100%, 0.15) 0,
+    hsla(0, 0%, 100%, 0.15) 75%,
+    transparent 0,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+/* 通过隐藏元素之间的边框，创建表格和时间线中的网格线 */
+.nc-gantt-table .nc-gantt-table-body > :not([hidden]) ~ :not([hidden]),
+.nc-gantt-timeline .nc-gantt-timeline-body > :not([hidden]) ~ :not([hidden]) {
+  border-top: var(--nc-gantt-row-border);
+}
+
+.nc-gantt-row {
+  height: var(--nc-gantt-body-row-height);
+}
+
+.nc-gantt-cell-outlet > :not([hidden]) ~ :not([hidden]) {
+  border-left: 1px solid var(--nc-gantt-border-color);
+}
+
+/* 拖拽分隔线样式 */
+.nc-gantt-resizer {
+  width: 3px;
+  height: auto;
+  min-height: 100%;
+  background-color: #e5e7eb;
+  cursor: col-resize;
+  z-index: 100;
+  flex-shrink: 0;
+  position: relative;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nc-gantt-resizer:hover,
+.nc-gantt.resizing .nc-gantt-resizer {
+  background-color: #38bdf8;
+}
+
+.nc-gantt.resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.nc-gantt.resizing .nc-gantt-table,
+.nc-gantt.resizing .nc-gantt-timeline {
+  pointer-events: none;
+}
+
+/* 拖拽滚动相关样式 */
+.nc-gantt.dragging {
+  cursor: grabbing !important;
+  user-select: none;
+}
+
+.nc-gantt-timeline-body {
+  cursor: grab; /* 默认显示可拖拽的鼠标样式 */
+}
+
+.nc-gantt-timeline-body:active {
+  cursor: grabbing; /* 点击时显示正在拖拽的鼠标样式 */
+}

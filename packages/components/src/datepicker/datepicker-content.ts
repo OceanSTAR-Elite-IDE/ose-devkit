@@ -8,6 +8,7 @@
 
 import { Subscription } from 'rxjs';
 
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -20,21 +21,16 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { DateAdapter } from '@oceanstar/components/core';
+import { DateAdapter } from '../core';
 
 import { NcCalendarUserEvent } from './calendar-body';
 import { NcDatePickerCalendar } from './calendar';
 import { NC_DATE_PICKER_CONTROL, NcDatePickerControl } from './datepicker-control';
-import {
-  DateRange,
-  ExtractDateTypeFromSelection,
-  NC_DATE_RANGE_SELECTION_STRATEGY,
-  NcDateRangeSelectionStrategy,
-  NcDateSelectionModel,
-} from './selections';
+import { DateRange, ExtractDateTypeFromSelection, NC_DATE_RANGE_SELECTION_STRATEGY, NcDateRangeSelectionStrategy, NcDateSelectionModel } from './selections';
+import { NcTimePicker } from './time-picker';
 
 @Component({
-  imports: [NcDatePickerCalendar],
+  imports: [CommonModule, NcDatePickerCalendar, NcTimePicker],
   selector: 'nc-datepicker-content',
   templateUrl: 'datepicker-content.html',
   host: {
@@ -82,9 +78,19 @@ export class NcDatePickerContent<S, D = ExtractDateTypeFromSelection<S>> impleme
   }
 
   _handleUserSelection(event: NcCalendarUserEvent<D | null>) {
-    const selection = this._model.selection;
-    const value = event.value;
+    const {selection} = this._model;
+    const {value} = event;
     const isRange = selection instanceof DateRange;
+
+    // 在月份选择模式下，直接处理选择
+    if (this.datepicker.unit === 'month' && value) {
+      // 设置为月份的第一天
+      const jsDate = value as unknown as Date;
+      const firstDayOfMonth = new Date(jsDate.getFullYear(), jsDate.getMonth(), 1);
+      this._model.updateSelection(firstDayOfMonth as unknown as S, this);
+      this.datepicker.overlay.close();
+      return;
+    }
 
     // If we're selecting a range and we have a selection strategy, always pass the value through
     // there. Otherwise don't assign null values to the model, unless we're selecting a range.
@@ -92,14 +98,16 @@ export class NcDatePickerContent<S, D = ExtractDateTypeFromSelection<S>> impleme
     // pressing escape), whereas when selecting a single value it means that the value didn't
     // change. This isn't very intuitive, but it's here for backwards-compatibility.
     if (isRange && this._rangeSelectionStrategy) {
-      const newSelection = this._rangeSelectionStrategy.selectionFinished(
-        value,
-        selection as unknown as DateRange<D>,
-        event.event,
-      );
+      const newSelection = this._rangeSelectionStrategy.selectionFinished(value, selection as unknown as DateRange<D>, event.event);
       this._model.updateSelection(newSelection as unknown as S, this);
     } else if (value && (isRange || !this._dateAdapter.sameDate(value, selection as unknown as D))) {
       this._model.add(value);
+    }
+
+    // 对于 datetime 类型，选择日期后不关闭弹窗，让用户继续选择时间
+    if (this.datepicker.unit === 'datetime') {
+      // 不关闭弹窗，让用户继续选择时间
+      return;
     }
 
     if (!this._model || this._model.isComplete()) {
@@ -109,5 +117,34 @@ export class NcDatePickerContent<S, D = ExtractDateTypeFromSelection<S>> impleme
 
   _getSelected() {
     return this._model.selection as unknown as D | DateRange<D> | null;
+  }
+
+  _onTimeChange(event: { hour: number; minute: number }, type?: 'hour' | 'minute') {
+    this.datepicker.onTimeChange?.('hour', event.hour);
+    this.datepicker.onTimeChange?.('minute', event.minute);
+
+    // 当 unit 为 datetime 且用户选择了分钟时，关闭弹窗
+    if (this.datepicker.unit === 'datetime' && type === 'minute') {
+      this.datepicker.overlay.close();
+    }
+  }
+
+  _shouldShowTimePicker(): boolean {
+    return this.datepicker.unit === 'datetime' || this.datepicker.unit === 'time';
+  }
+
+  _getSelectedHour(): number {
+    return this.datepicker.selectedHour || 0;
+  }
+
+  _getSelectedMinute(): number {
+    return this.datepicker.selectedMinute || 0;
+  }
+
+  _getCalendarStartView(): 'month' | 'year' | 'multi-year' {
+    if (this.datepicker.unit === 'month') {
+      return 'year';
+    }
+    return 'month';
   }
 }

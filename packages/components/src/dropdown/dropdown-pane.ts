@@ -2,16 +2,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ContentObserver } from '@angular/cdk/observers';
-import {
-  AfterContentInit,
-  Component,
-  ElementRef,
-  Inject,
-  InjectionToken,
-  Input,
-  OnDestroy,
-  ViewEncapsulation,
-} from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Inject, InjectionToken, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { NcOverlay } from '@oceanstar/components/overlay';
 
 export declare type NcDropdownPaneSize = '' | 'tiny' | 'small' | 'large';
@@ -73,9 +64,7 @@ export class NcDropdownPane implements AfterContentInit, OnDestroy {
   ) {}
 
   ngAfterContentInit() {
-    this._contentSubscription = this._contentObserver
-      .observe(this._elementRef)
-      .subscribe(() => this._checkContentChange());
+    this._contentSubscription = this._contentObserver.observe(this._elementRef).subscribe(() => this._checkContentChange());
   }
 
   ngOnDestroy() {

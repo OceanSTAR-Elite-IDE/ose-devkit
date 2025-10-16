@@ -1,87 +1,91 @@
-:root {
-  --nc-attachment-item-margin: theme('spacing.4');
-  --nc-attachment-task-color: theme('colors.gray.700');
-  --nc-attachment-task-color-error: theme('colors.red.600');
-  --nc-attachment-task-padding: theme('spacing.2');
-  --nc-attachment-task-background: color-mix(in srgb, theme('colors.blue.500') 10%, transparent);
-  --nc-attachment-task-background-success: color-mix(in srgb, theme('colors.green.500') 10%, transparent);
-  --nc-attachment-task-background-error: color-mix(in srgb, theme('colors.red.500') 10%, transparent);
-  --nc-attachment-font-size: theme('fontSize.xs');
+@theme {
+
+  --nc-attachment-trigger-color: var(--nc-color-primary);
+  --nc-attachment-trigger-color-hover: var(--nc-color-primary-dark);
+  --nc-attachment-disabled-opacity: 0.5;
+  --nc-attachment-transition-duration: 0.3s;
+
+  --nc-attachment-file-padding: theme('padding.3');
+  --nc-attachment-file-shadow: theme('boxShadow.sm');
+
+  --nc-attachment-file-color-normal: theme('colors.gray.300');
+  --nc-attachment-file-color-pending: var(--nc-primary-color);
+  --nc-attachment-file-color-uploading: var(--nc-warning-color);
+  --nc-attachment-file-color-success: var(--nc-success-color);
+  --nc-attachment-file-color-error: var(--nc-danger-color);
+  --nc-attachment-file-border-radius: theme('borderRadius.md');
 }
 
-.nc-attachment {
-  display: block;
-  margin: 0 0 var(--nc-attachment-item-margin);
-}
+@layer components {
+  .nc-attachment {
+    display: block;
+  }
 
-.nc-attachment.disabled .nc-attachment-trigger {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  .nc-attachment .nc-attachment-trigger {
+    color: var(--nc-attachment-trigger-color);
+    cursor: pointer;
+  }
 
-.nc-attachment.readonly .nc-attachment-trigger {
-  display: none;
-}
+  .nc-attachment .nc-attachment-trigger:hover {
+    color: var(--nc-attachment-trigger-color-hover);
+  }
 
-.nc-attachment-item {
-  position: relative;
-  margin-top: calc(var(--nc-attachment-item-margin) * 0.5);
-}
+  .nc-attachment.disabled .nc-attachment-trigger {
+    opacity: var(--nc-attachment-disabled-opacity);
+    cursor: not-allowed;
+  }
 
-.nc-attachment-item:last-child {
-  margin-bottom: var(--nc-attachment-item-margin);
-}
+  .nc-attachment.readonly .nc-attachment-trigger {
+    display: none;
+  }
 
-.nc-attachment-progress {
-  margin-bottom: 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
+  .nc-attachment .nc-attachment-file {
 
-.nc-attachment-task {
-  font-size: var(--nc-attachment-font-size);
-  transition: background 0.5s;
-  display: flex;
-  color: var(--nc-attachment-task-color);
-  background-color: var(--nc-attachment-task-background);
-}
+    --nc-attachment-file-color: var(--nc-attachment-file-color-normal);
 
-.nc-attachment-task > .cell {
-  padding: var(--nc-attachment-task-padding);
-}
+    position: relative;
+    border-radius: var(--nc-attachment-file-border-radius);
+    border: 1px solid oklch(from var(--nc-attachment-file-color) l c h / 0.5);
+    padding: var(--nc-attachment-file-padding);
+    box-shadow: var(--nc-attachment-file-shadow);
+    background-color: oklch(from var(--nc-attachment-file-color) l c h / 0.05);
+  }
 
-.nc-attachment-task .task-info {
-  padding-left: 0;
-  padding-right: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  .nc-attachment .nc-attachment-file.pending {
+    --nc-attachment-file-color: var(--nc-attachment-file-color-pending);
+  }
 
-.nc-attachment-task .task-name {
-  margin-right: 0.5em;
-}
+  .nc-attachment .nc-attachment-file.uploading {
+    --nc-attachment-file-color: var(--nc-attachment-file-color-uploading);
+  }
 
-.nc-attachment-task .task-name:not([href]) {
-  cursor: auto;
-  color: theme('colors.gray.700');
-}
+  .nc-attachment .nc-attachment-file.success {
+    --nc-attachment-file-color: var(--nc-attachment-file-color-success);
+  }
 
-.nc-attachment-task .task-error {
-  color: var(--nc-attachment-task-color-error);
-  margin-left: 0.5em;
-}
+  .nc-attachment .nc-attachment-file.error {
+    border-color: var(--nc-attachment-file-border-color-error);
+  }
 
-.nc-attachment-task .task-action {
-  cursor: pointer;
-}
+  .nc-attachment .file-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+  }
 
-.nc-attachment-task.success {
-  background-color: var(--nc-attachment-task-background-success);
-}
+  .nc-attachment .fade-out {
+    animation: fadeOut var(--nc-attachment-transition-duration) ease-out;
+  }
 
-.nc-attachment-task.error {
-  background-color: var(--nc-attachment-task-background-error);
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
 }

@@ -2,18 +2,26 @@ import type { StorybookConfig } from '@storybook/angular';
 
 const config: StorybookConfig = {
   stories: [
-    // "../src/**/*.mdx", 
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    '../src/**/*.mdx',
+    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'
   ],
-  "addons": [
-    "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
-    "@storybook/addon-interactions"
-  ],
-  "framework": {
-    "name": "@storybook/angular",
-    "options": {}
-  }
+  addons: ['@storybook/addon-docs'],
+  staticDirs: ['../public'],
+  previewHead: (head) => `
+    ${head}
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/brands.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/solid.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/regular.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/light.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/duotone.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/sharp-light.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/sharp-regular.min.css" />
+    <link rel="stylesheet" href="https://kind-bay-07135c000.2.azurestaticapps.net/css/sharp-solid.min.css" />
+  `,
+  framework: {
+    name: '@storybook/angular',
+    options: {},
+  },
 };
 export default config;

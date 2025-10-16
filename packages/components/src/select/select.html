@@ -1,54 +1,65 @@
-<nc-pseudo-input
-  *ngIf="!filter"
-  [style.margin.px]="0"
-  [attr.tabindex]="tabIndex"
-  [value]="displayValue"
-  [placeholder]="placeholder"
-  [disabled]="disabled"
-  (click)="_onInputClick($event)">
-  <nc-pseudo-caret *ngIf="!clearable else clearCaret">
-    <span [class]="icons.caret"></span>
-  </nc-pseudo-caret>
-</nc-pseudo-input>
-<div *ngIf="filter" class="nc-pseudo-input only-caret">
-  <input #inputElement type="text"
-    [style.margin.px]="0"
-    [placeholder]="placeholder"
+@if(filter) {
+  <div class="nc-pseudo-input only-caret">
+    <input
+      class="nc-select-input"
+      [disabled]="disabled"
+      [placeholder]="placeholder"
+      [style.margin.px]="0"
+      [value]="focused && overlay.opened ? '' : displayValue"
+      (blur)="_onInputBlur()"
+      (focus)="_onInputFocus($event)"
+      (keyup)="_onSearch($event)"
+      #inputElement
+      type="text" />
+      @if(!clearable) {
+        <nc-pseudo-caret>
+          <span [class]="icons.caret"></span>
+        </nc-pseudo-caret>
+      } @else {
+        <ng-container *ngTemplateOutlet="clearCaret"></ng-container>
+      }
+  </div>
+} @else {
+  <nc-pseudo-input
+    [attr.tabindex]="tabIndex"
     [disabled]="disabled"
-    [value]="focused && overlay.opened ? '' : displayValue"
-    (focus)="_onInputFocus()"
-    (blur)="_onInputBlur()"
-    (keyup)="_onSearch($event)">
-  <nc-pseudo-caret *ngIf="!clearable else clearCaret">
-    <span [class]="icons.caret"></span>
-  </nc-pseudo-caret>
-</div>
+    [placeholder]="placeholder"
+    [style.margin.px]="0"
+    [value]="displayType === 'content' ? displayContent : displayValue"
+    (click)="_onInputClick($event)">
+    @if(!clearable) {
+    <nc-pseudo-caret>
+      <span [class]="icons.caret"></span>
+    </nc-pseudo-caret>
+    } @else {
+      <ng-container *ngTemplateOutlet="clearCaret"></ng-container>
+    }
+  </nc-pseudo-input>
+}
 <nc-overlay
-  overlayClass="nc-select-overlay"
   [origin]="origin"
   [positionPairs]="_positionPairs"
-  (afterOpen)="_afterOpen($event)"
   (afterClosed)="_afterClosed($event)"
-  (beforeOpen)="_beforeOpen($event)"
+  (afterOpen)="_afterOpen($event)"
   (beforeClosed)="_beforeClosed($event)"
+  (beforeOpen)="_beforeOpen($event)"
+  (keydownEvents)="_handleKeydown($event)"
   (positionChange)="_positionChange($event)"
-  (keydownEvents)="_handleKeydown($event)">
-  <div #paneElement
-    class="nc-select-pane"
-    [class.folded]="state === 'folded'"
-    [style.width.px]="width">
+  overlayClass="nc-select-overlay">
+  <div class="nc-select-pane" [class.folded]="state === 'folded'" [style.width.px]="width" #paneElement>
     <ng-content select="nc-option"></ng-content>
-    <div class="filter-empty" [hidden]="!optionEmpty">
-      {{ filterNotFound }}
-    </div>
+    <div class="nc-select-not-found" [hidden]="!optionEmpty">{{ filterNotFound }}</div>
   </div>
 </nc-overlay>
 
 <ng-template #clearCaret>
-  <nc-pseudo-caret *ngIf="!hasSelectedValue">
-    <span [class]="icons.caret"></span>
-  </nc-pseudo-caret>
-  <nc-pseudo-caret class="nc-select-clear" (click)="_onClear($event)" *ngIf="hasSelectedValue && !disabled">
-    <span [class]="icons.clear"></span>
-  </nc-pseudo-caret>
+  @if(!hasSelectedValue) {
+    <nc-pseudo-caret>
+      <span [class]="icons.caret"></span>
+    </nc-pseudo-caret>
+  } @else if(!disabled) {
+    <nc-pseudo-caret class="nc-select-clear" (click)="_onClear($event)">
+      <span [class]="icons.clear"></span>
+    </nc-pseudo-caret>
+  }
 </ng-template>

@@ -11,5 +11,7 @@ export * from './calendar';
 export * from './month';
 export * from './multi-year';
 export * from './year';
+export * from './time-picker';
+export * from './month-picker-example';
 
 export * from './selections';

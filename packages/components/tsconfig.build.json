@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@oceanstar/components/core": ["./src/core/public-api"],
+      "@oceanstar/components/forms": ["./src/forms/public-api"],
+      "@oceanstar/components/overlay": ["./src/overlay/public-api"]
+    }
+  }
+}

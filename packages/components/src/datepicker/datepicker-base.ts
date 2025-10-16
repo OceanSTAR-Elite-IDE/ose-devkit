@@ -38,9 +38,7 @@ import { ExtractDateTypeFromSelection, NcDateSelectionModel } from './selections
 
 /** Base class for a datepicker. */
 @Directive()
-export abstract class NcDatePickerBase<S, D = ExtractDateTypeFromSelection<S>>
-  implements NcDatePickerControl<D>, AfterViewInit, OnChanges, OnDestroy
-{
+export abstract class NcDatePickerBase<S, D = ExtractDateTypeFromSelection<S>> implements NcDatePickerControl<D>, AfterViewInit, OnChanges, OnDestroy {
   private _overlayToggle = new Subject<boolean>();
 
   tabIndex: number;

@@ -1,7 +1,6 @@
 import { Subscription, SubscriptionLike } from 'rxjs';
 import { debounceTime, delay, filter, switchMap, take } from 'rxjs/operators';
 
-import { AnimationEvent, transition, trigger } from '@angular/animations';
 import { BooleanInput, coerceArray, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange, ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
@@ -25,7 +24,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { fadeIn, fadeOut, fromOutsideClick } from '@oceanstar/components/core';
+import { fromOutsideClick } from '@oceanstar/components/core';
 
 import { getPositionClassName, NC_OVERLAY_POSITION_PAIRS, NcOverlayPosition } from './overlay-positions';
 
@@ -33,7 +32,6 @@ import { getPositionClassName, NC_OVERLAY_POSITION_PAIRS, NcOverlayPosition } fr
   imports: [CommonModule, OverlayModule],
   selector: 'nc-overlay, [nc-overlay]',
   templateUrl: 'overlay.html',
-  animations: [trigger('fade', [transition('void => *', fadeIn(0.15)), transition('* => void', fadeOut(0.15))])],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -252,17 +250,34 @@ export class NcOverlay implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   }
 
   onAnimationStart(event: AnimationEvent): void {
-    if (event.toState === null) {
+    // 防止子元素的动画事件冒泡
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    // Angular 20.2 的 animate.enter 和 animate.leave 会应用 CSS 类名
+    // 实际触发的 animationName 是 @keyframes 定义的名称，即 'nc-fade-in' 或 'nc-fade-out'
+    const animationName = event.animationName;
+
+    if (animationName === 'nc-fade-in' || animationName.includes('fade-in')) {
       this.beforeOpen.next();
-    } else if (event.toState === 'void') {
+    } else if (animationName === 'nc-fade-out' || animationName.includes('fade-out')) {
       this.beforeClosed.next();
     }
   }
 
   onAnimationDone(event: AnimationEvent): void {
-    if (event.toState === null) {
+    // 防止子元素的动画事件冒泡
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    // 检查 animationName 来区分进入和离开动画
+    const animationName = event.animationName;
+
+    if (animationName === 'nc-fade-in' || animationName.includes('fade-in')) {
       this.afterOpen.next();
-    } else if (event.toState === 'void') {
+    } else if (animationName === 'nc-fade-out' || animationName.includes('fade-out')) {
       this.afterClosed.next();
     }
   }

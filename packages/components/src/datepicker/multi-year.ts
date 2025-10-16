@@ -42,8 +42,7 @@ export class NcCalendarMultiYear<D> implements AfterContentInit, OnDestroy {
   }
   set activeDate(value: D) {
     let oldActiveDate = this._activeDate;
-    const validDate =
-      this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
+    const validDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
     this._activeDate = this._dateAdapter.clampDate(validDate, this.minDate, this.maxDate);
 
     if (!isSameMultiYearView(this._dateAdapter, oldActiveDate, this._activeDate, this.minDate, this.maxDate)) {
@@ -157,9 +156,7 @@ export class NcCalendarMultiYear<D> implements AfterContentInit, OnDestroy {
     this.yearSelected.emit(this._dateAdapter.createDate(year, 0, 1));
     let month = this._dateAdapter.getMonth(this.activeDate);
     let daysInMonth = this._dateAdapter.getNumDaysInMonth(this._dateAdapter.createDate(year, month, 1));
-    this.selectedChange.emit(
-      this._dateAdapter.createDate(year, month, Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth)),
-    );
+    this.selectedChange.emit(this._dateAdapter.createDate(year, month, Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth)));
   }
 
   _getActiveCell(): number {
@@ -200,11 +197,7 @@ export class NcCalendarMultiYear<D> implements AfterContentInit, OnDestroy {
     const firstOfYear = this._dateAdapter.createDate(year, 0, 1);
 
     // If any date in the year is enabled count the year as enabled.
-    for (
-      let date = firstOfYear;
-      this._dateAdapter.getYear(date) === year;
-      date = this._dateAdapter.addCalendarDays(date, 1)
-    ) {
+    for (let date = firstOfYear; this._dateAdapter.getYear(date) === year; date = this._dateAdapter.addCalendarDays(date, 1)) {
       if (this.dateFilter(date)) {
         return true;
       }

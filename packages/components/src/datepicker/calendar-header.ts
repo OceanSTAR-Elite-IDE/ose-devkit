@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  forwardRef,
-  Inject,
-  Optional,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, NC_DATE_FORMATS, NcDateFormats } from '@oceanstar/components/core';
 
 import { isSameMultiYearView, yearsPerPage } from './calendar-utils';
@@ -44,10 +36,7 @@ export class NcCalendarHeader<D> {
 
   get _multiYearLabel() {
     const activeYear = this._dateAdapter.getYear(this.calendar.activeDate);
-    const firstYearInView = this._dateAdapter.getYearName(
-      this._dateAdapter.createDate(activeYear - (activeYear % yearsPerPage), 0, 1),
-      'en-US',
-    );
+    const firstYearInView = this._dateAdapter.getYearName(this._dateAdapter.createDate(activeYear - (activeYear % yearsPerPage), 0, 1), 'en-US');
     const lastYearInView = this._dateAdapter.getYearName(
       this._dateAdapter.createDate(activeYear + yearsPerPage - 1 - (activeYear % yearsPerPage), 0, 1),
       'en-US',
@@ -104,10 +93,7 @@ export class NcCalendarHeader<D> {
   /** Whether the two dates represent the same view in the current view mode (month or year). */
   private _isSameView(date1: D, date2: D, viewType: NcDatePickerViewType = 'month'): boolean {
     if (viewType == 'month') {
-      return (
-        this._dateAdapter.getYear(date1) == this._dateAdapter.getYear(date2) &&
-        this._dateAdapter.getMonth(date1) == this._dateAdapter.getMonth(date2)
-      );
+      return this._dateAdapter.getYear(date1) == this._dateAdapter.getYear(date2) && this._dateAdapter.getMonth(date1) == this._dateAdapter.getMonth(date2);
     }
     if (viewType == 'year') {
       return this._dateAdapter.getYear(date1) == this._dateAdapter.getYear(date2);

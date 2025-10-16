@@ -7,7 +7,11 @@ import { NC_VALIDATION_TRANSFOMER, NcValidationTransformer } from './form-valida
 export class NcFormErrorPipe implements PipeTransform {
   constructor(@Inject(NC_VALIDATION_TRANSFOMER) private _transformer: NcValidationTransformer) {}
 
-  transform(value: ValidationErrors, ...args: any[]) {
+  transform(value: ValidationErrors | null, ...args: any[]) {
+    if (!value) {
+      return '';
+    }
+
     return this._transformer.transform(value, ...args);
   }
 }

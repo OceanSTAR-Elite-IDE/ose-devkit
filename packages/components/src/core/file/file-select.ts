@@ -1,6 +1,6 @@
 import { fromEvent } from 'rxjs';
 
-import { BooleanInput, coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
+import { BooleanInput, coerceBooleanProperty, coerceNumberProperty, _isNumberValue } from '@angular/cdk/coercion';
 import {
   DestroyRef,
   Directive,
@@ -19,7 +19,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NcFileError, NcFileSizeError, NcFileTypeError } from './file-select-errors';
 
 @Directive({
-  standalone: false,
   selector: '[ncFileSelect]',
   host: {
     '(click)': 'trigger($event)',
@@ -49,7 +48,11 @@ export class NcFileSelect implements OnInit, OnChanges {
     return this._limitSize;
   }
   set limitSize(value: number) {
-    this._limitSize = coerceNumberProperty(value, 5);
+    if (_isNumberValue(value)) {
+      this._limitSize = Math.abs(coerceNumberProperty(value, Number.MAX_VALUE));
+    } else {
+      this._limitSize = Number.MAX_VALUE;
+    }
   }
 
   private _multiple = false;

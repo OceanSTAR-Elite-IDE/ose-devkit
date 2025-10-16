@@ -1,16 +1,15 @@
 import { defer, Observable, of } from 'rxjs';
 import { filter, switchMap, take } from 'rxjs/operators';
 
-import { transition, trigger } from '@angular/animations';
 import { BooleanInput, coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
   DestroyRef,
+  Inject,
   inject,
   Input,
   NgZone,
@@ -18,34 +17,45 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, FormGroupDirective, NgControl, NgForm, ValidationErrors } from '@angular/forms';
-import { fadeIn, fadeOut } from '@oceanstar/components/core';
+import { FormControl, FormGroupDirective, NgControl, NgForm, ValidationErrors, Validators } from '@angular/forms';
 
 import { NcFormErrorPipe } from './form-error.pipe';
 import { NcFormFieldControl } from './form-field-control';
+import { DEFAULT_FORM_FIELD_ICONS, NC_FORM_FIELD_ICONS, NcFormFieldIcons } from './form-field-icons';
 import { NcFormLabelWidth } from './form-label-width';
-import { NcFormOrientationType, NcFormOrientation } from './form-orientation';
+import { NcFormOrientation, NcFormOrientationType } from './form-orientation';
 
 @Component({
   imports: [CommonModule, NcFormErrorPipe],
   selector: 'nc-form-field',
+  exportAs: 'ncFormField',
   template: `
     <label *ngIf="labelVisible" class="nc-form-label" [class.required]="markVisible && required" [ngStyle]="_labelStyles">
-      {{ label }}<sup *ngIf="sublabel" class="nc-form-sublabel">{{ sublabel }}</sup>
+      {{ label }}<span *ngIf="sublabel" class="nc-form-sublabel">{{ sublabel }}</span>
     </label>
     <div class="nc-form-group" [ngStyle]="_groupStyles">
       <ng-content></ng-content>
-      <p *ngIf="_invalid && errors && errorVisible" class="nc-form-message" [@fade]="_invalid">
-        {{ errors | formError: label : messages }}
+
+      <p *ngIf="messageVisible" class="nc-form-helptext">
+        @if (isInvalidState && errors) {
+          <span [class]="icons.error"></span>
+          {{ errors | formError: label : messages }}
+        } @else if (isSuccessState) {
+          <span [class]="icons.success"></span>
+          {{ helptext || 'Good' }}
+        } @else if (helptext) {
+          <span [class]="icons.info"></span>
+          {{ helptext }}
+        }
       </p>
     </div>
   `,
-  animations: [trigger('fade', [transition('* => false', fadeOut(0.15)), transition('* => true', fadeIn(0.15))])],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'nc-form-field',
-    '[class.nc-form-error]': '_invalid',
+    '[class.nc-form-error]': 'isInvalidState',
+    '[class.nc-form-success]': 'isSuccessState',
     '[class.nc-form-horizontal]': 'isHorizontal()',
   },
 })
@@ -63,7 +73,7 @@ export class NcFormField implements AfterContentInit {
 
   _groupStyles: any = {};
 
-  _invalid = false;
+  isInvalidState = false;
 
   @Input() label!: string;
 
@@ -80,15 +90,15 @@ export class NcFormField implements AfterContentInit {
     this._labelVisible = coerceBooleanProperty(value);
   }
 
-  /** 错误可见性 */
-  private _errorVisible = true;
+  /** 表单可见性 */
+  private _messageVisible = true;
 
   @Input()
-  get errorVisible() {
-    return this._errorVisible;
+  get messageVisible() {
+    return this._messageVisible;
   }
-  set errorVisible(value: BooleanInput) {
-    this._errorVisible = coerceBooleanProperty(value);
+  set messageVisible(value: BooleanInput) {
+    this._messageVisible = coerceBooleanProperty(value);
   }
 
   private _labelWidth = 120;
@@ -107,6 +117,16 @@ export class NcFormField implements AfterContentInit {
       this._labelWidth = 120;
     }
     this._setHorizontalStyles();
+  }
+
+  private _helptext!: string;
+
+  @Input()
+  get helptext() {
+    return this._helptext;
+  }
+  set helptext(value: string) {
+    this._helptext = value;
   }
 
   @Input() messages!: { [key: string]: string };
@@ -159,6 +179,36 @@ export class NcFormField implements AfterContentInit {
     return this.control?.ngControl || null;
   }
 
+  get isSuccessState() {
+    if (!this.ngControl || !this.ngControl.control) return false;
+
+    const control = this.ngControl.control;
+    const hasRequiredValidator = control.hasValidator(Validators.required);
+    const hasAnyValidator = !!control.validator;
+
+    // 情况1: 有 required 验证器
+    if (hasRequiredValidator) {
+      return this.ngControl.touched && this.ngControl.valid;
+    }
+
+    // 情况2: 没有任何验证器
+    if (!hasAnyValidator) {
+      return false;
+    }
+
+    // 情况3: 没有 required 验证器，但有其他验证器
+    if (hasAnyValidator && !hasRequiredValidator) {
+      // 没有值时返回 false
+      if (!this.ngControl.value) {
+        return false;
+      }
+      // 有值时根据 touched 和 valid 判断
+      return this.ngControl.touched && this.ngControl.valid;
+    }
+
+    return false;
+  }
+
   readonly statusChanges: Observable<any> = defer(() => {
     if (this.control && this.ngControl) {
       return this.ngControl.statusChanges ? this.ngControl.statusChanges : of(null);
@@ -176,8 +226,11 @@ export class NcFormField implements AfterContentInit {
     @Optional() parentFormGroup: FormGroupDirective,
     @Optional() private _formLabelWidth: NcFormLabelWidth,
     @Optional() private _formOrientation: NcFormOrientation,
+    @Optional() @Inject(NC_FORM_FIELD_ICONS) public icons: NcFormFieldIcons,
   ) {
     this._ngForm = parentForm || parentFormGroup;
+
+    this.icons = { ...DEFAULT_FORM_FIELD_ICONS, ...icons };
 
     if (this._formLabelWidth) {
       this._subscribeContainerWidthChange();
@@ -197,7 +250,7 @@ export class NcFormField implements AfterContentInit {
   }
 
   _clearValidateMessage() {
-    this._invalid = false;
+    this.isInvalidState = false;
   }
 
   isHorizontal() {
@@ -210,7 +263,7 @@ export class NcFormField implements AfterContentInit {
 
   private _validate() {
     if (this.ngControl) {
-      this._invalid = !!this.ngControl.invalid;
+      this.isInvalidState = !!this.ngControl.invalid;
       this._changeDetectorRef.markForCheck();
     }
   }

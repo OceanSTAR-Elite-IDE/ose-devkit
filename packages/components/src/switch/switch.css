@@ -1,83 +1,73 @@
-:root {
-  --nc-switch-height: theme('spacing.6');
-  --nc-switch-width: calc(var(--nc-switch-height) * 1.8);
-  --nc-switch-handle-size: calc(var(--nc-switch-height) - theme('spacing.1'));
-  --nc-switch-handle-offset: calc((var(--nc-switch-height) - var(--nc-switch-handle-size)) / 2);
-  --nc-switch-padding: theme('spacing.1');
-  --nc-switch-border-radius: calc(var(--nc-switch-height) / 2);
-  --nc-switch-background: theme('colors.gray.300');
-  --nc-switch-background-checked: theme('colors.blue.500');
-  --nc-switch-handle-background: theme('colors.white');
+@theme {
+  --nc-switch-width: theme('size.11');
+  --nc-switch-color: var(--nc-primary-color);
+  --nc-switch-background: theme('colors.gray.200');
+  --nc-switch-background-disabled: theme('colors.gray.300');
+  --nc-switch-disabled-opacity: 0.6;
+  --nc-switch-padding: theme('size.[0.5]');
+  --nc-switch-border-radius: theme('borderRadius.full');
+  --nc-switch-outline-offset: 2px;
+  --nc-switch-toggle-size: calc(calc(var(--nc-switch-width) / 2) - var(--nc-switch-padding));
+  --nc-switch-toggle-background: theme('colors.white');
   --nc-switch-transition-duration: 0.2s;
   --nc-switch-transition-function: ease-in-out;
-  --nc-switch-disabled-opacity: 0.5;
 }
 
-.nc-switch {
-  display: inline-block;
-  position: relative;
-  margin: 0;
-  cursor: pointer;
-}
+@layer components {
+  .nc-switch {
+    display: inline-flex;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: var(--nc-switch-border-radius);
+    padding: var(--nc-switch-padding);
+    background: var(--nc-switch-background);
+    width: var(--nc-switch-width);
+    outline-offset: var(--nc-switch-outline-offset);
+    outline-color: var(--nc-switch-color);
+    transition-timing-function: var(--nc-switch-transition-function);
+    transition-duration: var(--nc-switch-transition-duration);
+    @apply ring-gray-900/5 transition-colors ring-inset;
+  }
 
-.nc-switch-input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
+  .nc-switch-toggle {
+    width: var(--nc-switch-toggle-size);
+    height: var(--nc-switch-toggle-size);
+    background: var(--nc-switch-toggle-background);
+    border-radius: var(--nc-switch-border-radius);
+    transition-timing-function: var(--nc-switch-transition-function);
+    transition-duration: var(--nc-switch-transition-duration);
+    @apply ring-1 ring-gray-900/5 transition-transform;
+  }
 
-.nc-switch-slider {
-  position: relative;
-  display: block;
-  width: var(--nc-switch-width);
-  height: var(--nc-switch-height);
-  background-color: var(--nc-switch-background);
-  border-radius: var(--nc-switch-border-radius);
-  transition: background-color var(--nc-switch-transition-duration) var(--nc-switch-transition-function);
-}
+  .nc-switch.nc-switch-checked {
+    background: var(--nc-switch-color);
+  }
 
-.nc-switch-slider:before {
-  position: absolute;
-  content: '';
-  height: var(--nc-switch-handle-size);
-  width: var(--nc-switch-handle-size);
-  left: var(--nc-switch-handle-offset);
-  top: var(--nc-switch-handle-offset);
-  background-color: var(--nc-switch-handle-background);
-  border-radius: 50%;
-  transition: transform var(--nc-switch-transition-duration) var(--nc-switch-transition-function);
-}
+  .nc-switch.nc-switch-disabled {
+    cursor: not-allowed;
+    opacity: var(--nc-switch-disabled-opacity);
+  }
 
-.nc-switch-input:checked + .nc-switch-slider {
-  background-color: var(--nc-switch-background-checked);
-}
+  .nc-switch.nc-switch-disabled > .nc-switch-input {
+    cursor: not-allowed;
+  }
 
-.nc-switch-input:checked + .nc-switch-slider:before {
-  transform: translateX(calc(var(--nc-switch-width) - var(--nc-switch-height)));
-}
+  .nc-switch.nc-switch-checked > .nc-switch-toggle {
+    transform: translateX(var(--nc-switch-toggle-size));
+  }
 
-.nc-switch-input:focus + .nc-switch-slider {
-  box-shadow: 0 0 1px var(--nc-switch-background-checked);
-}
+  .nc-switch-input {
+    position: absolute;
+    appearance: none;
+    inset: 0;
+    cursor: pointer;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-.nc-switch-input:disabled + .nc-switch-slider,
-.nc-switch.disabled .nc-switch-slider {
-  opacity: var(--nc-switch-disabled-opacity);
-  cursor: not-allowed;
-}
-
-.nc-switch-label {
-  display: inline-block;
-  margin-left: theme('spacing.2');
-  vertical-align: middle;
-}
-
-.nc-switch.small {
-  --nc-switch-height: theme('spacing.4');
-}
-
-.nc-switch.large {
-  --nc-switch-height: theme('spacing.8');
+  .nc-switch-input:focus {
+    outline: hidden;
+  }
 }

@@ -1,7 +1,0 @@
-{
-  "lib": {
-    "entryFile": "index.ts",
-    "flatModuleFile": "tree",
-    "umdId": "nc.components.tree"
-  }
-}

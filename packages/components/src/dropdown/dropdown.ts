@@ -11,6 +11,7 @@ export declare type NcDropdownTriggerType = '' | 'hover' | 'click';
 @Component({
   imports: [ObserversModule, NcOverlayModule],
   selector: 'nc-dropdown, [nc-dropdown]',
+  exportAs: 'ncDropdown',
   templateUrl: 'dropdown.html',
   encapsulation: ViewEncapsulation.None,
   host: {

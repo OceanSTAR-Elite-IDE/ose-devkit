@@ -138,9 +138,7 @@ export class NcRangeDateSelectionModel<D> extends NcDateSelectionModel<DateRange
 
     // Complete ranges are only valid if both dates are valid and the start is before the end.
     if (start != null && end != null) {
-      return (
-        this._isValidDateInstance(start) && this._isValidDateInstance(end) && this._adapter.compareDate(start, end) <= 0
-      );
+      return this._isValidDateInstance(start) && this._isValidDateInstance(end) && this._adapter.compareDate(start, end) <= 0;
     }
 
     // Partial ranges are valid if the start/end is valid.
@@ -157,10 +155,7 @@ export class NcRangeDateSelectionModel<D> extends NcDateSelectionModel<DateRange
 }
 
 /** @docs-private */
-export function NC_SINGLE_DATE_SELECTION_MODEL_FACTORY(
-  parent: NcSingleDateSelectionModel<unknown>,
-  adapter: DateAdapter<unknown>,
-) {
+export function NC_SINGLE_DATE_SELECTION_MODEL_FACTORY(parent: NcSingleDateSelectionModel<unknown>, adapter: DateAdapter<unknown>) {
   return parent || new NcSingleDateSelectionModel(adapter);
 }
 
@@ -172,10 +167,7 @@ export const NC_SINGLE_DATE_SELECTION_MODEL_PROVIDER: FactoryProvider = {
 };
 
 /** @docs-private */
-export function NC_RANGE_DATE_SELECTION_MODEL_FACTORY(
-  parent: NcSingleDateSelectionModel<unknown>,
-  adapter: DateAdapter<unknown>,
-) {
+export function NC_RANGE_DATE_SELECTION_MODEL_FACTORY(parent: NcSingleDateSelectionModel<unknown>, adapter: DateAdapter<unknown>) {
   return parent || new NcRangeDateSelectionModel(adapter);
 }
 

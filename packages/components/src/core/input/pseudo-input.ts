@@ -6,8 +6,11 @@ import { Attribute, Component, ElementRef, Input, OnInit, ViewEncapsulation } fr
   imports: [CommonModule],
   selector: 'nc-pseudo-input',
   template: `
-    <div *ngIf="value" class="nc-pseudo-value">{{ value }}</div>
-    <div *ngIf="!value" class="nc-pseudo-placeholder">{{ placeholder }}</div>
+    @if (value) {
+      <div class="nc-pseudo-value" [innerHTML]="value"></div>
+    } @else {
+      <div class="nc-pseudo-placeholder">{{ placeholder }}</div>
+    }
     <ng-content select="nc-pseudo-caret"></ng-content>
   `,
   encapsulation: ViewEncapsulation.None,

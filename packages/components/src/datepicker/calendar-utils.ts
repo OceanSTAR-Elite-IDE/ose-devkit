@@ -4,13 +4,7 @@ export const yearsPerPage = 12;
 
 export const yearsPerRow = 3;
 
-export function isSameMultiYearView<D>(
-  dateAdapter: DateAdapter<D>,
-  date1: D,
-  date2: D,
-  minDate: D | null,
-  maxDate: D | null,
-): boolean {
+export function isSameMultiYearView<D>(dateAdapter: DateAdapter<D>, date1: D, date2: D, minDate: D | null, maxDate: D | null): boolean {
   const year1 = dateAdapter.getYear(date1);
   const year2 = dateAdapter.getYear(date2);
   const startingYear = getStartingYear(dateAdapter, minDate, maxDate);
@@ -22,12 +16,7 @@ export function isSameMultiYearView<D>(
  * So we compute how many years are between the active year and the *slot* where our
  * "startingYear" will render when paged into view.
  */
-export function getActiveOffset<D>(
-  dateAdapter: DateAdapter<D>,
-  activeDate: D,
-  minDate: D | null,
-  maxDate: D | null,
-): number {
+export function getActiveOffset<D>(dateAdapter: DateAdapter<D>, activeDate: D, minDate: D | null, maxDate: D | null): number {
   const activeYear = dateAdapter.getYear(activeDate);
   return euclideanModulo(activeYear - getStartingYear(dateAdapter, minDate, maxDate), yearsPerPage);
 }

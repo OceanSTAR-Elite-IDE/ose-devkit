@@ -41,10 +41,7 @@ export class MonthlyNcCalendarRangeStrategy<D> implements NcDateRangeSelectionSt
 }
 
 /** @docs-private */
-export function MONTHLY_NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
-  parent: NcDateRangeSelectionStrategy<unknown>,
-  adapter: DateAdapter<unknown>,
-) {
+export function MONTHLY_NC_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(parent: NcDateRangeSelectionStrategy<unknown>, adapter: DateAdapter<unknown>) {
   return parent || new MonthlyNcCalendarRangeStrategy(adapter);
 }
 
