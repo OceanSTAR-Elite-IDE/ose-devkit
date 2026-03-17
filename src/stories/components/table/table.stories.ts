@@ -33,7 +33,7 @@ interface PeriodicElement {
 
       <nc-header-row *ncHeaderRowDef="displayedColumns"></nc-header-row>
       <nc-row *ncRowDef="let row; columns: displayedColumns"></nc-row>
-      <nc-no-data-row *ncNoDataRow>暂无数据</nc-no-data-row>
+      <ng-template ncNoDataRow>暂无数据</ng-template>
     </nc-table>
   `,
   imports: [CommonModule, NcTableModule],

@@ -1,10 +1,10 @@
-import { _DisposeViewRepeaterStrategy, _RecycleViewRepeaterStrategy, _VIEW_REPEATER_STRATEGY } from '@angular/cdk/collections';
 import { CDK_TABLE, CdkTable, DataRowOutlet, FooterRowOutlet, HeaderRowOutlet, NoDataRowOutlet, STICKY_POSITIONING_LISTENER } from '@angular/cdk/table';
 import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation } from '@angular/core';
 
+// In Angular CDK 21, _VIEW_REPEATER_STRATEGY was removed. CdkTable now manages
+// the view repeater strategy internally via the `recycleRows` input.
 @Directive({
   selector: 'nc-table[recycleRows], table[nc-table][recycleRows]',
-  providers: [{ provide: _VIEW_REPEATER_STRATEGY, useClass: _RecycleViewRepeaterStrategy }],
 })
 export class NcRecycleRows {}
 
@@ -47,7 +47,6 @@ export class NcRecycleRows {}
   providers: [
     { provide: CdkTable, useExisting: NcTable },
     { provide: CDK_TABLE, useExisting: NcTable },
-    { provide: _VIEW_REPEATER_STRATEGY, useClass: _DisposeViewRepeaterStrategy },
     { provide: STICKY_POSITIONING_LISTENER, useValue: null },
   ],
   host: {

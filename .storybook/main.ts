@@ -5,7 +5,11 @@ const config: StorybookConfig = {
     '../src/**/*.mdx',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'
   ],
-  addons: ['@storybook/addon-docs'],
+  addons: [
+    '@storybook/addon-docs',
+    '@storybook/addon-a11y',
+    '@chromatic-com/storybook'
+  ],
   staticDirs: ['../public'],
   previewHead: (head) => `
     ${head}
@@ -23,5 +27,11 @@ const config: StorybookConfig = {
     name: '@storybook/angular',
     options: {},
   },
+  managerHead: (head) => `
+    ${head}
+    <style>
+      .sidebar-header img { height: 34px; width: auto; }
+    </style>
+  `,
 };
 export default config;

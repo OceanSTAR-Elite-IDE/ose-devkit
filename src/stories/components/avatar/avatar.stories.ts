@@ -39,7 +39,7 @@ export default meta;
 
 type Story = StoryObj<NcAvatar>;
 
-const SAMPLE_SRC = '/logo.png';
+const SAMPLE_SRC = '/';
 
 export const Basic: Story = {
   args: {

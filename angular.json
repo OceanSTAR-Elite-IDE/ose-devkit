@@ -81,6 +81,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
+            "styles": ["src/styles.css"],
             "browserTarget": "ose-devkit:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],

@@ -4,7 +4,7 @@ export default create({
   base: 'light',
   brandTitle: 'OceanSTAR',
   brandUrl: '/',
-  brandImage: '/logo.png',
+  brandImage: '/brand.svg',
   brandTarget: '_self',
 
   colorPrimary: '#155dfb',

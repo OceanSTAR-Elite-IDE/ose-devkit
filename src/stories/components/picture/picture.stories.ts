@@ -103,10 +103,10 @@ class PictureStoryHostComponent {
   messages: string[] = [];
 
   constructor() {
-    const file = new File([], 'logo.png', { type: 'image/png' });
+    const file = new File([], 'logo.svg', { type: 'image/svg+xml' });
     const ref = new NcPictureRef<{ url: string }, string>(file);
-    ref.thumbnail = '/logo.png';
-    ref.link = '/logo.png';
+    ref.thumbnail = '/logo.svg';
+    ref.link = '/logo.svg';
     ref.status = NcUploadStatus.UPLOADED;
     this.control.setValue([ref]);
   }

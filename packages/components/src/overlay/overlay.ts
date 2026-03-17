@@ -31,6 +31,7 @@ import { getPositionClassName, NC_OVERLAY_POSITION_PAIRS, NcOverlayPosition } fr
 @Component({
   imports: [CommonModule, OverlayModule],
   selector: 'nc-overlay, [nc-overlay]',
+  exportAs: 'ncOverlay',
   templateUrl: 'overlay.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

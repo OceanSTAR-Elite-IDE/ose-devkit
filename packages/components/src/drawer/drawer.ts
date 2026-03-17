@@ -1,7 +1,7 @@
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { isPlatformBrowser } from '@angular/common';
+import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
+import { isPlatformBrowser } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -20,16 +20,13 @@ import {
   PLATFORM_ID,
   Renderer2,
   ViewEncapsulation,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  fromOutsideClick,
-  fromOutsideTouch,
-} from '@oceanstar/components/core';
-import { NcDrawerContainer } from './drawer-container';
-import { NC_DRAWER_CONTAINER } from './drawer-container';
+} from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { fromOutsideClick, fromOutsideTouch } from "@oceanstar/components/core";
+import { NcDrawerContainer } from "./drawer-container";
+import { NC_DRAWER_CONTAINER } from "./drawer-container";
 
-export declare type NcDrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
+export declare type NcDrawerPlacement = "left" | "right" | "top" | "bottom";
 
 let uniqueId = 0;
 /**
@@ -39,15 +36,15 @@ let uniqueId = 0;
  */
 @Component({
   // 组件的基本信息，包括选择器、模板、封装方式和动画等。
-  selector: 'nc-drawer',
+  selector: "nc-drawer",
   template: `<ng-content />`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'nc-drawer',
-    '[class.opened]': 'state !== "closed"',
-    '[class.backdrop]': 'backdrop',
-    '[class.static]': 'static',
+    class: "nc-drawer",
+    "[class.opened]": 'state !== "closed"',
+    "[class.backdrop]": "backdrop",
+    "[class.static]": "static",
   },
 })
 export class NcDrawerComponent implements AfterViewInit, OnDestroy {
@@ -133,7 +130,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
   }
 
   // 抽屉的当前状态（关闭或某个方向打开）。
-  state: 'closed' | NcDrawerPlacement = 'closed';
+  state: "closed" | NcDrawerPlacement = "closed";
 
   private _currentAnimationClass: string | null = null;
   private _isClosing = false;
@@ -166,7 +163,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(_platformId)) {
       this._initContainerAndStyles(container); // 在浏览器环境中初始化容器和样式
     }
-    this._changePlacementAndStyles('left'); // 默认抽屉从左侧滑出
+    this._changePlacementAndStyles("left"); // 默认抽屉从左侧滑出
   }
 
   // 组件的视图初始化后的生命周期钩子。
@@ -187,7 +184,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
     if (!this.static) {
       this._isClosing = false;
       this.state = this.placement;
-      // this._applyAnimation(this._getEnterClass(this.placement));
+      this._applyAnimation(this._getEnterClass(this.placement));
     }
   }
 
@@ -198,8 +195,8 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
   close(force: boolean = false) {
     if (!this.static || force) {
       this._isClosing = true;
-      // this._applyAnimation(this._getLeaveClass(this.placement));
-      this.state = 'closed';
+      this._applyAnimation(this._getLeaveClass(this.placement));
+      this.state = "closed";
     }
   }
 
@@ -207,7 +204,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
    * 动画完成后的回调处理。
    * @param event AnimationEvent，动画事件对象。
    */
-  @HostListener('animationstart', ['$event'])
+  @HostListener("animationstart", ["$event"])
   handleAnimationStart(event: AnimationEvent) {
     if (event.target !== this._element.nativeElement) {
       return;
@@ -223,7 +220,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('animationend', ['$event'])
+  @HostListener("animationend", ["$event"])
   handleAnimationEnd(event: AnimationEvent) {
     if (event.target !== this._element.nativeElement) {
       return;
@@ -243,16 +240,19 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
   private _changeStaticMode() {
     if (this.static) {
       this.state = this.placement;
-      this._renderer.addClass(this._container, 'nc-drawer-scrollblock');
+      this._renderer.addClass(this._container, "nc-drawer-scrollblock");
     } else {
-      this.state = 'closed';
-      this._renderer.removeClass(this._container, 'nc-drawer-scrollblock');
+      this.state = "closed";
+      this._renderer.removeClass(this._container, "nc-drawer-scrollblock");
     }
   }
 
   private _applyAnimation(className: string) {
     if (this._currentAnimationClass) {
-      this._renderer.removeClass(this._element.nativeElement, this._currentAnimationClass);
+      this._renderer.removeClass(
+        this._element.nativeElement,
+        this._currentAnimationClass,
+      );
     }
 
     this._currentAnimationClass = className;
@@ -263,60 +263,66 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
 
   private _clearAnimation() {
     if (this._currentAnimationClass) {
-      this._renderer.removeClass(this._element.nativeElement, this._currentAnimationClass);
+      this._renderer.removeClass(
+        this._element.nativeElement,
+        this._currentAnimationClass,
+      );
       this._currentAnimationClass = null;
     }
   }
 
-  // private _getEnterClass(placement: NcDrawerPlacement) {
-  //   switch (placement) {
-  //     case 'right':
-  //       return slideInRight();
-  //     case 'top':
-  //       return slideInDown();
-  //     case 'bottom':
-  //       return slideInUp();
-  //     case 'left':
-  //     default:
-  //       return slideInLeft();
-  //   }
-  // }
+  private _getEnterClass(placement: NcDrawerPlacement) {
+    switch (placement) {
+      case "right":
+        return "animate-slide-in-right";
+      case "top":
+        return "animate-slide-in-down";
+      case "bottom":
+        return "animate-slide-in-up";
+      case "left":
+      default:
+        return "animate-slide-in-left";
+    }
+  }
 
-  // private _getLeaveClass(placement: NcDrawerPlacement) {
-  //   switch (placement) {
-  //     case 'right':
-  //       return slideOutRight();
-  //     case 'top':
-  //       return slideOutUp();
-  //     case 'bottom':
-  //       return slideOutDown();
-  //     case 'left':
-  //     default:
-  //       return slideOutLeft();
-  //   }
-  // }
+  private _getLeaveClass(placement: NcDrawerPlacement) {
+    switch (placement) {
+      case "right":
+        return "animate-slide-out-right";
+      case "top":
+        return "animate-slide-out-up";
+      case "bottom":
+        return "animate-slide-out-down";
+      case "left":
+      default:
+        return "animate-slide-out-left";
+    }
+  }
 
   /** 调整方向的样式属性 */
   private _changePlacementAndStyles(placement: NcDrawerPlacement) {
     if (this._placement) {
       this._renderer.removeClass(this._element.nativeElement, this._placement);
     }
-    this._renderer.addClass(this._element.nativeElement, (this._placement = placement));
+    this._renderer.addClass(
+      this._element.nativeElement,
+      (this._placement = placement),
+    );
   }
 
   /** 设置容器的样式 */
   private _initContainerAndStyles(container: NcDrawerContainer) {
     this._container = container ? container.element : document.body;
     if (this._container !== document.body) {
-      this._renderer.addClass(this._element.nativeElement, 'nested');
+      this._renderer.addClass(this._element.nativeElement, "nested");
     }
     this._renderer.addClass(this._container, `${this.id}-container`);
   }
 
   /** 创建遮罩层元素对象，当 backdrop 属性是 true 的时候才会创建 */
   private _createBackdropOverlay() {
-    this._backdropElement = this._renderer.createElement('div');
-    this._renderer.addClass(this._backdropElement, 'nc-drawer-backdrop');
+    this._backdropElement = this._renderer.createElement("div");
+    this._renderer.addClass(this._backdropElement, "nc-drawer-backdrop");
     this._renderer.addClass(this._backdropElement, `${this.id}-backdrop`);
   }
 
@@ -330,7 +336,7 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
   private _attachBackdropOverlay() {
     if (this.backdrop && this._backdropElement) {
       this._renderer.appendChild(this._container, this._backdropElement);
-      this._renderer.addClass(this._container, 'nc-drawer-scrollblock');
+      this._renderer.addClass(this._container, "nc-drawer-scrollblock");
     }
   }
 
@@ -338,16 +344,19 @@ export class NcDrawerComponent implements AfterViewInit, OnDestroy {
   private _disattachBackdropOverlay() {
     if (this._backdropElement) {
       this._renderer.removeChild(this._container, this._backdropElement);
-      this._renderer.removeClass(this._container, 'nc-drawer-scrollblock');
+      this._renderer.removeClass(this._container, "nc-drawer-scrollblock");
     }
   }
 
   /** 开始外部事件的订阅 */
   private _subscribeOutsideActionEvent() {
     const outsideAction = this.touchmode ? fromOutsideTouch : fromOutsideClick;
-    this._outsideActionSubscription = outsideAction([this._element.nativeElement], this._container)
+    this._outsideActionSubscription = outsideAction(
+      [this._element.nativeElement],
+      this._container,
+    )
       .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe(_ => this.close());
+      .subscribe((_) => this.close());
   }
 
   /** 取消外部事件的订阅 */
