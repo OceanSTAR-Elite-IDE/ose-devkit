@@ -12,7 +12,6 @@ interface PeriodicElement {
 }
 
 @Component({
-  standalone: true,
   selector: 'storybook-table-host',
   template: `
     <nc-table [dataSource]="data" class="min-w-[480px]" role="table">
@@ -38,7 +37,7 @@ interface PeriodicElement {
   `,
   imports: [CommonModule, NcTableModule],
 })
-class TableStoryHostComponent {
+export class TableStoryHostComponent {
   displayedColumns = ['name', 'symbol', 'weight'];
 
   data: PeriodicElement[] = [
@@ -70,7 +69,7 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryObj;
+export type Story = StoryObj;
 
 // export const Basic: Story = {
 //   render: () => ({

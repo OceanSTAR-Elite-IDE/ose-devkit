@@ -8,7 +8,6 @@ import { NcButtonModule } from '@oceanstar/components/button';
 import { NcScrimModule } from '@oceanstar/components/scrim';
 
 @Component({
-  standalone: true,
   selector: 'storybook-scrim-host',
   template: `
     <div class="space-y-4">

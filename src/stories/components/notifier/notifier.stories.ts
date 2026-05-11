@@ -10,7 +10,6 @@ import { withNotifierService } from '@oceanstar/components/notifier/notifier-pro
 import { NcNotifierService } from '@oceanstar/components/notifier/notifier.service';
 
 @Component({
-  standalone: true,
   selector: 'storybook-notifier-host',
   template: `
     <div class="space-y-4">

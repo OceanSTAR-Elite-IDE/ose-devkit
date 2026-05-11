@@ -66,7 +66,6 @@ class StoryPictureUploadHandler extends NcUploadHandler<{ url: string }, string>
 }
 
 @Component({
-  standalone: true,
   selector: 'storybook-picture-host',
   template: `
     <div class="space-y-4">

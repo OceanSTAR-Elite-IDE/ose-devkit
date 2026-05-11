@@ -16,7 +16,6 @@ import { NcModalRef } from '@oceanstar/components/modal/modal-ref';
 import { NcModalService } from '@oceanstar/components/modal/modal-serivce';
 
 @Component({
-  standalone: true,
   selector: 'storybook-modal-content',
   template: `
     <nc-modal-header>
